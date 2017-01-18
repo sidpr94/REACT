@@ -20,6 +20,9 @@ import javax.swing.border.LineBorder;
 
 import com.esri.core.geometry.Envelope;
 import com.esri.map.JMap;
+import com.esri.map.Layer;
+import com.esri.map.LayerInitializeCompleteEvent;
+import com.esri.map.LayerInitializeCompleteListener;
 import com.esri.toolkit.JLayerList;
 
 //REACT runs the main application populating the base map as well as the GUI
@@ -89,7 +92,6 @@ public class REACT {
 	    //Creates a map and LayerList for that map
 	    jMap = new JMap();
 	    jLayerlist = new JLayerList(jMap);
-		CreateMap cm = new CreateMap(jMap,jLayerlist);
 	    //Sets the initial zoom status of the map. Zooms into the runway
     	Envelope initialExtent = new Envelope(-94.920484888,39.032438997,-94.543736896,39.534769654);
     	jMap.setFullExtent(initialExtent);
@@ -114,10 +116,9 @@ public class REACT {
 	    controlPanel.setBorder(new LineBorder(Color.BLACK,3));
 	    controlPanel.add(txtTitle);
 	    controlPanel.add(jLayerlist);
-	    
 	    //Add control panel and map into content pane of the window
 	    contentPane.add(controlPanel);
-	    contentPane.add(cm.createMap());
+	    contentPane.add(CreateMap(jMap));
 	    return contentPane;
 	}
 	
@@ -129,6 +130,54 @@ public class REACT {
 		    contentPane.setVisible(true);
 		    return contentPane;
      }
-
-}
+	class EditLayerName implements LayerInitializeCompleteListener {
+	    @Override
+	    public void layerInitializeComplete(final LayerInitializeCompleteEvent event) {
+	      SwingUtilities.invokeLater(new Runnable()
+	      {
+	        @Override
+	        public void run()
+	        {
+	          Layer layer = event.getLayer();
+	          if(layer.getName() == jMap.getLayers().get(0).getName()){
+	        	  layer.setName("Population Map");
+	          }else if(layer.getName() == jMap.getLayers().get(1).getName()){
+	        	  layer.setName("Flight Tracks");
+	          }else if(layer.getName() == jMap.getLayers().get(2).getName()){
+	        	  layer.setName("Noise Contour");
+	          }else{
+	        	  layer.setName("Runways");
+	          }
+	          // Update layer list
+	          jLayerlist.refresh();
+	        }
+	      });
+	    }
+    }
+	
+	 
+	 public JMap CreateMap(JMap map) {
+			PopMap pmap = new PopMap();
+			Runway rmap = new Runway();
+			Tracks tmap = new Tracks();
+			NoiseContour nmap = new NoiseContour();
+			Layer pop = pmap.createPopMap();
+			Layer tracks = tmap.createTracks();
+			Layer noise = nmap.createNoiseContour();
+			Layer runway = rmap.createRunway();
+			map.getLayers().add(pop);
+			map.getLayers().add(tracks);
+			map.getLayers().add(noise);
+			map.getLayers().add(runway);
+			pop.addLayerInitializeCompleteListener(new EditLayerName());
+			tracks.addLayerInitializeCompleteListener(new EditLayerName());
+			noise.addLayerInitializeCompleteListener(new EditLayerName());
+			runway.addLayerInitializeCompleteListener(new EditLayerName());
+			return jMap;
+	}
+	public void getLayerName(Layer l1, Layer l2, Layer l3, Layer l4){
+		
+	}
+ }
+	
 
