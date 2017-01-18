@@ -18,7 +18,7 @@ public class PopMap {
 		try {
 			//URL url = PopMap.class.getClassLoader().getResource("Files/MCI_BUFFER_PROJECTION_1.shp");
 			//POP10shapefile = new ShapefileFeatureTable(url.getPath());
-			POP10shapefile = new ShapefileFeatureTable("C:\\Users\\Sidharth\\workspace\\REACT\\bin\\Files\\MCI_BUFFER_PROJECTION_1.shp");
+			POP10shapefile = new ShapefileFeatureTable("C:\\ARCGIS\\MCI_BUFFER_PROJECTION_1.shp");
 			POP10Layer = new FeatureLayer(POP10shapefile);
 			ClassBreaksRenderer cbrenderer = new ClassBreaksRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,1)),"POP10");
 			cbrenderer.addBreak(0,14,new SimpleFillSymbol(Color.getHSBColor(0, 0, 1),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
