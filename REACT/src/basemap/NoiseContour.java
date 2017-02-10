@@ -2,7 +2,7 @@ package basemap;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-//import java.net.URL;
+import java.net.URL;
 
 import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.renderer.UniqueValueInfo;
@@ -18,8 +18,8 @@ public class NoiseContour {
 	public NoiseContour(){};
 	public FeatureLayer createNoiseContour(){
 		try {
-			//URL url = NoiseContour.class.getClassLoader().getResource("/Files/AAD_KMCI 260.shp");
-			Contourshapefile = new ShapefileFeatureTable("C:\\ARCGIS\\AAD_KMCI260_Project1.shp");
+			URL url = NoiseContour.class.getClassLoader().getResource("Files/Noise.shp");
+			Contourshapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
 			ContourLayer = new FeatureLayer(Contourshapefile);
 			UniqueValueRenderer srenderer = new UniqueValueRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,3),Style.NULL),"Contour");
 			Color DNL55 = new Color(56,168,0);

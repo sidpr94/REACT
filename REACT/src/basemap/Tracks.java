@@ -2,7 +2,7 @@ package basemap;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-//import java.net.URL;
+import java.net.URL;
 
 import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.renderer.UniqueValueInfo;
@@ -16,8 +16,8 @@ public class Tracks {
 	public Tracks(){};
 	public FeatureLayer createTracks(){
 		try {
-			//URL url = Tracks.class.getClassLoader().getResource("/Files/Tracks for AAD_KMCI 260.shp");
-			Trackshapefile = new ShapefileFeatureTable("C:\\ARCGIS\\TracksforAAD_KMCI260_1.shp");
+			URL url = Tracks.class.getClassLoader().getResource("Files/Tracks.shp");
+			Trackshapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
 			TrackLayer = new FeatureLayer(Trackshapefile);
 			UniqueValueRenderer uvrenderer = new UniqueValueRenderer(new SimpleLineSymbol(Color.BLACK,2), "Operation_");
 			uvrenderer.addValue(new UniqueValueInfo(new Object[] {"Approach"}, new SimpleLineSymbol(Color.BLUE,2)));

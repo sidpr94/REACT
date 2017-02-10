@@ -2,7 +2,7 @@ package basemap;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-//import java.net.URL;
+import java.net.URL;
 
 import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.renderer.SimpleRenderer;
@@ -15,8 +15,8 @@ public class Runway{
 	public Runway(){};
 	public FeatureLayer createRunway(){
 		try {
-			//URL url = Runway.class.getClassLoader().getResource("/Files/MCI_Runways.shp");
-			Runwayshapefile = new ShapefileFeatureTable("C:\\Users\\Sidharth\\Documents\\ArcGIS\\MCI_Matt\\MCI_Runways.shp");
+			URL url = Runway.class.getClassLoader().getResource("Files/MCI_Runways.shp");
+			Runwayshapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
 			RunwayLayer = new FeatureLayer(Runwayshapefile);
 			SimpleRenderer srenderer = new SimpleRenderer(new SimpleLineSymbol(Color.BLACK,5));
 			RunwayLayer.setRenderer(srenderer);

@@ -2,7 +2,7 @@ package basemap;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-//import java.net.URL;
+import java.net.URL;
 
 import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.renderer.ClassBreaksRenderer;
@@ -16,9 +16,8 @@ public class PopMap {
 	public PopMap(){};
 	public FeatureLayer createPopMap(){
 		try {
-			//URL url = PopMap.class.getClassLoader().getResource("Files/MCI_BUFFER_PROJECTION_1.shp");
-			//POP10shapefile = new ShapefileFeatureTable(url.getPath());
-			POP10shapefile = new ShapefileFeatureTable("C:\\ARCGIS\\MCI_BUFFER_PROJECTION_1.shp");
+			URL url = PopMap.class.getClassLoader().getResource("Files/PopMap.shp");
+			POP10shapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
 			POP10Layer = new FeatureLayer(POP10shapefile);
 			ClassBreaksRenderer cbrenderer = new ClassBreaksRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,1)),"POP10");
 			cbrenderer.addBreak(0,14,new SimpleFillSymbol(Color.getHSBColor(0, 0, 1),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
