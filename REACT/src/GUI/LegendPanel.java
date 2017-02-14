@@ -1,5 +1,5 @@
 package GUI;
-
+//creates the JPanel containing the legend for the layers on the map
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,17 +17,18 @@ public class LegendPanel {
 	String text;
 	int width;
 	int height;
+	public LegendPanel(){}
 	public LegendPanel(int w, int h){
 		this.width = w;
 		this.height = h;
 	};
-	
+	//creates the final legend calling the get methods
 	public JPanel getLegend(){
 		final JPanel legendPanel = new JPanel();
 	    BoxLayout boxLayout = new BoxLayout(legendPanel, BoxLayout.Y_AXIS);
 	    legendPanel.setLayout(boxLayout);
-	    legendPanel.setSize(250, 500);
-	    legendPanel.setLocation(width-280,40);
+	    legendPanel.setSize((int)width/8, (int) ((int) height/1.65));
+	    legendPanel.setLocation(width-legendPanel.getWidth()-30,15+(int) (height/32));
 	    legendPanel.setBackground(new Color(0,0,0,100));
 	    legendPanel.setDoubleBuffered(true);
 	    legendPanel.setBorder(new LineBorder(Color.BLACK, 2, false));
@@ -37,19 +38,19 @@ public class LegendPanel {
 	    legendPanel.add(getPopLegend());
 		return legendPanel;
 	}
-	
+	//gets the legend title
 	public JTextField getTitle(){
 		JTextField txtTitle = new JTextField();
 		txtTitle.setText("Legend");
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,18));
-		txtTitle.setMaximumSize(new Dimension(400,40));
+		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,14));
+		txtTitle.setMaximumSize(new Dimension((int)width/8,40));
 		txtTitle.setBackground(new Color(0,0,0,100));
 		txtTitle.setForeground(Color.WHITE);
 		txtTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		return txtTitle;
 	}
-	
+	//gets the noise part of the legend
 	public JPanel getNoiseLegend(){
 		final JPanel noisePanel = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(noisePanel, BoxLayout.Y_AXIS);
@@ -58,8 +59,8 @@ public class LegendPanel {
 		JTextField ContourTitle = new JTextField();
 		ContourTitle.setText("Noise Contour");
 		ContourTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		ContourTitle.setFont(new Font(ContourTitle.getFont().getName(),Font.BOLD,16));
-		ContourTitle.setMaximumSize(new Dimension(400,40));
+		ContourTitle.setFont(new Font(ContourTitle.getFont().getName(),Font.BOLD,12));
+		ContourTitle.setMaximumSize(new Dimension((int)width/8,40));
 		ContourTitle.setBackground(Color.WHITE);
 		ContourTitle.setForeground(Color.BLACK);
 		ContourTitle.setBorder(BorderFactory.createMatteBorder(0,3,0, 3, Color.BLACK));
@@ -75,6 +76,7 @@ public class LegendPanel {
 		for(int i = 55; i < 70; i = i + 5){
 			JPanel DNLColorBox = new JPanel();
 			DNLColorBox.setBorder(new LineBorder(Color.WHITE,5,false));
+			DNLColorBox.setMaximumSize(new Dimension((int)width/16,20));
 			if(i == 55){
 				bg = new Color(56,168,0);
 			} else if (i == 60){
@@ -88,8 +90,8 @@ public class LegendPanel {
 		    JTextField DNLDescription = new JTextField();
 		    DNLDescription.setText(i+" DNL");
 		    DNLDescription.setHorizontalAlignment(SwingConstants.CENTER);
-		    DNLDescription.setFont(new Font(DNLDescription.getFont().getName(),Font.PLAIN,16));
-		    DNLDescription.setMaximumSize(new Dimension(150,20));
+		    DNLDescription.setFont(new Font(DNLDescription.getFont().getName(),Font.PLAIN,12));
+		    DNLDescription.setMaximumSize(new Dimension((int)width/16,20));
 		    DNLDescription.setBackground(Color.WHITE);
 		    DNLDescription.setForeground(Color.BLACK);
 		    DNLDescription.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -100,6 +102,7 @@ public class LegendPanel {
 		return noisePanel;
 		
 	}
+	//gets the track panel for the legend
 	public JPanel getTrackLegend(){
 		final JPanel trackPanel = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(trackPanel, BoxLayout.Y_AXIS);
@@ -108,8 +111,8 @@ public class LegendPanel {
 	    JTextField TrackTitle = new JTextField();
 	    TrackTitle.setText("Flight Tracks");
 	    TrackTitle.setHorizontalAlignment(SwingConstants.CENTER);
-	    TrackTitle.setFont(new Font(TrackTitle.getFont().getName(),Font.BOLD,16));
-	    TrackTitle.setMaximumSize(new Dimension(400,40));
+	    TrackTitle.setFont(new Font(TrackTitle.getFont().getName(),Font.BOLD,12));
+	    TrackTitle.setMaximumSize(new Dimension((int)width/8,40));
 	    TrackTitle.setBackground(Color.WHITE);
 	    TrackTitle.setForeground(Color.BLACK);
 	    TrackTitle.setBorder(BorderFactory.createMatteBorder(0,3,0, 3, Color.BLACK));
@@ -125,7 +128,7 @@ public class LegendPanel {
 	    for(int i = 1; i < 3; i++){
 	    	JPanel colorBox = new JPanel();
 	    	colorBox.setBorder(new LineBorder(Color.WHITE, 5, false));
-	    	
+	    	colorBox.setMaximumSize(new Dimension((int)width/16,20));
 	    	if(i == 1){
 	    		bg = Color.BLUE;
 	    		text = "Approach";
@@ -140,8 +143,8 @@ public class LegendPanel {
 	    	JTextField Description = new JTextField();
 	        Description.setText(text);
 	        Description.setHorizontalAlignment(SwingConstants.CENTER);
-	        Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,16));
-	        Description.setMaximumSize(new Dimension(150,20));
+	        Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,12));
+	        Description.setMaximumSize(new Dimension((int)width/16,20));
 	        Description.setBackground(Color.WHITE);
 	        Description.setForeground(Color.BLACK);
 	        Description.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -152,7 +155,7 @@ public class LegendPanel {
 	    trackPanel.add(colorPanel);
 	    return trackPanel;
 	}
-	
+	//gets the population panel for the legend
 	public JPanel getPopLegend(){
 		final JPanel popPanel = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(popPanel, BoxLayout.Y_AXIS);
@@ -161,8 +164,8 @@ public class LegendPanel {
 	    JTextField PopTitle = new JTextField();
 	    PopTitle.setText("2010 Population");
 	    PopTitle.setHorizontalAlignment(SwingConstants.CENTER);
-	    PopTitle.setFont(new Font(PopTitle.getFont().getName(),Font.BOLD,16));
-	    PopTitle.setMaximumSize(new Dimension(400,40));
+	    PopTitle.setFont(new Font(PopTitle.getFont().getName(),Font.BOLD,12));
+	    PopTitle.setMaximumSize(new Dimension((int)width/8,40));
 	    PopTitle.setBackground(Color.WHITE);
 	    PopTitle.setForeground(Color.BLACK);
 	    PopTitle.setBorder(BorderFactory.createMatteBorder(0,3,0, 3, Color.BLACK));
@@ -178,6 +181,7 @@ public class LegendPanel {
 	    for(int i = 1; i<8; i++){
 	    	JPanel colorBox = new JPanel();
 	    	colorBox.setBorder(new LineBorder(Color.WHITE,5,false));
+	    	colorBox.setMaximumSize(new Dimension((int)width/16,20));
 	    	switch(i){
 	    		case 1: text = "10-14";
 	    				bg = Color.getHSBColor(0,0,1);
@@ -207,8 +211,8 @@ public class LegendPanel {
 	        JTextField Description = new JTextField();
 	        Description.setText(text);
 	        Description.setHorizontalAlignment(SwingConstants.CENTER);
-	        Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,16));
-	        Description.setMaximumSize(new Dimension(150,20));
+	        Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,12));
+	        Description.setMaximumSize(new Dimension((int)width/16,20));
 	        Description.setBackground(Color.WHITE);
 	        Description.setForeground(Color.BLACK);
 	        Description.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));

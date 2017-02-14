@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 public class mapCoordPanel {
 	int width;
 	int height;
+	public mapCoordPanel(){}
 	public mapCoordPanel(int w, int h){
 		this.width = w;
 		this.height = h;
@@ -24,8 +25,8 @@ public class mapCoordPanel {
 		JTextField coordTitle = new JTextField();
 		coordTitle.setText("Map Coordinates");
 		coordTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		coordTitle.setFont(new Font(coordTitle.getFont().getName(),Font.PLAIN,16));
-		coordTitle.setMaximumSize(new Dimension(500,200));
+		coordTitle.setFont(new Font(coordTitle.getFont().getName(),Font.BOLD,10));
+		coordTitle.setMaximumSize(new Dimension(400,(int)(height/12)));
 		coordTitle.setBackground(new Color(0,0,0,100));
 		coordTitle.setForeground(Color.WHITE);
 		coordTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -33,8 +34,8 @@ public class mapCoordPanel {
 	    final JPanel coordPanel = new JPanel();
 	    BoxLayout boxLayout2 = new BoxLayout(coordPanel, BoxLayout.Y_AXIS);
 	    coordPanel.setLayout(boxLayout2);
-	    coordPanel.setLocation(270,height-205);
-	    coordPanel.setSize(250,70);
+	    coordPanel.setSize((int)(width/6.5),(int)(height/10.3));
+	    coordPanel.setLocation(240,height-coordPanel.getHeight()-50);
 	    coordPanel.setBackground(new Color(0,0,0,100));
 	    coordPanel.setBorder(new LineBorder(Color.BLACK,3));
 	    coordPanel.add(coordTitle);
@@ -48,8 +49,8 @@ public class mapCoordPanel {
 		coordTxt.setLineWrap(true);
 		coordTxt.setWrapStyleWord(true);
 		coordTxt.setAlignmentX(SwingConstants.CENTER);
-		coordTxt.setFont(new Font(coordTxt.getFont().getName(), coordTxt.getFont().getStyle(), 14));
-		coordTxt.setMaximumSize(new Dimension(300, 100));
+		coordTxt.setFont(new Font(coordTxt.getFont().getName(), coordTxt.getFont().getStyle(), 10));
+		coordTxt.setMaximumSize(new Dimension((int)(width/6.5), (int)(height/12)));
 		coordTxt.setBackground(new Color(0, 0, 0, 255));
 		coordTxt.setForeground(Color.WHITE);
 		coordTxt.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));

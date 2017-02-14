@@ -1,5 +1,5 @@
 package basemap;
-
+//This class creates the population map from the shape file
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -16,9 +16,13 @@ public class PopMap {
 	public PopMap(){};
 	public FeatureLayer createPopMap(){
 		try {
+			//captures the relative path for the shape file within Files
 			URL url = PopMap.class.getClassLoader().getResource("Files/PopMap.shp");
+			//creates the feature table
 			POP10shapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
+			//creates the layer
 			POP10Layer = new FeatureLayer(POP10shapefile);
+			//adds color to the layer
 			ClassBreaksRenderer cbrenderer = new ClassBreaksRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,1)),"POP10");
 			cbrenderer.addBreak(0,14,new SimpleFillSymbol(Color.getHSBColor(0, 0, 1),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
 			cbrenderer.addBreak(15,47,new SimpleFillSymbol(Color.getHSBColor(0, 0, 0.83f),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
