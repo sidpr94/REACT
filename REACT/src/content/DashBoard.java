@@ -1,4 +1,4 @@
-package GUI;
+package content;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import GUI.SwitchBox;
 
 public class DashBoard {
 	public DashBoard(){}

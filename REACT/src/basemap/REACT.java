@@ -1,39 +1,28 @@
 package basemap;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.OverlayLayout;
+
 import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
 
 import com.esri.core.geometry.Envelope;
 import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
-import GUI.mapCoordPanel;
-import GUI.DashBoard;
-import GUI.LegendButton;
-import GUI.LegendPanel;
-import GUI.MapLayer;
-import GUI.MapLayerButton;
+import content.ContentPane;
+
 
 //REACT runs the main application populating the base map as well as the GUI
 //Creates the window, content pane, and initializes the map for the application
@@ -106,98 +95,26 @@ public class REACT {
 	//creates the UI for the app. This is where the map is inserted and created
 	public JComponent createUI(Dimension d) throws Exception {
 		// application content
+		jMap = new JMap();
+		jLayerlist = new JLayerList(jMap);
+		
 		JTabbedPane tabContent = new JTabbedPane();
 		tabContent.setBorder(BorderFactory.createEmptyBorder());
-		tabContent.setFont(new Font("Dialog",Font.BOLD,20));
+		tabContent.setFont(new Font("Dialog",Font.BOLD,16));
+		ContentPane contentPane = new ContentPane(jMap,jLayerlist,d);
 		JPanel dataPane = new JPanel();
-		dataPane.setLayout(new BoxLayout(dataPane,BoxLayout.Y_AXIS));
-		JPanel contentPane = new JPanel();
-		contentPane.setLayout(new BorderLayout(0,0));
-		tabContent.addTab("Map", contentPane);
+		
+		tabContent.addTab("Map", contentPane.getContentPane());
 		tabContent.addTab("Database", dataPane);
 		//JLayeredPane contentPane = createContentPane();
 		//Creates a map and LayerList for that map
-		jMap = new JMap();
-		jLayerlist = new JLayerList(jMap);
 		//Sets the initial zoom status of the map. Zooms into the runway
 		Envelope initialExtent = new Envelope(-94.920484888,39.032438997,-94.543736896,39.534769654);
 		jMap.setFullExtent(initialExtent);
-
-		//creates the map layer and legend panels
-		LegendPanel lPanel = new LegendPanel(d.width,d.height);
-		JPanel legendPanel = lPanel.getLegend();
-		LegendButton lgndbtn = new LegendButton(legendPanel,d.width,d.height);
-
-		mapCoordPanel mPanel = new mapCoordPanel(d.width,d.height);
-		JTextArea coordTxt = mPanel.getCoordTxt();
-
-		MapLayer lyrPanel = new MapLayer(d.width,d.height);
-		JPanel layerPanel = lyrPanel.getMapLayer(jLayerlist); 
-		MapLayerButton mbtn = new MapLayerButton(layerPanel,d.width,d.height);
-
-		CreateMap mapCreator = new CreateMap(jMap,jLayerlist,coordTxt);
-
-		DashBoard dPanel = new DashBoard();
-		
-		JPanel mapPane = new JPanel();
-		mapPane.setLayout(new OverlayLayout(mapPane));
-		JPanel guiPane = new JPanel();
-		guiPane.setLayout(new GridBagLayout());
-		guiPane.setOpaque(false);
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets(10,10,0,0);
-		guiPane.add(layerPanel, c);
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 10;
-		c.insets = new Insets(10,0,0,10);
-		guiPane.add(legendPanel, c);
-		c.anchor = GridBagConstraints.LAST_LINE_START;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.insets = new Insets(0,10,10,0);
-		guiPane.add(mPanel.getCoordPanel(coordTxt),c);
-		GridBagConstraints de = new GridBagConstraints();
-		de.fill = GridBagConstraints.BOTH;
-		de.gridx = 1;
-		de.gridy = 1;
-		de.weightx = 0;
-		de.weighty = 1;
-		guiPane.add(Box.createGlue(),de);
-		mapPane.add(guiPane);
-		mapPane.add(mapCreator.getMap());
-		contentPane.add(mapPane,BorderLayout.CENTER);
-		contentPane.add(dPanel.getDashboard(),BorderLayout.WEST);
-		//toggle button to turn off the visibility for the legend
-
-		//Add map, layer list, coordinates, legend, and dashboard into content pane of the window
-		/*
-		contentPane.add(mPanel.getCoordPanel(coordTxt),BorderLayout.CENTER);
-		contentPane.add(layerPanel,BorderLayout.CENTER);
-		contentPane.add(mbtn.getMapButton(),BorderLayout.CENTER);
-		contentPane.add(legendPanel,BorderLayout.CENTER); 
-		contentPane.add(lgndbtn.getLegendButton(),BorderLayout.CENTER);
-		contentPane.add(mapCreator.getMap(),BorderLayout.CENTER);
-		contentPane.add(dPanel.getDashboard(),BorderLayout.WEST);
-		*/
 		return tabContent;
 	}
 
 	//creates the content pane where the content is actually stored in the UI
-	private static JLayeredPane createContentPane() {
-		JLayeredPane contentPane = new JLayeredPane();
-		contentPane.setLayout(new BorderLayout(0, 0));
-		return contentPane;
-	}
 }
 
 

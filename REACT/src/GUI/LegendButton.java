@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +19,7 @@ public class LegendButton {
 	public JButton getLegendButton(){
 	  final JButton btnLegendToggle = new JButton("Toggle Legend");
 	    btnLegendToggle.setLocation(width-legendPanel.getWidth()-30,10);
-	    btnLegendToggle.setSize((int) (width/8), (int) (height/32));
+	    btnLegendToggle.setPreferredSize(new Dimension((int) (width/8), (int) (height/32)));
 	    btnLegendToggle.setVisible(true);
 	    btnLegendToggle.addActionListener(new ActionListener() {
 	      @Override

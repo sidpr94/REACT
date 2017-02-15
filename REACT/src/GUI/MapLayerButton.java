@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,8 +18,7 @@ public class MapLayerButton {
 	}
 	public JButton getMapButton(){
 	  final JButton btnMapToggle = new JButton("Toggle Map Layer");
-	  btnMapToggle.setLocation(240,10);
-	  btnMapToggle.setSize(260,(int) (height/32));
+	  btnMapToggle.setPreferredSize(new Dimension(260,(int) (height/32)));
 	  btnMapToggle.setVisible(true);
 	  btnMapToggle.addActionListener(new ActionListener() {
 	      @Override
