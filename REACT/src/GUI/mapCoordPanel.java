@@ -26,7 +26,7 @@ public class mapCoordPanel {
 		coordTitle.setText("Map Coordinates");
 		coordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		coordTitle.setFont(new Font(coordTitle.getFont().getName(),Font.BOLD,16));
-		coordTitle.setPreferredSize(new Dimension(250,40));
+		//coordTitle.setPreferredSize(new Dimension(170,30));
 		coordTitle.setBackground(new Color(0,0,0,100));
 		coordTitle.setForeground(Color.WHITE);
 		coordTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -34,8 +34,8 @@ public class mapCoordPanel {
 		final JPanel coordPanel = new JPanel();
 		BoxLayout boxLayout2 = new BoxLayout(coordPanel, BoxLayout.Y_AXIS);
 		coordPanel.setLayout(boxLayout2);
-		coordPanel.setPreferredSize(new Dimension(250,80));
-		coordPanel.setLocation(240,height-coordPanel.getHeight()-60);
+		coordPanel.setPreferredSize(new Dimension(250,70));
+		//coordPanel.setLocation(240,height-coordPanel.getHeight()-60);
 		coordPanel.setBackground(new Color(0,0,0,100));
 		coordPanel.setBorder(new LineBorder(Color.BLACK,3));
 		coordPanel.add(coordTitle);
@@ -49,8 +49,9 @@ public class mapCoordPanel {
 		coordTxt.setLineWrap(true);
 		coordTxt.setWrapStyleWord(true);
 		coordTxt.setAlignmentX(SwingConstants.CENTER);
+		coordTxt.setAlignmentY(SwingConstants.CENTER);
 		coordTxt.setFont(new Font(coordTxt.getFont().getName(), coordTxt.getFont().getStyle(), 14));
-		coordTxt.setPreferredSize(new Dimension(250,40));
+		//coordTxt.setPreferredSize(new Dimension(170,30));
 		coordTxt.setBackground(new Color(0, 0, 0, 255));
 		coordTxt.setForeground(Color.WHITE);
 		coordTxt.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));

@@ -27,7 +27,7 @@ public class MapLayer {
 		txtTitle.setText("Map Layers");
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
-		txtTitle.setPreferredSize(new Dimension(260,30));
+		//txtTitle.setPreferredSize(new Dimension(260,30));
 		txtTitle.setBackground(new Color(0,0,0,100));
 		txtTitle.setForeground(Color.WHITE);
 		txtTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -36,7 +36,6 @@ public class MapLayer {
 		final JPanel controlPanel = new JPanel();
 		BoxLayout boxLayout1 = new BoxLayout(controlPanel, BoxLayout.Y_AXIS);
 		controlPanel.setLayout(boxLayout1);
-		//controlPanel.setLocation(240,15+(int) (height/32));
 		controlPanel.setPreferredSize(new Dimension(260,225));
 		controlPanel.setBackground(new Color(0,0,0,100));
 		controlPanel.setBorder(new LineBorder(Color.BLACK,3));

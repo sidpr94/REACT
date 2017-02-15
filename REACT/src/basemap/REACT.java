@@ -71,7 +71,7 @@ public class REACT {
 		//Title
 		JFrame window = new JFrame("REACT - Rapid Environmental Impact for Airport Calculation Tradeoff Environment");
 		//bounds of the frame (when not in full screen)
-		window.setBounds(0, 0, width,height);
+		window.setBounds(0, 10, width,height-60);
 		//Makes sure the app opens full screen
 		window.setExtendedState	(JFrame.MAXIMIZED_BOTH);
 		//What happens when the app is closed
