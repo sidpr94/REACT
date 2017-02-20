@@ -1,4 +1,4 @@
-package GUI;
+package action;
 
 import java.awt.event.MouseEvent;
 

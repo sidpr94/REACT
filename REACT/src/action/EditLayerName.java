@@ -1,4 +1,4 @@
-package GUI;
+package action;
 
 import javax.swing.SwingUtilities;
 

@@ -6,8 +6,8 @@ import com.esri.map.JMap;
 import com.esri.map.Layer;
 import com.esri.toolkit.JLayerList;
 
-import GUI.EditLayerName;
-import GUI.MouseMoveOverlay;
+import action.EditLayerName;
+import action.MouseMoveOverlay;
 
 public class CreateMap {
 	JMap jMap;
