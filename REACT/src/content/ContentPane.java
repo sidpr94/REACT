@@ -22,7 +22,7 @@ public class ContentPane {
 	public JPanel getContentPane(){
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0,0));
-		DashBoard dPanel = new DashBoard();
+		DashBoard dPanel = new DashBoard(jMap,jLayerList);
 		
 		MapPane mapPane = new MapPane(jMap,jLayerList,d);
 		

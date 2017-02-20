@@ -21,11 +21,20 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import com.esri.map.JMap;
+import com.esri.toolkit.JLayerList;
+
 import GUI.SwitchBox;
 import action.WhatIf;
 
 public class DashBoard {
+	JMap map;
+	JLayerList layerList;
 	public DashBoard(){}
+	public DashBoard(JMap jMap,JLayerList list){
+		this.map = jMap;
+		this.layerList = list;
+	}
 	public JPanel getDashboard(){
 		JPanel inputPane = new JPanel();
 		inputPane.setLayout(new GridBagLayout());
