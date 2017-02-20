@@ -44,6 +44,8 @@ public class LegendPanel {
 		
 		JTextField txtTitle = new JTextField();
 		txtTitle.setText("Legend");
+		txtTitle.setEnabled(false);
+		txtTitle.setEditable(false);
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
 		txtTitle.setBackground(new Color(0,0,0,100));
@@ -55,6 +57,7 @@ public class LegendPanel {
 		
 		JTextField ContourTitle = new JTextField();
 		ContourTitle.setText("Noise Contour");
+		ContourTitle.setEditable(false);
 		ContourTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		ContourTitle.setFont(new Font(ContourTitle.getFont().getName(),Font.BOLD,14));
 		ContourTitle.setBackground(Color.WHITE);
@@ -79,6 +82,7 @@ public class LegendPanel {
 
 			JTextField DNLDescription = new JTextField();
 			DNLDescription.setText(i+" DNL");
+			DNLDescription.setEditable(false);
 			DNLDescription.setHorizontalAlignment(SwingConstants.CENTER);
 			DNLDescription.setFont(new Font(DNLDescription.getFont().getName(),Font.PLAIN,14));
 			DNLDescription.setBackground(Color.WHITE);
@@ -90,6 +94,7 @@ public class LegendPanel {
 		
 		JTextField TrackTitle = new JTextField();
 		TrackTitle.setText("Flight Tracks");
+		TrackTitle.setEditable(false);
 		TrackTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		TrackTitle.setFont(new Font(TrackTitle.getFont().getName(),Font.BOLD,14));
 		TrackTitle.setBackground(Color.WHITE);
@@ -115,6 +120,7 @@ public class LegendPanel {
 
 			JTextField Description = new JTextField();
 			Description.setText(text);
+			Description.setEditable(false);
 			Description.setHorizontalAlignment(SwingConstants.CENTER);
 			Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,14));
 			Description.setBackground(Color.WHITE);
@@ -126,6 +132,7 @@ public class LegendPanel {
 		
 		JTextField PopTitle = new JTextField();
 		PopTitle.setText("2010 Population");
+		PopTitle.setEditable(false);
 		PopTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		PopTitle.setFont(new Font(PopTitle.getFont().getName(),Font.BOLD,14));
 		PopTitle.setBackground(Color.WHITE);
@@ -167,6 +174,7 @@ public class LegendPanel {
 
 			JTextField Description = new JTextField();
 			Description.setText(text);
+			Description.setEditable(false);
 			Description.setPreferredSize(e);
 			Description.setHorizontalAlignment(SwingConstants.CENTER);
 			Description.setFont(new Font(Description.getFont().getName(),Font.PLAIN,14));

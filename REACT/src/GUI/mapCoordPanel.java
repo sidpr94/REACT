@@ -24,6 +24,8 @@ public class mapCoordPanel {
 	public JPanel getCoordPanel(JTextArea coordTxt){
 		JTextField coordTitle = new JTextField();
 		coordTitle.setText("Map Coordinates");
+		coordTitle.setEditable(false);
+		coordTitle.setEnabled(false);
 		coordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		coordTitle.setFont(new Font(coordTitle.getFont().getName(),Font.BOLD,16));
 		//coordTitle.setPreferredSize(new Dimension(170,30));

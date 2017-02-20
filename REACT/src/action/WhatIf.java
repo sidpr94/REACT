@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
 import GUI.SwitchBox;
@@ -11,10 +12,12 @@ import GUI.SwitchBox;
 public class WhatIf implements MouseListener {
 	SwitchBox selet;
 	ArrayList<JToggleButton> list;
+	ButtonGroup group;
 	
-	public WhatIf(SwitchBox sbx, ArrayList<JToggleButton> list){
+	public WhatIf(SwitchBox sbx, ArrayList<JToggleButton> list, ButtonGroup group){
 		this.selet = sbx;
 		this.list = list;
+		this.group = group;
 	}
 
 	@Override
@@ -22,6 +25,7 @@ public class WhatIf implements MouseListener {
 		if(selet.isSelected()){
 			for(int i = 0; i < list.size(); i++){
 				list.get(i).setEnabled(false);
+				group.clearSelection();
 			}
 		}else{
 			for(int i = 0; i < list.size(); i++){

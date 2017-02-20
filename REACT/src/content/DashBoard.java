@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -44,6 +45,8 @@ public class DashBoard {
 
 		JTextField inputTitle = new JTextField();
 		inputTitle.setText("Dashboard");
+		inputTitle.setEditable(false);
+		inputTitle.setEnabled(false);
 		inputTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		inputTitle.setFont(new Font(inputTitle.getFont().getName(),Font.BOLD,14));
 		inputTitle.setPreferredSize(new Dimension(300,50));
@@ -53,6 +56,8 @@ public class DashBoard {
 
 		JTextField opForecastTitle = new JTextField();
 		opForecastTitle.setText("Operations Forecasting Scenarios");
+		opForecastTitle.setEditable(false);
+		opForecastTitle.setEnabled(false);
 		opForecastTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		opForecastTitle.setFont(new Font(opForecastTitle.getFont().getName(),Font.PLAIN,14));
 		opForecastTitle.setPreferredSize(new Dimension(300,65));
@@ -63,6 +68,8 @@ public class DashBoard {
 
 		JTextField popForecastTitle = new JTextField();
 		popForecastTitle.setText("Population Movement Scenarios");
+		popForecastTitle.setEnabled(false);
+		popForecastTitle.setEditable(false);
 		popForecastTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		popForecastTitle.setFont(new Font(popForecastTitle.getFont().getName(),Font.PLAIN,14));
 		popForecastTitle.setPreferredSize(new Dimension(300,50));
@@ -82,6 +89,8 @@ public class DashBoard {
 
 		JTextField WhatifTitle = new JTextField();
 		WhatifTitle.setText("What-If Scenarios");
+		WhatifTitle.setEnabled(false);
+		WhatifTitle.setEditable(false);
 		WhatifTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		WhatifTitle.setFont(new Font(WhatifTitle.getFont().getName(),Font.BOLD,14));
 		WhatifTitle.setPreferredSize(new Dimension(300,55));
@@ -130,11 +139,25 @@ public class DashBoard {
 		fleet.setFont(new Font(fleet.getFont().getName(),Font.BOLD,14));
 		fleet.setEnabled(false);
 		
-		ButtonGroup group = new ButtonGroup();
+		ButtonGroup group = new ButtonGroup(){
+			private static final long serialVersionUID = 1L;
+			public void setSelected(ButtonModel model, boolean selected) {
+				if (selected) {
+					super.setSelected(model, selected);
+				} else {
+					clearSelection();
+				}
+			}
+
+		};
 		group.add(runway);
+		buttonPanel.add(runway);
 		group.add(land);
+		buttonPanel.add(land);
 		group.add(track);
+		buttonPanel.add(track);
 		group.add(fleet);
+		buttonPanel.add(fleet);
 
 		ArrayList<JToggleButton> list = new ArrayList<>();
 		list.add(runway);
@@ -142,12 +165,7 @@ public class DashBoard {
 		list.add(track);
 		list.add(fleet);
 
-		sbx.addMouseListener(new WhatIf(sbx,list));
-
-		buttonPanel.add(list.get(0));
-		buttonPanel.add(list.get(1));
-		buttonPanel.add(list.get(2));
-		buttonPanel.add(list.get(3));
+		sbx.addMouseListener(new WhatIf(sbx,list,group));
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -218,7 +236,7 @@ public class DashBoard {
 		o.anchor = GridBagConstraints.PAGE_START;
 		o.weighty = 1;
 		o.gridx = 0;
-		o.gridy = 8;
+		o.gridy = 9;
 		inputPane.add(Box.createVerticalGlue(),o);
 
 		return inputPane;

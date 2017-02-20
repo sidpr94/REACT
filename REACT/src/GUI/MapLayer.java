@@ -25,6 +25,8 @@ public class MapLayer {
 		//Creates a text field for the title of the control panel
 		JTextField txtTitle = new JTextField();
 		txtTitle.setText("Map Layers");
+		txtTitle.setEnabled(false);
+		txtTitle.setEditable(false);
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
 		//txtTitle.setPreferredSize(new Dimension(260,30));
