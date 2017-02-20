@@ -17,10 +17,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import GUI.SwitchBox;
+import action.OnePressed;
 import action.WhatIf;
 
 public class DashBoard {
@@ -96,37 +98,41 @@ public class DashBoard {
 		});
 		buttonPanel.setBackground(new Color(0,0,0,100));
 		
-		JButton runway = new JButton("Runway Enhancement");
+		JToggleButton runway = new JToggleButton("Runway Enhancement");
 		runway.setPreferredSize(new Dimension(250,40));
 		runway.setHorizontalAlignment(SwingConstants.CENTER);
 		runway.setFont(new Font(runway.getFont().getName(),Font.BOLD,14));
 		runway.setEnabled(false);
 		
-		JButton land = new JButton("Land Zoning");
+		JToggleButton land = new JToggleButton("Land Zoning");
 		land.setPreferredSize(new Dimension(250,40));
 		land.setHorizontalAlignment(SwingConstants.CENTER);
 		land.setFont(new Font(land.getFont().getName(),Font.BOLD,14));
 		land.setEnabled(false);
 		
-		JButton track = new JButton("Track Flexibility");
+		JToggleButton track = new JToggleButton("Track Flexibility");
 		track.setPreferredSize(new Dimension(250,40));
 		track.setHorizontalAlignment(SwingConstants.CENTER);
 		track.setFont(new Font(track.getFont().getName(),Font.BOLD,14));
 		track.setEnabled(false);
 		
-		JButton fleet = new JButton("Fleet Technology");
+		JToggleButton fleet = new JToggleButton("Fleet Technology");
 		fleet.setPreferredSize(new Dimension(250,40));
 		fleet.setHorizontalAlignment(SwingConstants.CENTER);
 		fleet.setFont(new Font(fleet.getFont().getName(),Font.BOLD,14));
 		fleet.setEnabled(false);
 		
-		ArrayList<JButton> list = new ArrayList<>();
+		ArrayList<JToggleButton> list = new ArrayList<>();
 		list.add(runway);
 		list.add(land);
 		list.add(track);
 		list.add(fleet);
 		
 		sbx.addMouseListener(new WhatIf(sbx,list));
+		runway.addMouseListener(new OnePressed(list));
+		land.addMouseListener(new OnePressed(list));
+		fleet.addMouseListener(new OnePressed(list));
+		track.addMouseListener(new OnePressed(list));
 		
 		buttonPanel.add(runway);
 		buttonPanel.add(land);

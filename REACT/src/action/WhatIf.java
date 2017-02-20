@@ -5,33 +5,17 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
 import GUI.SwitchBox;
 
 public class WhatIf implements MouseListener {
 	SwitchBox selet;
-	ArrayList<JButton> list;
+	ArrayList<JToggleButton> list;
 	
-	public WhatIf(SwitchBox sbx, ArrayList<JButton> list){
+	public WhatIf(SwitchBox sbx, ArrayList<JToggleButton> list){
 		this.selet = sbx;
 		this.list = list;
-	}
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -49,6 +33,24 @@ public class WhatIf implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
