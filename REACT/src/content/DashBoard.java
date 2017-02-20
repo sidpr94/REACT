@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import GUI.SwitchBox;
-import action.OnePressed;
 import action.WhatIf;
 
 public class DashBoard {
@@ -33,7 +32,7 @@ public class DashBoard {
 		inputPane.setBackground(new Color(0,0,0,100));
 		inputPane.setDoubleBuffered(true);
 		inputPane.setBorder(new LineBorder(Color.BLACK, 5, false));
-		
+
 		JTextField inputTitle = new JTextField();
 		inputTitle.setText("Dashboard");
 		inputTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,7 +82,7 @@ public class DashBoard {
 		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));
 
 		SwitchBox sbx = new SwitchBox("On","Off");
-		
+
 		final JPanel buttonPanel = new JPanel(new GridLayout(4,1){
 			/**
 			 * 
@@ -97,48 +96,50 @@ public class DashBoard {
 			}
 		});
 		buttonPanel.setBackground(new Color(0,0,0,100));
-		
+
 		JToggleButton runway = new JToggleButton("Runway Enhancement");
 		runway.setPreferredSize(new Dimension(250,40));
 		runway.setHorizontalAlignment(SwingConstants.CENTER);
 		runway.setFont(new Font(runway.getFont().getName(),Font.BOLD,14));
 		runway.setEnabled(false);
-		
+
 		JToggleButton land = new JToggleButton("Land Zoning");
 		land.setPreferredSize(new Dimension(250,40));
 		land.setHorizontalAlignment(SwingConstants.CENTER);
 		land.setFont(new Font(land.getFont().getName(),Font.BOLD,14));
 		land.setEnabled(false);
-		
+
 		JToggleButton track = new JToggleButton("Track Flexibility");
 		track.setPreferredSize(new Dimension(250,40));
 		track.setHorizontalAlignment(SwingConstants.CENTER);
 		track.setFont(new Font(track.getFont().getName(),Font.BOLD,14));
 		track.setEnabled(false);
-		
+
 		JToggleButton fleet = new JToggleButton("Fleet Technology");
 		fleet.setPreferredSize(new Dimension(250,40));
 		fleet.setHorizontalAlignment(SwingConstants.CENTER);
 		fleet.setFont(new Font(fleet.getFont().getName(),Font.BOLD,14));
 		fleet.setEnabled(false);
 		
+		ButtonGroup group = new ButtonGroup();
+		group.add(runway);
+		group.add(land);
+		group.add(track);
+		group.add(fleet);
+
 		ArrayList<JToggleButton> list = new ArrayList<>();
 		list.add(runway);
 		list.add(land);
 		list.add(track);
 		list.add(fleet);
-		
+
 		sbx.addMouseListener(new WhatIf(sbx,list));
-		runway.addMouseListener(new OnePressed(list));
-		land.addMouseListener(new OnePressed(list));
-		fleet.addMouseListener(new OnePressed(list));
-		track.addMouseListener(new OnePressed(list));
-		
-		buttonPanel.add(runway);
-		buttonPanel.add(land);
-		buttonPanel.add(track);
-		buttonPanel.add(fleet);
-		
+
+		buttonPanel.add(list.get(0));
+		buttonPanel.add(list.get(1));
+		buttonPanel.add(list.get(2));
+		buttonPanel.add(list.get(3));
+
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -146,7 +147,7 @@ public class DashBoard {
 		c.gridx = 0;
 		c.gridy = 0;
 		inputPane.add(inputTitle, c);
-		
+
 		GridBagConstraints d = new GridBagConstraints();
 		d.fill = GridBagConstraints.HORIZONTAL;
 		d.anchor = GridBagConstraints.PAGE_START;
@@ -154,7 +155,7 @@ public class DashBoard {
 		d.gridx = 0;
 		d.gridy = 1;
 		inputPane.add(popForecastTitle, d);
-		
+
 		GridBagConstraints e = new GridBagConstraints();
 		e.fill = GridBagConstraints.HORIZONTAL;
 		e.anchor = GridBagConstraints.PAGE_START;
@@ -162,7 +163,7 @@ public class DashBoard {
 		e.gridx = 0;
 		e.gridy = 2;
 		inputPane.add(popForecast, e);
-		
+
 		GridBagConstraints f = new GridBagConstraints();
 		f.fill = GridBagConstraints.HORIZONTAL;
 		f.anchor = GridBagConstraints.PAGE_START;
@@ -170,7 +171,7 @@ public class DashBoard {
 		f.gridx = 0;
 		f.gridy = 3;
 		inputPane.add(opForecastTitle, f);
-		
+
 		GridBagConstraints g = new GridBagConstraints();
 		g.fill = GridBagConstraints.HORIZONTAL;
 		g.anchor = GridBagConstraints.PAGE_START;
@@ -178,7 +179,7 @@ public class DashBoard {
 		g.gridx = 0;
 		g.gridy = 4;
 		inputPane.add(opForecast, g);
-		
+
 		GridBagConstraints h = new GridBagConstraints();
 		h.fill = GridBagConstraints.HORIZONTAL;
 		h.anchor = GridBagConstraints.PAGE_START;
@@ -186,7 +187,7 @@ public class DashBoard {
 		h.gridx = 0;
 		h.gridy = 5;
 		inputPane.add(WhatifTitle, h);
-		
+
 		GridBagConstraints i = new GridBagConstraints();
 		i.fill = GridBagConstraints.HORIZONTAL;
 		i.anchor = GridBagConstraints.PAGE_START;
