@@ -26,6 +26,7 @@ import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
 import GUI.SwitchBox;
+import action.PressedActionRunway;
 import action.WhatIf;
 
 public class DashBoard {
@@ -230,6 +231,8 @@ public class DashBoard {
 		k.gridx = 0;
 		k.gridy = 7;
 		inputPane.add(buttonPanel, k);
+		
+		runway.addActionListener(new PressedActionRunway(inputPane, runway));
 
 		GridBagConstraints o = new GridBagConstraints();
 		o.fill = GridBagConstraints.HORIZONTAL;
