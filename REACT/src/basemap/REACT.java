@@ -69,7 +69,7 @@ public class REACT {
 	//creates the literal window for this app
 	private JFrame createWindow() {
 		//Title
-		JFrame window = new JFrame("REACT - Rapid Environmental Impact for Airport Calculation Tradeoff Environment");
+		JFrame window = new JFrame("REACT - Rapid Environmental Impact on Airport Community Tradeoff Environment");
 		//bounds of the frame (when not in full screen)
 		window.setBounds(0, 10, width,height-60);
 		//Makes sure the app opens full screen

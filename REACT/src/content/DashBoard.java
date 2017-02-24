@@ -26,7 +26,7 @@ import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
 import GUI.SwitchBox;
-import action.PressedActionRunway;
+import action.PressedAction;
 import action.WhatIf;
 
 public class DashBoard {
@@ -103,9 +103,6 @@ public class DashBoard {
 		SwitchBox sbx = new SwitchBox("On","Off");
 
 		final JPanel buttonPanel = new JPanel(new GridLayout(4,1){
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			public Dimension preferredLayoutSize(Container target){
@@ -167,7 +164,11 @@ public class DashBoard {
 		list.add(fleet);
 
 		sbx.addMouseListener(new WhatIf(sbx,list,group));
-
+		runway.addMouseListener(new PressedAction(inputPane,list));
+		land.addMouseListener(new PressedAction(inputPane,list));
+		track.addMouseListener(new PressedAction(inputPane,list));
+		fleet.addMouseListener(new PressedAction(inputPane,list));
+		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -232,7 +233,17 @@ public class DashBoard {
 		k.gridy = 7;
 		inputPane.add(buttonPanel, k);
 		
-		runway.addActionListener(new PressedActionRunway(inputPane, runway));
+		GridBagConstraints l = new GridBagConstraints();
+		l.fill = GridBagConstraints.HORIZONTAL;
+		l.gridx = 0;
+		l.gridy = 8;
+		l.weighty = 0;
+		l.anchor = GridBagConstraints.PAGE_START;
+		RunwayEnhancement runIn = new RunwayEnhancement();
+		JPanel runEnh = runIn.getRun();
+		inputPane.add(runEnh,l);
+		inputPane.getComponent(8).setVisible(false);
+		inputPane.revalidate();
 
 		GridBagConstraints o = new GridBagConstraints();
 		o.fill = GridBagConstraints.HORIZONTAL;
@@ -241,7 +252,7 @@ public class DashBoard {
 		o.gridx = 0;
 		o.gridy = 9;
 		inputPane.add(Box.createVerticalGlue(),o);
-
+		
 		return inputPane;
 	}
 }
