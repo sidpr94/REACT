@@ -1,33 +1,31 @@
 package content;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
-import GUI.SwitchBox;
-import action.PressedAction;
-import action.WhatIf;
+import scenarioDev.DensityControl;
+import scenarioDev.FleetTechnology;
+import scenarioDev.RunwayEnhancement;
+import scenarioDev.TrackFlexibility;
 
 public class DashBoard {
 	JMap map;
@@ -89,7 +87,7 @@ public class DashBoard {
 		popForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2010 Year", "2020 Year","2030 Year"}));
 
 		JTextField WhatifTitle = new JTextField();
-		WhatifTitle.setText("What-If Scenarios");
+		WhatifTitle.setText("Scenario Development");
 		WhatifTitle.setEnabled(false);
 		WhatifTitle.setEditable(false);
 		WhatifTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,75 +97,21 @@ public class DashBoard {
 		WhatifTitle.setForeground(Color.WHITE);
 		WhatifTitle.setEnabled(false);
 		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));
-
-		SwitchBox sbx = new SwitchBox("On","Off");
-
-		final JPanel buttonPanel = new JPanel(new GridLayout(4,1){
-			private static final long serialVersionUID = 1L;
-
-			public Dimension preferredLayoutSize(Container target){
-				Dimension sd = super.preferredLayoutSize(target);
-				sd.width = 250;
-				return sd;
-			}
-		});
-		buttonPanel.setBackground(new Color(0,0,0,100));
-
-		JToggleButton runway = new JToggleButton("Runway Enhancement");
-		runway.setPreferredSize(new Dimension(250,40));
-		runway.setHorizontalAlignment(SwingConstants.CENTER);
-		runway.setFont(new Font(runway.getFont().getName(),Font.BOLD,14));
-		runway.setEnabled(false);
-
-		JToggleButton land = new JToggleButton("Land Zoning");
-		land.setPreferredSize(new Dimension(250,40));
-		land.setHorizontalAlignment(SwingConstants.CENTER);
-		land.setFont(new Font(land.getFont().getName(),Font.BOLD,14));
-		land.setEnabled(false);
-
-		JToggleButton track = new JToggleButton("Track Flexibility");
-		track.setPreferredSize(new Dimension(250,40));
-		track.setHorizontalAlignment(SwingConstants.CENTER);
-		track.setFont(new Font(track.getFont().getName(),Font.BOLD,14));
-		track.setEnabled(false);
-
-		JToggleButton fleet = new JToggleButton("Fleet Technology");
-		fleet.setPreferredSize(new Dimension(250,40));
-		fleet.setHorizontalAlignment(SwingConstants.CENTER);
-		fleet.setFont(new Font(fleet.getFont().getName(),Font.BOLD,14));
-		fleet.setEnabled(false);
 		
-		ButtonGroup group = new ButtonGroup(){
-			private static final long serialVersionUID = 1L;
-			public void setSelected(ButtonModel model, boolean selected) {
-				if (selected) {
-					super.setSelected(model, selected);
-				} else {
-					clearSelection();
-				}
-			}
-
-		};
-		group.add(runway);
-		buttonPanel.add(runway);
-		group.add(land);
-		buttonPanel.add(land);
-		group.add(track);
-		buttonPanel.add(track);
-		group.add(fleet);
-		buttonPanel.add(fleet);
-
-		ArrayList<JToggleButton> list = new ArrayList<>();
-		list.add(runway);
-		list.add(land);
-		list.add(track);
-		list.add(fleet);
-
-		sbx.addMouseListener(new WhatIf(sbx,list,group));
-		runway.addMouseListener(new PressedAction(inputPane,list));
-		land.addMouseListener(new PressedAction(inputPane,list));
-		track.addMouseListener(new PressedAction(inputPane,list));
-		fleet.addMouseListener(new PressedAction(inputPane,list));
+		RunwayEnhancement run = new RunwayEnhancement();
+		DensityControl land = new DensityControl();
+		TrackFlexibility track = new TrackFlexibility();
+		FleetTechnology fleet = new FleetTechnology();
+		
+		ScenarioPane sPane = new ScenarioPane(run.getRun(),land.getDensity(),track.getTrack(),fleet.getFleet());
+		JTabbedPane sP = sPane.createScenarioPane();
+		
+		JButton calculate = new JButton();
+		calculate.setText("Calculate Noise");
+		calculate.setPreferredSize(new Dimension(300,60));
+		calculate.setHorizontalAlignment(SwingConstants.CENTER);
+		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
+		
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -223,35 +167,30 @@ public class DashBoard {
 		i.weighty = 0;
 		i.gridx = 0;
 		i.gridy = 6;
-		inputPane.add(sbx, i);
-
-		GridBagConstraints k = new GridBagConstraints();
-		k.fill = GridBagConstraints.HORIZONTAL;
-		k.anchor = GridBagConstraints.PAGE_START;
-		k.weighty = 0;
-		k.gridx = 0;
-		k.gridy = 7;
-		inputPane.add(buttonPanel, k);
+		JPanel hidePane = new JPanel();
+		hidePane.setLayout(new BoxLayout(hidePane, BoxLayout.Y_AXIS));
+		hidePane.setBackground(new Color(0,0,0,100));
+		hidePane.setDoubleBuffered(true);
+		hidePane.setBorder(new LineBorder(Color.BLACK, 1, false));
+		//hidePane.add(sbx);
+		hidePane.add(sP);
+		inputPane.add(hidePane, i);
 		
-		GridBagConstraints l = new GridBagConstraints();
-		l.fill = GridBagConstraints.HORIZONTAL;
-		l.gridx = 0;
-		l.gridy = 8;
-		l.weighty = 0;
-		l.anchor = GridBagConstraints.PAGE_START;
-		RunwayEnhancement runIn = new RunwayEnhancement();
-		JPanel runEnh = runIn.getRun();
-		inputPane.add(runEnh,l);
-		inputPane.getComponent(8).setVisible(false);
-		inputPane.revalidate();
+		GridBagConstraints r = new GridBagConstraints();
+		r.fill = GridBagConstraints.HORIZONTAL;
+		r.anchor = GridBagConstraints.PAGE_START;
+		r.weighty = 1;
+		r.gridx = 0;
+		r.gridy = 7;
 
 		GridBagConstraints o = new GridBagConstraints();
 		o.fill = GridBagConstraints.HORIZONTAL;
 		o.anchor = GridBagConstraints.PAGE_START;
 		o.weighty = 1;
 		o.gridx = 0;
-		o.gridy = 9;
-		inputPane.add(Box.createVerticalGlue(),o);
+		o.gridy = 8;
+		inputPane.add(Box.createVerticalGlue(),r);
+		//inputPane.add(calculate, o);
 		
 		return inputPane;
 	}

@@ -1,4 +1,4 @@
-package content;
+package scenarioDev;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,12 +23,12 @@ public class RunwayEnhancement {
 		GridLayout gridLayout = new GridLayout(7,1);
 		gridLayout.setVgap(3);
 		runInputs.setLayout(gridLayout);
-		runInputs.setBorder(BorderFactory.createMatteBorder(3,0,3,0,Color.BLACK));
+		runInputs.setBorder(BorderFactory.createEmptyBorder());
 		
 		JTextField rnEnh = new JTextField();
 		rnEnh.setBackground(new Color(0,0,0,100));
-		rnEnh.setPreferredSize(new Dimension(250,40));
-		rnEnh.setFont(new Font(rnEnh.getFont().getName(),Font.BOLD,14));
+		rnEnh.setPreferredSize(new Dimension(250,30));
+		rnEnh.setFont(new Font(rnEnh.getFont().getName(),Font.BOLD,12));
 		rnEnh.setText("Runway Enhancement");
 		rnEnh.setHorizontalAlignment(SwingConstants.CENTER);
 		rnEnh.setBorder(BorderFactory.createMatteBorder(0, 0,3,0,Color.BLACK));
@@ -39,14 +39,14 @@ public class RunwayEnhancement {
 		JTextField rnName = new JTextField();
 		rnName.setBackground(new Color(0,0,0,100));
 		rnName.setText("Runway Name:");
-		rnName.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		rnName.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		rnName.setEditable(false);
 		rnName.setEnabled(false);
 		rnName.setBorder(BorderFactory.createEmptyBorder());
 		runInputs.add(rnName);
 		
 		JTextField runName = new JTextField();
-		runName.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		runName.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		runInputs.add(runName);
 		
 		JPanel runSt = new JPanel();
@@ -59,7 +59,7 @@ public class RunwayEnhancement {
 		JTextField rnStrtLt = new JTextField();
 		rnStrtLt.setBackground(new Color(0,0,0,100));
 		rnStrtLt.setText("Runway Start Lat:");
-		rnStrtLt.setFont(new Font(rnStrtLt.getFont().getName(),Font.PLAIN,14));
+		rnStrtLt.setFont(new Font(rnStrtLt.getFont().getName(),Font.PLAIN,12));
 		rnStrtLt.setEditable(false);
 		rnStrtLt.setEnabled(false);
 		runSt.add(rnStrtLt);
@@ -67,7 +67,7 @@ public class RunwayEnhancement {
 		JTextField rnStrtLng = new JTextField();
 		rnStrtLng.setBackground(new Color(0,0,0,100));
 		rnStrtLng.setText("Runway Start Long:");
-		rnStrtLng.setFont(new Font(rnStrtLng.getFont().getName(),Font.PLAIN,14));
+		rnStrtLng.setFont(new Font(rnStrtLng.getFont().getName(),Font.PLAIN,12));
 		rnStrtLng.setEditable(false);
 		rnStrtLng.setEnabled(false);
 		runSt.add(rnStrtLng);
@@ -82,11 +82,11 @@ public class RunwayEnhancement {
 		runStTxt.setLayout(gridLayoutStTxt);
 		
 		JFormattedTextField runStartLat = new JFormattedTextField(NumberFormat.getNumberInstance());
-		runStartLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		runStartLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		runStTxt.add(runStartLat);
 		
 		JFormattedTextField runStartLong = new JFormattedTextField(NumberFormat.getNumberInstance());
-		runStartLong.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		runStartLong.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		runStTxt.add(runStartLong);
 		
 		runInputs.add(runStTxt);
@@ -101,14 +101,14 @@ public class RunwayEnhancement {
 		JTextField rnEdLt = new JTextField();
 		rnEdLt.setBackground(new Color(0,0,0,100));
 		rnEdLt.setText("Length (ft)");
-		rnEdLt.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		rnEdLt.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		rnEdLt.setEditable(false);
 		rnEdLt.setEnabled(false);
 		runEd.add(rnEdLt);
 		
 		JTextField rnEdLng = new JTextField();
 		rnEdLng.setBackground(new Color(0,0,0,100));
-		rnEdLng.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		rnEdLng.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		rnEdLng.setText("Heading (degs)");
 		rnEdLng.setEditable(false);
 		rnEdLng.setEnabled(false);
@@ -124,11 +124,11 @@ public class RunwayEnhancement {
 		runEdTxt.setLayout(gridLayoutEdTxt);
 		
 		JFormattedTextField runEndLat = new JFormattedTextField(NumberFormat.getNumberInstance());
-		runEndLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		runEndLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		runEdTxt.add(runEndLat);
 		
 		JFormattedTextField runEndLong = new JFormattedTextField(NumberFormat.getNumberInstance());
-		runEndLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,14));
+		runEndLat.setFont(new Font(rnName.getFont().getName(),Font.PLAIN,12));
 		runEdTxt.add(runEndLong);
 		
 		runInputs.add(runEdTxt);

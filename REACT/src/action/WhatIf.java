@@ -2,34 +2,30 @@ package action;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JToggleButton;
+import javax.swing.JTabbedPane;
 
 import GUI.SwitchBox;
 
 public class WhatIf implements MouseListener {
 	SwitchBox selet;
-	ArrayList<JToggleButton> list;
-	ButtonGroup group;
-	
-	public WhatIf(SwitchBox sbx, ArrayList<JToggleButton> list, ButtonGroup group){
+	JTabbedPane sPane;
+	public WhatIf(SwitchBox sbx,JTabbedPane s){
 		this.selet = sbx;
-		this.list = list;
-		this.group = group;
+		this.sPane = s;
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		if(selet.isSelected()){
-			for(int i = 0; i < list.size(); i++){
-				list.get(i).setEnabled(false);
-				group.clearSelection();
+			sPane.setEnabled(false);
+			for(int i = 0; i < sPane.getComponentCount();i++){
+				sPane.getComponent(i).setEnabled(false);
 			}
 		}else{
-			for(int i = 0; i < list.size(); i++){
-				list.get(i).setEnabled(true);
+			sPane.setEnabled(true);
+			for(int i = 0; i < sPane.getComponentCount();i++){
+				sPane.getComponent(i).setEnabled(false);
 			}
 		}
 	}
