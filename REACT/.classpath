@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/apache-mime4j.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/ArcGIS_Runtime_Java.jar" sourcepath="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/ArcGIS_Runtime_Java.jar" sourcepath="C:/Program Files (x86)/ArcGIS SDKs"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/ArcGIS_Runtime_Java_Toolkit.jar" sourcepath="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/ArcGIS_Runtime_Java_Toolkit-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/ArcGIS_Runtime_Java_Toolkit-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/commons-codec.jar"/>

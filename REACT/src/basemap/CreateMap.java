@@ -2,11 +2,14 @@ package basemap;
 
 import javax.swing.JTextArea;
 
+import com.esri.map.FeatureLayer;
 import com.esri.map.JMap;
 import com.esri.map.Layer;
 import com.esri.toolkit.JLayerList;
+import com.esri.toolkit.overlays.HitTestOverlay;
 
 import action.EditLayerName;
+import action.InfoOverlay;
 import action.MouseMoveOverlay;
 
 public class CreateMap {
@@ -37,6 +40,9 @@ public class CreateMap {
 		tracks.addLayerInitializeCompleteListener(new EditLayerName(jMap, jLayerList));
 		noise.addLayerInitializeCompleteListener(new EditLayerName(jMap, jLayerList));
 		runway.addLayerInitializeCompleteListener(new EditLayerName(jMap, jLayerList));
+		HitTestOverlay hitTestOverlay = new HitTestOverlay((FeatureLayer) pop);
+		hitTestOverlay.addHitTestListener(new InfoOverlay((FeatureLayer) pop, jMap));
+		jMap.addMapOverlay(hitTestOverlay);
 		return jMap;
 	}
 }
