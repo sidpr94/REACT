@@ -4,6 +4,7 @@ import javax.swing.JComponent;
 
 import com.esri.core.map.Feature;
 import com.esri.map.FeatureLayer;
+import com.esri.map.GraphicsLayer;
 import com.esri.map.JMap;
 import com.esri.map.popup.PopupDialog;
 import com.esri.map.popup.PopupView;
@@ -16,6 +17,7 @@ import com.esri.toolkit.overlays.HitTestOverlay;
 public class InfoOverlay implements HitTestListener{
 	HitTestOverlay overlay;
 	FeatureLayer layer;
+	GraphicsLayer gLayer;
 	JMap jMap;
 	public InfoOverlay(FeatureLayer featureLayer, JMap map) {
 		this.layer = featureLayer;	
@@ -28,7 +30,7 @@ public class InfoOverlay implements HitTestListener{
 		Feature hitGraphic = overlay.getHitFeatures().get(0);
 		// create a popup in edit view
 		PopupView contentPanel = PopupView.createEditView("Edit Attributes",layer);
-		// you can optionally set a preferred size for the PopupView
+		// you can optionally set a preferred size for the sPopupView
 		//contentPanel.setPreferredSize(new Dimension(300, 300));
 		contentPanel.setFeature(jMap, hitGraphic);
 		final PopupDialog popup = jMap.createPopup(new JComponent[]{contentPanel}, hitGraphic);

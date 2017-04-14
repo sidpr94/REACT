@@ -1,33 +1,38 @@
 package basemap;
 //This class creates the population map from the shape file
 import java.awt.Color;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.net.URL;
+import java.util.List;
 
-import com.esri.core.geodatabase.Geodatabase;
-import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.map.Feature;
+import com.esri.core.map.Graphic;
 import com.esri.core.renderer.ClassBreaksRenderer;
+import com.esri.core.symbol.CompositeSymbol;
 import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
-import com.esri.core.table.FeatureTable;
-import com.esri.core.table.TableException;
-import com.esri.map.FeatureLayer;
+import com.esri.map.GraphicsLayer;
 
 public class PopMap {
-	private Geodatabase POP10shapefile;
-	private FeatureTable POP10shape;
-	private FeatureLayer POP10Layer;
 	public PopMap(){};
-	public FeatureLayer createPopMap(){
-		try {
-			//captures the relative path for the shape file within Files
-			URL url = PopMap.class.getClassLoader().getResource("Files/arcgis.geodatabase");
-			//creates the feature table
-			POP10shapefile = new Geodatabase(url.getPath().replace("/", "\\").substring(1));
-			//creates the layer
-			POP10Layer = new FeatureLayer(POP10shapefile.getGeodatabaseFeatureTableByLayerId(0));
-			//adds color to the layer
+	public void createPopMap(GraphicsLayer layer){
+		try{
+			GeoJsonParser geoJsonParser = new GeoJsonParser();
+			URL url = this.getClass().getClassLoader().getResource("Files/Geojson/BlocksAirportBoundary.geojson");
+			File PopMap = new File(url.getPath());
+			List<Feature> features = geoJsonParser.parseFeatures(PopMap);
+			for(Feature f : features){
+				layer.addGraphic(new Graphic(f.getGeometry(),null,f.getAttributes()));
+			}
+			URL url1 = this.getClass().getClassLoader().getResource("Files/Geojson/AirportBoundary.geojson");
+			File AirportBoundary = new File(url1.getPath());
+			List<Feature> features1 = geoJsonParser.parseFeatures(AirportBoundary);
+			for(Feature f : features1){
+				CompositeSymbol symbol = new CompositeSymbol();
+				symbol.add(new SimpleFillSymbol(new Color(255, 0, 0,50)));
+				symbol.add(new SimpleLineSymbol(Color.BLACK, 3));
+				layer.addGraphic(new Graphic(f.getGeometry(),symbol,f.getAttributes()));
+			}
 			ClassBreaksRenderer cbrenderer = new ClassBreaksRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,1)),"POP10");
 			cbrenderer.addBreak(0,14,new SimpleFillSymbol(Color.getHSBColor(0, 0, 1),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
 			cbrenderer.addBreak(15,47,new SimpleFillSymbol(Color.getHSBColor(0, 0, 0.83f),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
@@ -36,11 +41,10 @@ public class PopMap {
 			cbrenderer.addBreak(236,488,new SimpleFillSymbol(Color.getHSBColor(0, 0, 0.33f),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
 			cbrenderer.addBreak(489,1130,new SimpleFillSymbol(Color.getHSBColor(0, 0, 0.16f),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
 			cbrenderer.addBreak(1131,2362,new SimpleFillSymbol(Color.getHSBColor(0, 0, 0),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));
-			POP10Layer.setRenderer(cbrenderer);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch 
-			e.printStackTrace();
+			layer.setRenderer(cbrenderer);
+			layer.setName("Population Near Airport");
+		}catch (Exception ex) {
+			throw new RuntimeException(ex);
 		}
-		return POP10Layer;
-		}
+	}
 }

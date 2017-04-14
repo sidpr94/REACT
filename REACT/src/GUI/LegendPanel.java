@@ -26,7 +26,7 @@ public class LegendPanel {
 	};
 	//creates the final legend calling the get methods
 	public JPanel getLegend(){
-		final JPanel legendPanel = new JPanel(new GridLayout(16,1){
+		final JPanel legendPanel = new JPanel(new GridLayout(17,1){
 			/**
 			 * 
 			 */
@@ -39,7 +39,7 @@ public class LegendPanel {
 			}
 		});
 		legendPanel.setBorder(new LineBorder(Color.BLACK,5,false));
-		legendPanel.setBackground(new Color(0,0,0,100));
+		legendPanel.setOpaque(false);
 		legendPanel.setEnabled(false);
 		
 		JTextField txtTitle = new JTextField();
@@ -48,12 +48,32 @@ public class LegendPanel {
 		txtTitle.setEditable(false);
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
-		txtTitle.setBackground(new Color(0,0,0,100));
-		txtTitle.setForeground(Color.WHITE);
+		txtTitle.setBackground(new Color(38,38,38));
+		txtTitle.setDisabledTextColor(Color.WHITE);
 		txtTitle.setEnabled(false);
 		txtTitle.setHighlighter(null);
 		txtTitle.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.BLACK));
 		legendPanel.add(txtTitle);
+		
+		JPanel airports = new JPanel();
+		airports.setLayout(new GridLayout(1,2));
+		
+		JTextField airport = new JTextField();
+		airport.setText("Airport Boundary");
+		airport.setEditable(false);
+		airport.setHorizontalAlignment(SwingConstants.CENTER);
+		airport.setFont(new Font(airport.getFont().getName(),Font.PLAIN,14));
+		airport.setBackground(Color.WHITE);
+		airport.setForeground(Color.BLACK);
+		airport.setBorder(BorderFactory.createEmptyBorder());
+		
+		JPanel airportColor = new JPanel();
+		airportColor.setBackground(new Color(255,0,0,50));
+		airportColor.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+		airports.add(airportColor);
+		airports.add(airport);
+		
+		legendPanel.add(airports);
 		
 		JTextField ContourTitle = new JTextField();
 		ContourTitle.setText("Noise Contour");

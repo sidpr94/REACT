@@ -4,21 +4,22 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.net.URL;
 
-import com.esri.core.geodatabase.ShapefileFeatureTable;
+import com.esri.core.geodatabase.Geodatabase;
 import com.esri.core.renderer.UniqueValueInfo;
 import com.esri.core.renderer.UniqueValueRenderer;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.FeatureLayer;
 
 public class Tracks {
-	private ShapefileFeatureTable Trackshapefile;
+	private Geodatabase Trackshape;
 	private FeatureLayer TrackLayer;
 	public Tracks(){};
 	public FeatureLayer createTracks(){
 		try {
-			URL url = Tracks.class.getClassLoader().getResource("Files/Tracks.shp");
-			Trackshapefile = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
-			TrackLayer = new FeatureLayer(Trackshapefile);
+			URL url = this.getClass().getClassLoader().getResource("Files/Shapefiles/Track.geodatabase");
+			Trackshape = new Geodatabase(url.getPath().replace("/", "\\").substring(1));
+			//creates the layer
+			TrackLayer = new FeatureLayer(Trackshape.getGeodatabaseFeatureTableByLayerId(0));
 			UniqueValueRenderer uvrenderer = new UniqueValueRenderer(new SimpleLineSymbol(Color.BLACK,2), "Operation_");
 			uvrenderer.addValue(new UniqueValueInfo(new Object[] {"Approach"}, new SimpleLineSymbol(Color.BLUE,2)));
 			uvrenderer.addValue(new UniqueValueInfo(new Object[] {"Departure"}, new SimpleLineSymbol(Color.ORANGE,2)));
@@ -28,5 +29,5 @@ public class Tracks {
 			e.printStackTrace();
 		}
 		return TrackLayer;
-		}
+	}
 }

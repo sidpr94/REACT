@@ -30,17 +30,17 @@ public class MapLayer {
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
 		//txtTitle.setPreferredSize(new Dimension(260,30));
-		txtTitle.setBackground(new Color(0,0,0,100));
-		txtTitle.setForeground(Color.WHITE);
+		txtTitle.setBackground(new Color(38,38,38));
+		txtTitle.setDisabledTextColor(Color.WHITE);
 		txtTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
 
 		//creates the control panel of the proper size and background to visualize the layers in
 		final JPanel controlPanel = new JPanel();
 		BoxLayout boxLayout1 = new BoxLayout(controlPanel, BoxLayout.Y_AXIS);
 		controlPanel.setLayout(boxLayout1);
-		controlPanel.setPreferredSize(new Dimension(260,225));
-		controlPanel.setBackground(new Color(0,0,0,100));
-		controlPanel.setBorder(new LineBorder(Color.BLACK,3));
+		controlPanel.setPreferredSize(new Dimension(265,270));
+		controlPanel.setOpaque(false);
+		controlPanel.setBorder(new LineBorder(Color.BLACK,5));
 		controlPanel.add(txtTitle);
 		controlPanel.add(jLayerlist);
 		return controlPanel;

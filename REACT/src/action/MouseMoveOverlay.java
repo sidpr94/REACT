@@ -15,21 +15,20 @@ public class MouseMoveOverlay extends MapOverlay {
 		this.jMap = map;
 		this.coordTxt = txt;
 	}
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public void onMouseMoved(MouseEvent arg0) {
-      try {
-        if (!jMap.isReady()) {
-          return;
-        }
-        java.awt.Point screenPoint = arg0.getPoint();
-        com.esri.core.geometry.Point mapPoint = jMap.toMapPoint(screenPoint.x, screenPoint.y);
-        String decimalDegrees = "Decimal Degrees: " 
-            + CoordinateConversion.pointToDecimalDegrees(mapPoint, jMap.getSpatialReference(), 2);
-        coordTxt.setText(decimalDegrees);
-
-      } finally {
-        super.onMouseMoved(arg0);
-      }
-    }
-  }
+	public void onMouseMoved(MouseEvent arg0) {
+		try {
+			if (!jMap.isReady()) {
+				return;
+			}
+			java.awt.Point screenPoint = arg0.getPoint();
+			com.esri.core.geometry.Point mapPoint = jMap.toMapPoint(screenPoint.x, screenPoint.y);
+			String decimalDegrees = "Decimal Degrees: " 
+					+ CoordinateConversion.pointToDecimalDegrees(mapPoint, jMap.getSpatialReference(), 2);
+			coordTxt.setText(decimalDegrees);
+		} finally {
+			super.onMouseMoved(arg0);
+		}
+	}
+}

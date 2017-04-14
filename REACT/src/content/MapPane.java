@@ -1,6 +1,7 @@
 package content;
 
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -22,7 +23,7 @@ public class MapPane {
 		this.jLayerList = list;
 		this.d = screen;
 	}
-	public JPanel getmapPane(){
+	public JPanel getmapPane() throws IOException{
 		JPanel mapPane = new JPanel();
 		mapPane.setLayout(new OverlayLayout(mapPane));
 		mapCoordPanel mPanel = new mapCoordPanel(d.width,d.height);

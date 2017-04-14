@@ -18,7 +18,7 @@ public class MapLayerButton {
 	}
 	public JButton getMapButton(){
 	  final JButton btnMapToggle = new JButton("Toggle Map Layer");
-	  btnMapToggle.setPreferredSize(new Dimension(260,(int) (height/32)));
+	  btnMapToggle.setPreferredSize(new Dimension(265,(int) (height/32)));
 	  btnMapToggle.setVisible(true);
 	  btnMapToggle.addActionListener(new ActionListener() {
 	      @Override

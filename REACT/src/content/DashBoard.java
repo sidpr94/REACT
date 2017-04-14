@@ -5,11 +5,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,10 +30,11 @@ import javax.swing.border.LineBorder;
 import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
-import scenarioDev.DensityControl;
-import scenarioDev.FleetTechnology;
-import scenarioDev.RunwayEnhancement;
-import scenarioDev.TrackFlexibility;
+import angim.CalculateNoise;
+import scenarioDev.density.DensityControl;
+import scenarioDev.fleet.FleetTechnology;
+import scenarioDev.runway.RunwayEnhancement;
+import scenarioDev.track.TrackFlexibility;
 
 public class DashBoard {
 	JMap map;
@@ -35,22 +44,23 @@ public class DashBoard {
 		this.map = jMap;
 		this.layerList = list;
 	}
-	public JPanel getDashboard(){
+	public JPanel getDashboard() throws IOException{
 		JPanel inputPane = new JPanel();
 		inputPane.setLayout(new GridBagLayout());
-		inputPane.setBackground(new Color(0,0,0,100));
+		inputPane.setBackground(new Color(0,37,76));
 		inputPane.setDoubleBuffered(true);
 		inputPane.setBorder(new LineBorder(Color.BLACK, 5, false));
 
 		JTextField inputTitle = new JTextField();
 		inputTitle.setText("Dashboard");
+		inputTitle.setFont(new Font(inputTitle.getFont().getName(),Font.BOLD,14));
+		inputTitle.setPreferredSize(new Dimension(300,50));
+		inputTitle.setOpaque(false);
+		inputTitle.setForeground(new Color(238,178,17));
+		inputTitle.setDisabledTextColor(new Color(238,178,17));
 		inputTitle.setEditable(false);
 		inputTitle.setEnabled(false);
 		inputTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		inputTitle.setFont(new Font(inputTitle.getFont().getName(),Font.BOLD,14));
-		inputTitle.setPreferredSize(new Dimension(300,50));
-		inputTitle.setBackground(new Color(0,0,0,100));
-		inputTitle.setForeground(Color.WHITE);
 		inputTitle.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.BLACK));
 
 		JTextField opForecastTitle = new JTextField();
@@ -60,9 +70,8 @@ public class DashBoard {
 		opForecastTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		opForecastTitle.setFont(new Font(opForecastTitle.getFont().getName(),Font.PLAIN,14));
 		opForecastTitle.setPreferredSize(new Dimension(300,65));
-		opForecastTitle.setBackground(new Color(0,0,0,100));
-		opForecastTitle.setForeground(Color.WHITE);
-		opForecastTitle.setEnabled(false);
+		opForecastTitle.setOpaque(false);
+		opForecastTitle.setDisabledTextColor(new Color(238,178,17));
 		opForecastTitle.setBorder(BorderFactory.createEmptyBorder(15,0,5,0));
 
 		JTextField popForecastTitle = new JTextField();
@@ -72,14 +81,13 @@ public class DashBoard {
 		popForecastTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		popForecastTitle.setFont(new Font(popForecastTitle.getFont().getName(),Font.PLAIN,14));
 		popForecastTitle.setPreferredSize(new Dimension(300,50));
-		popForecastTitle.setBackground(new Color(0,0,0,100));
-		popForecastTitle.setForeground(Color.WHITE);
-		popForecastTitle.setEnabled(false);
+		popForecastTitle.setOpaque(false);
+		popForecastTitle.setDisabledTextColor(new Color(238,178,17));
 		popForecastTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
 
 		JComboBox<String> opForecast = new JComboBox<>();
 		opForecast.setPreferredSize(new Dimension(300,40));
-		opForecast.setModel(new DefaultComboBoxModel<>(new String[]{"Below Nominal TAF","Nominal TAF","Above Nominal TAF"}));
+		opForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2010 Operations","Nominal TAF","Below Nominal TAF","Above Nominal TAF"}));
 		((JLabel)opForecast.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		JComboBox<String> popForecast = new JComboBox<>();
 		popForecast.setPreferredSize(new Dimension(300,40));
@@ -93,26 +101,29 @@ public class DashBoard {
 		WhatifTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		WhatifTitle.setFont(new Font(WhatifTitle.getFont().getName(),Font.BOLD,14));
 		WhatifTitle.setPreferredSize(new Dimension(300,55));
-		WhatifTitle.setBackground(new Color(0,0,0,100));
-		WhatifTitle.setForeground(Color.WHITE);
-		WhatifTitle.setEnabled(false);
+		WhatifTitle.setOpaque(false);
+		WhatifTitle.setDisabledTextColor(new Color(238,178,17));
 		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));
-		
+
 		RunwayEnhancement run = new RunwayEnhancement();
-		DensityControl land = new DensityControl();
-		TrackFlexibility track = new TrackFlexibility();
+		DensityControl land = new DensityControl(map);
+		TrackFlexibility track = new TrackFlexibility(map);
 		FleetTechnology fleet = new FleetTechnology();
-		
+
 		ScenarioPane sPane = new ScenarioPane(run.getRun(),land.getDensity(),track.getTrack(),fleet.getFleet());
 		JTabbedPane sP = sPane.createScenarioPane();
-		
+
 		JButton calculate = new JButton();
 		calculate.setText("Calculate Noise");
-		calculate.setPreferredSize(new Dimension(300,60));
+		calculate.setPreferredSize(new Dimension(300,50));
 		calculate.setHorizontalAlignment(SwingConstants.CENTER);
 		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
-		
-		
+		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map));
+
+		URL url = this.getClass().getClassLoader().getResource("Files/Logos/ASDLlogo.png");
+		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
+		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(300, 50, Image.SCALE_FAST)));
+
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -169,29 +180,31 @@ public class DashBoard {
 		i.gridy = 6;
 		JPanel hidePane = new JPanel();
 		hidePane.setLayout(new BoxLayout(hidePane, BoxLayout.Y_AXIS));
-		hidePane.setBackground(new Color(0,0,0,100));
+		hidePane.setOpaque(false);
 		hidePane.setDoubleBuffered(true);
 		hidePane.setBorder(new LineBorder(Color.BLACK, 1, false));
 		//hidePane.add(sbx);
 		hidePane.add(sP);
 		inputPane.add(hidePane, i);
-		
+
 		GridBagConstraints r = new GridBagConstraints();
 		r.fill = GridBagConstraints.HORIZONTAL;
-		r.anchor = GridBagConstraints.PAGE_START;
+		r.anchor = GridBagConstraints.PAGE_END;
 		r.weighty = 1;
 		r.gridx = 0;
-		r.gridy = 7;
+		r.gridy = 8;
+		inputPane.add(picLabel,r);
 
 		GridBagConstraints o = new GridBagConstraints();
 		o.fill = GridBagConstraints.HORIZONTAL;
 		o.anchor = GridBagConstraints.PAGE_START;
 		o.weighty = 1;
 		o.gridx = 0;
-		o.gridy = 8;
+		o.gridy = 7;
+		o.insets = new Insets(10, 0, 0, 0);
 		inputPane.add(Box.createVerticalGlue(),r);
-		//inputPane.add(calculate, o);
-		
+		inputPane.add(calculate, o);
+
 		return inputPane;
 	}
 }

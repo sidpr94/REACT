@@ -1,0 +1,34 @@
+1 = On 0 = off, unless other options specified
+RwyPrint = print rotated and translated runway-level DNL grids,0
+AptPrint = print combined airport-level DNL grids,0
+Area = Compute and report contour area,1
+Length = Compute length along x axis,0
+Width = Compute width along y axis,0
+ArcLength = Compute and report arclength (perimeter),0
+PI = Compute and report Perimeter Index,0
+Vertex = Compute and report Vertex count,0
+DI = Compute and report Dispersion Index,0
+GI = Compute and report Girth Index,0
+DeI = Compute and report Detour Index,0
+RadP = Compute and report contour Radial Points,0
+PrI = Compute and report Proximity Index,0
+SI = Compute and report Spin Index,0
+CI = Compute and report Cohesion Index,0
+DepI = Compute and report Depth Index,0
+Contourprint = Printing of contour points,1
+SchedLim,150
+MirrorFlag,0
+Rounding,0
+Metric,0
+App/Dep,0
+UF = Utilization Flag,0
+Grid Read Option,2
+Local Points,0
+ACClass,0
+ClassOpt,0
+WrapperFlag,1
+ContribPrint,0
+ContribAvgPrint,0
+PrintCharts,0
+DistPop,1
+PopMethod,0

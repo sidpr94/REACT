@@ -3,9 +3,17 @@ package content;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -22,24 +30,28 @@ public class GuiPane {
 	JTextArea coordTxt;
 	Dimension d;
 	public GuiPane(){}
-	
+
 	public GuiPane(JLayerList list, JTextArea txt, Dimension screen){
 		this.jLayerList = list;
 		this.coordTxt = txt;
 		this.d = screen;
 	}
-	
-	public JPanel getGUIpane(){
+
+	public JPanel getGUIpane() throws IOException{
 		LegendPanel lPanel = new LegendPanel(d.width,d.height);
 		JPanel legendPanel = lPanel.getLegend();
 		LegendButton lgndbtn = new LegendButton(legendPanel,d.width,d.height);	
-		
+
 		mapCoordPanel mPanel = new mapCoordPanel(d.width,d.height);
-		
+
 		MapLayer lyrPanel = new MapLayer(d.width,d.height);
 		JPanel layerPanel = lyrPanel.getMapLayer(jLayerList); 
 		MapLayerButton mbtn = new MapLayerButton(layerPanel,d.width,d.height);
-		
+
+		URL url = this.getClass().getClassLoader().getResource("Files/Logos/Buzz.png");
+		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
+		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(100, 100, Image.SCALE_FAST)));
+
 		JPanel guiPane = new JPanel();
 		guiPane.setLayout(new GridBagLayout());
 		guiPane.setOpaque(false);
@@ -49,7 +61,7 @@ public class GuiPane {
 		c.gridy = 0;
 		c.insets = new Insets(10,10,0,0);
 		guiPane.add(mbtn.getMapButton(), c);
-		
+
 		GridBagConstraints d = new GridBagConstraints();
 		d.anchor = GridBagConstraints.FIRST_LINE_START;
 		d.gridx = 0;
@@ -58,7 +70,7 @@ public class GuiPane {
 		d.weighty = 500;
 		d.insets = new Insets(5,10,0,0);
 		guiPane.add(layerPanel, d);
-		
+
 		GridBagConstraints e = new GridBagConstraints();
 		e.anchor = GridBagConstraints.FIRST_LINE_END;
 		e.gridx = 1;
@@ -67,7 +79,7 @@ public class GuiPane {
 		e.weighty = 0;
 		e.insets = new Insets(10,0,0,10);
 		guiPane.add(lgndbtn.getLegendButton(), e);
-		
+
 		GridBagConstraints f = new GridBagConstraints();
 		f.anchor = GridBagConstraints.FIRST_LINE_END;
 		f.gridx = 1;
@@ -76,22 +88,31 @@ public class GuiPane {
 		f.weighty = 500;
 		f.insets = new Insets(5,10,0,10);
 		guiPane.add(legendPanel,f);
-		
+
 		GridBagConstraints g = new GridBagConstraints();
 		g.anchor = GridBagConstraints.LAST_LINE_START;
 		g.gridx = 0;
-		g.gridy = 1;
+		g.gridy = 2;
 		g.weightx = 1;
-		g.weighty = 1;
+		g.weighty = 10;
 		g.insets = new Insets(0,10,10,0);
 		guiPane.add(mPanel.getCoordPanel(coordTxt),g);
-		
+
+		GridBagConstraints n = new GridBagConstraints();
+		n.anchor = GridBagConstraints.LAST_LINE_END;
+		n.gridx = 1;
+		n.gridy = 2;
+		n.weightx = 1;
+		n.weighty = 1;
+		n.insets = new Insets(0, 0, 10, 10);
+		guiPane.add(picLabel, n);
+
 		GridBagConstraints de = new GridBagConstraints();
 		de.fill = GridBagConstraints.BOTH;
 		de.gridx = 1;
 		de.gridy = 2;
 		guiPane.add(Box.createGlue(),de);
-		
+
 		return guiPane;
 	}
 }

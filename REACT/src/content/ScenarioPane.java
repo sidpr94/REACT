@@ -19,6 +19,7 @@ public class ScenarioPane {
 	}
 	public JTabbedPane createScenarioPane(){
 		JTabbedPane scenarioPane = new JTabbedPane();
+		scenarioPane.setOpaque(false);
 		scenarioPane.setBorder(BorderFactory.createEmptyBorder());
 		scenarioPane.setFont(new Font("Dialog",Font.BOLD,12));
 		scenarioPane.addTab("Runway    ", run);
