@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import com.esri.map.JMap;
 
 import results.ContourMap;
+import scenarioDev.fleet.InsertFleetTechnology;
 
 public class RunANGIM extends SwingWorker<Integer,String>{
 	private int status = 1;
@@ -28,10 +29,12 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 	JTabbedPane sp;
 	JMap map;
 	JMap compare;
-	Process p;
+	Process p = null;
 	JTable table;
 	JButton reset;
-	public RunANGIM(JLabel label, JButton start, JButton stop, JProgressBar bar,JFrame frame,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map,JMap compare,JTable table,JButton reset) {
+	JButton resetTech;
+	ProcessBuilder pb = new ProcessBuilder("RANGG_V10.exe");
+	public RunANGIM(JLabel label, JButton start, JButton stop, JProgressBar bar,JFrame frame,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map,JMap compare,JTable table,JButton reset,JButton resetTech) {
 		this.start = start;
 		this.stop = stop;
 		this.bar = bar;
@@ -44,6 +47,7 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		this.compare = compare;
 		this.table = table;
 		this.reset = reset;
+		this.resetTech = resetTech;
 		statusLabel.setText("Calculating Noise...");
 	}
 	@Override
@@ -51,7 +55,6 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		// TODO Auto-generated method stub
 
 		try {
-			ProcessBuilder pb = new ProcessBuilder("RANGG_V10.exe");
 			pb.redirectErrorStream(true);
 			p = pb.start();
 			String s;
@@ -67,7 +70,7 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 			p.getOutputStream().close();
 			p.getErrorStream().close();
 			p.destroy();
-		} catch (IOException | InterruptedException ex) {
+		} catch (IOException ex) {
 			ex.printStackTrace(System.err);
 		}
 		return status;
@@ -84,6 +87,8 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 				UpdateContour contour = new UpdateContour(map,op,"update");
 				ContourMap c = new ContourMap(compare,op,"update");
 				contour.updateContourGraphic();
+				InsertFleetTechnology tech = new InsertFleetTechnology(resetTech,op);
+				tech.emptyFleet();
 				if(compare.getLayers().size() == 3){
 					c.addComparison(3);
 				}else if (compare.getLayers().size() == 4){
@@ -94,6 +99,7 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 				e.printStackTrace();
 			}
 		}
+		p = null;
 		stop.setEnabled(false);
 		start.setEnabled(true);
 		op.setEnabled(true);
@@ -101,27 +107,11 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		sp.setEnabled(true);
 		reset.setEnabled(true);
 		bar.setIndeterminate(false);
+		frame.dispose();
+	}
+	public void stopProcess(){
 		if(p != null){
-			try {
-				p.getInputStream().close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				p.getOutputStream().close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				p.getErrorStream().close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			p.destroy();
-			frame.dispose();
 		}
 	}
 

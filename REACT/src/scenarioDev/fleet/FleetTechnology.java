@@ -18,7 +18,10 @@ import GUI.AutoCompletion;
 import database.ReadFleetData;
 
 public class FleetTechnology {
-	public FleetTechnology(){}
+	JButton reset;
+	public FleetTechnology(JButton reset){
+		this.reset = reset;
+	}
 
 	public JPanel getFleet(){
 		ReadFleetData rd = new ReadFleetData();
@@ -30,7 +33,7 @@ public class FleetTechnology {
 		String[] unAC = Arrays.stream(aircraft).toArray(String[]::new);
 
 		JPanel dInputs = new JPanel();
-		GridLayout gLayout = new GridLayout(6,1);
+		GridLayout gLayout = new GridLayout(7,1);
 		gLayout.setVgap(3);
 		dInputs.setLayout(gLayout);
 		dInputs.setBackground(new Color(51,81,112));
@@ -57,7 +60,7 @@ public class FleetTechnology {
 		fleet.setDisabledTextColor(Color.WHITE);
 		fleet.setPreferredSize(new Dimension(250,30));
 		fleet.setFont(new Font(fleet.getFont().getName(),Font.BOLD,12));
-		fleet.setText("List of Aircraft");
+		fleet.setText("List of Aircraft (* indicates technology insertion)");
 		fleet.setHorizontalAlignment(SwingConstants.CENTER);
 		fleet.setBorder(BorderFactory.createMatteBorder(0, 0,0,0,Color.BLACK));
 		fleet.setEditable(false);
@@ -89,7 +92,14 @@ public class FleetTechnology {
 		perHighlight.setText("Add Noise Reduction");
 		perHighlight.setHorizontalAlignment(SwingConstants.CENTER);
 		perHighlight.setFont(new Font(perHighlight.getFont().getName(),Font.BOLD,12));
+		perHighlight.addActionListener(new InsertFleetTechnology(perHighlight,reset,fleetData,percent));
 		dInputs.add(perHighlight);
+		
+		reset.setText("Reset Fleet Insertion");
+		reset.setHorizontalAlignment(SwingConstants.CENTER);
+		reset.setFont(new Font(reset.getFont().getName(),Font.BOLD,12));
+		reset.addActionListener(new InsertFleetTechnology(perHighlight,reset,fleetData,percent));
+		dInputs.add(reset);
 
 		return dInputs;
 	}

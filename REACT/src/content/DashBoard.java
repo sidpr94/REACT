@@ -109,12 +109,14 @@ public class DashBoard {
 		WhatifTitle.setPreferredSize(new Dimension(300,55));
 		WhatifTitle.setOpaque(false);
 		WhatifTitle.setDisabledTextColor(new Color(238,178,17));
-		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));
+		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));	
+		
+		JButton resetTech = new JButton();
 
 		RunwayEnhancement run = new RunwayEnhancement();
 		DensityControl land = new DensityControl(map);
 		TrackFlexibility track = new TrackFlexibility(map);
-		FleetTechnology fleet = new FleetTechnology();
+		FleetTechnology fleet = new FleetTechnology(resetTech);
 
 		ScenarioPane sPane = new ScenarioPane(run.getRun(),land.getDensity(),track.getTrack(),fleet.getFleet());
 		JTabbedPane sP = sPane.createScenarioPane();
@@ -130,7 +132,7 @@ public class DashBoard {
 		calculate.setPreferredSize(new Dimension(300,50));
 		calculate.setHorizontalAlignment(SwingConstants.CENTER);
 		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
-		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map,compare,table,reset));
+		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map,compare,table,reset,resetTech));
 
 		URL url = this.getClass().getClassLoader().getResource("Files/Logos/ASDLlogo.png");
 		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));

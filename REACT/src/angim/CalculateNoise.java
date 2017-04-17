@@ -25,7 +25,6 @@ public class CalculateNoise implements ActionListener {
 	JButton reset;
 	final JLabel statusLabel = new JLabel("Status: ", JLabel.CENTER); 
     JProgressBar bar = new JProgressBar();
-    RunANGIM angim;
     JFrame frame;
     JComboBox<String> op;
     JComboBox<String> pop;
@@ -33,7 +32,8 @@ public class CalculateNoise implements ActionListener {
     JMap map;
     JMap compare;
     JTable table;
-	public CalculateNoise(JButton button,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map,JMap compare,JTable table,JButton reset){
+    JButton resetTech;
+	public CalculateNoise(JButton button,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map,JMap compare,JTable table,JButton reset,JButton resetTech){
 		this.start = button;
 		this.op = op;
 		this.pop = pop;
@@ -42,6 +42,7 @@ public class CalculateNoise implements ActionListener {
 		this.compare = compare;
 		this.table = table;
 		this.reset = reset;
+		this.resetTech = resetTech;
 	}
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -55,6 +56,7 @@ public class CalculateNoise implements ActionListener {
 		ForecastOperation changeOps = new ForecastOperation(op);
 		try {
 			changeOps.updateOperations();
+			changeOps.insertFleetTechnology();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -80,7 +82,6 @@ public class CalculateNoise implements ActionListener {
 	        final JLabel title = new JLabel("Calculating Noise...", JLabel.CENTER); 
 	        JPanel buttonPanel = new JPanel();
 	        buttonPanel.add(stop);
-	        stop.addActionListener(new StopCalculation());
 	        buttonPanel.add(bar);
 	        panel.add(title, BorderLayout.CENTER);
 	        panel.add(statusLabel, BorderLayout.CENTER);
@@ -91,8 +92,9 @@ public class CalculateNoise implements ActionListener {
 	        frame.setAlwaysOnTop(true);
 	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-	        angim = new RunANGIM(statusLabel,start,stop,bar,frame,op,pop,sp,map,compare,table,reset);
+	        RunANGIM angim = new RunANGIM(statusLabel,start,stop,bar,frame,op,pop,sp,map,compare,table,reset,resetTech);
 	        angim.execute();
+	        stop.addActionListener(new StopCalculation(angim));
 	        bar.setIndeterminate(true);
 	        
 		}
@@ -100,13 +102,16 @@ public class CalculateNoise implements ActionListener {
 	}
 	
 	public class StopCalculation implements ActionListener{
-
+		RunANGIM angi;
+		StopCalculation(RunANGIM a){
+			this.angi = a;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			angim.cancel(true);
-			angim.done();
-			frame.dispose();
+			angi.stopProcess();
+			angi.cancel(true);
+			angi.done();
 		}
 		
 	}
