@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -29,7 +30,7 @@ public class FleetTechnology {
 		String[] unAC = Arrays.stream(aircraft).toArray(String[]::new);
 
 		JPanel dInputs = new JPanel();
-		GridLayout gLayout = new GridLayout(5,1);
+		GridLayout gLayout = new GridLayout(6,1);
 		gLayout.setVgap(3);
 		dInputs.setLayout(gLayout);
 		dInputs.setBackground(new Color(51,81,112));
@@ -83,6 +84,12 @@ public class FleetTechnology {
 		JTextField percent = new JTextField();
 		percent.setFont(new Font(percent.getFont().getName(),Font.PLAIN,12));
 		dInputs.add(percent);
+		
+		JButton perHighlight = new JButton();
+		perHighlight.setText("Add Noise Reduction");
+		perHighlight.setHorizontalAlignment(SwingConstants.CENTER);
+		perHighlight.setFont(new Font(perHighlight.getFont().getName(),Font.BOLD,12));
+		dInputs.add(perHighlight);
 
 		return dInputs;
 	}

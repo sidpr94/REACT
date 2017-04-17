@@ -29,7 +29,7 @@ import database.TableModel;
 
 public class DataPane {
 	String[] colNames = {"Aircraft",
-			"Track ID",
+			"Track Name",
 			"Runway",
 			"Operation",
 			"Daily Day-Time Operations",

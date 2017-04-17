@@ -37,7 +37,7 @@ public class ReadFleetData {
 		DecimalFormat df = new DecimalFormat("0.00000");
 		for(int i = 0; i < r-1;i++){
 			String ac = data.get(i+1)[0];
-			long trackID = Long.valueOf(data.get(i+1)[1]);
+			String trackID = data.get(i+1)[1];
 			String rnwy = data.get(i+1)[2];
 			String op = data.get(i+1)[3];
 			String dOp = df.format(Double.valueOf(data.get(i+1)[4]));

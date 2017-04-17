@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
 import com.esri.core.geometry.Envelope;
@@ -23,6 +24,8 @@ import com.esri.toolkit.JLayerList;
 
 import content.ContentPane;
 import content.DataPane;
+import results.ResultPane;
+import results.ResultsTable;
 
 //REACT runs the main application populating the base map as well as the GUI
 //Creates the window, content pane, and initializes the map for the application
@@ -31,6 +34,8 @@ import content.DataPane;
 public class REACT {
 	//initialize map
 	private JMap jMap;
+	private JMap mapCompare;
+	JTable table;
 	//initialize list of layers to be used within map
 	private JLayerList jLayerlist;
 	//grab the screen size to be used for GUI sizing
@@ -91,8 +96,12 @@ public class REACT {
 			public void windowClosing(WindowEvent windowEvent) {
 				super.windowClosing(windowEvent);
 				//disposes map on window closing
-				if (jMap != null ) 
+				if (jMap != null ){
 					jMap.dispose();
+				}
+				if(mapCompare != null){
+					mapCompare.dispose();
+				}
 			}
 		});
 		return window;
@@ -102,22 +111,30 @@ public class REACT {
 	public JComponent createUI(Dimension d) throws Exception {
 		// application content
 		jMap = new JMap();
+		mapCompare = new JMap();
 		//JMap mp = new JMap();
 		jLayerlist = new JLayerList(jMap);
+		ResultsTable t = new ResultsTable();
+		table = t.getTable();
 		JTabbedPane tabContent = new JTabbedPane();
 		tabContent.setBorder(BorderFactory.createEmptyBorder());
 		tabContent.setFont(new Font("Dialog",Font.BOLD,16));
-		ContentPane contentPane = new ContentPane(jMap,jLayerlist,d);
+		ContentPane contentPane = new ContentPane(jMap,jLayerlist,d,mapCompare,table);
 
 		DataPane dataPane = new DataPane();
-
+		ResultPane resultsPane = new ResultPane(mapCompare,d,table);
 		tabContent.addTab("Map", contentPane.getContentPane());
 		tabContent.addTab("Database", dataPane.getfinePane());
+		tabContent.addTab("Results", resultsPane.createPane());
 		//JLayeredPane contentPane = createContentPane();
 		//Creates a map and LayerList for that map
 		//Sets the initial zoom status of the map. Zooms into the runway
 		Envelope initialExtent = new Envelope(-94.920484888,39.062438997,-94.543736896,39.534769654);
 		jMap.setFullExtent(initialExtent);
+		Envelope initialExtent1 = new Envelope(-94.920484888,39.062438997,-94.493736896,39.604769654);
+		mapCompare.setFullExtent(initialExtent1);
+		mapCompare.setShowingEsriLogo(false);
+		mapCompare.setScale(100000);
 		jMap.setShowingEsriLogo(false);
 		return tabContent;
 	}

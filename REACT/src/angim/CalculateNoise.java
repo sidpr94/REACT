@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,12 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import com.esri.map.JMap;
 
 public class CalculateNoise implements ActionListener {
 	JButton stop = new JButton("Stop");
 	JButton start;
+	JButton reset;
 	final JLabel statusLabel = new JLabel("Status: ", JLabel.CENTER); 
     JProgressBar bar = new JProgressBar();
     RunANGIM angim;
@@ -28,12 +31,17 @@ public class CalculateNoise implements ActionListener {
     JComboBox<String> pop;
     JTabbedPane sp;
     JMap map;
-	public CalculateNoise(JButton button,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map){
+    JMap compare;
+    JTable table;
+	public CalculateNoise(JButton button,JComboBox<String> op, JComboBox<String> pop,JTabbedPane sp,JMap map,JMap compare,JTable table,JButton reset){
 		this.start = button;
 		this.op = op;
 		this.pop = pop;
 		this.sp = sp;
 		this.map = map;
+		this.compare = compare;
+		this.table = table;
+		this.reset = reset;
 	}
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -43,6 +51,14 @@ public class CalculateNoise implements ActionListener {
 		pop.setEnabled(false);
 		sp.setEnabled(false);
 		stop.setEnabled(true);
+		reset.setEnabled(false);
+		ForecastOperation changeOps = new ForecastOperation(op);
+		try {
+			changeOps.updateOperations();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		createFrame cf = new createFrame();
 		Thread t = new Thread(cf);
 		t.start();		
@@ -69,14 +85,13 @@ public class CalculateNoise implements ActionListener {
 	        panel.add(title, BorderLayout.CENTER);
 	        panel.add(statusLabel, BorderLayout.CENTER);
 	        panel.add(buttonPanel, BorderLayout.PAGE_END);
-
 	        frame.setContentPane(panel);
 	        frame.pack();
 	        frame.setVisible(true);
 	        frame.setAlwaysOnTop(true);
 	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-	        angim = new RunANGIM(statusLabel,start,stop,bar,frame,op,pop,sp,map);
+	        angim = new RunANGIM(statusLabel,start,stop,bar,frame,op,pop,sp,map,compare,table,reset);
 	        angim.execute();
 	        bar.setIndeterminate(true);
 	        

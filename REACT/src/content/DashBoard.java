@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -31,6 +32,7 @@ import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
 import angim.CalculateNoise;
+import angim.ResetToBaseline;
 import scenarioDev.density.DensityControl;
 import scenarioDev.fleet.FleetTechnology;
 import scenarioDev.runway.RunwayEnhancement;
@@ -38,11 +40,15 @@ import scenarioDev.track.TrackFlexibility;
 
 public class DashBoard {
 	JMap map;
+	JMap compare;
 	JLayerList layerList;
+	JTable table;
 	public DashBoard(){}
-	public DashBoard(JMap jMap,JLayerList list){
+	public DashBoard(JMap jMap,JLayerList list,JMap compare,JTable table){
 		this.map = jMap;
 		this.layerList = list;
+		this.compare = compare;
+		this.table = table;
 	}
 	public JPanel getDashboard() throws IOException{
 		JPanel inputPane = new JPanel();
@@ -87,7 +93,7 @@ public class DashBoard {
 
 		JComboBox<String> opForecast = new JComboBox<>();
 		opForecast.setPreferredSize(new Dimension(300,40));
-		opForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2010 Operations","Nominal TAF","Below Nominal TAF","Above Nominal TAF"}));
+		opForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2015 Operations","2020 Below Nominal TAF","2020 Nominal TAF","2020 Above Nominal TAF","2030 Below Nominal TAF","2030 Nominal TAF","2030 Above Nominal TAF"}));
 		((JLabel)opForecast.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		JComboBox<String> popForecast = new JComboBox<>();
 		popForecast.setPreferredSize(new Dimension(300,40));
@@ -113,12 +119,18 @@ public class DashBoard {
 		ScenarioPane sPane = new ScenarioPane(run.getRun(),land.getDensity(),track.getTrack(),fleet.getFleet());
 		JTabbedPane sP = sPane.createScenarioPane();
 
+		JButton reset = new JButton("Reset to Baseline");
+		reset.setPreferredSize(new Dimension(300,50));
+		reset.setHorizontalAlignment(SwingConstants.CENTER);
+		reset.setFont(new Font(reset.getFont().getName(),Font.BOLD,14));
+		reset.addActionListener(new ResetToBaseline(opForecast,map));
+		
 		JButton calculate = new JButton();
 		calculate.setText("Calculate Noise");
 		calculate.setPreferredSize(new Dimension(300,50));
 		calculate.setHorizontalAlignment(SwingConstants.CENTER);
 		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
-		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map));
+		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map,compare,table,reset));
 
 		URL url = this.getClass().getClassLoader().getResource("Files/Logos/ASDLlogo.png");
 		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
@@ -186,15 +198,7 @@ public class DashBoard {
 		//hidePane.add(sbx);
 		hidePane.add(sP);
 		inputPane.add(hidePane, i);
-
-		GridBagConstraints r = new GridBagConstraints();
-		r.fill = GridBagConstraints.HORIZONTAL;
-		r.anchor = GridBagConstraints.PAGE_END;
-		r.weighty = 1;
-		r.gridx = 0;
-		r.gridy = 8;
-		inputPane.add(picLabel,r);
-
+		
 		GridBagConstraints o = new GridBagConstraints();
 		o.fill = GridBagConstraints.HORIZONTAL;
 		o.anchor = GridBagConstraints.PAGE_START;
@@ -202,8 +206,25 @@ public class DashBoard {
 		o.gridx = 0;
 		o.gridy = 7;
 		o.insets = new Insets(10, 0, 0, 0);
-		inputPane.add(Box.createVerticalGlue(),r);
 		inputPane.add(calculate, o);
+		
+		GridBagConstraints oo = new GridBagConstraints();
+		oo.fill = GridBagConstraints.HORIZONTAL;
+		oo.anchor = GridBagConstraints.PAGE_START;
+		oo.weighty = 50;
+		oo.gridx = 0;
+		oo.gridy = 8;
+		oo.insets = new Insets(0, 0, 0, 0);
+		inputPane.add(reset, oo);
+
+		GridBagConstraints r = new GridBagConstraints();
+		r.fill = GridBagConstraints.HORIZONTAL;
+		r.anchor = GridBagConstraints.PAGE_END;
+		r.weighty = 1;
+		r.gridx = 0;
+		r.gridy = 9;
+		inputPane.add(picLabel,r);
+		inputPane.add(Box.createVerticalGlue(),r);
 
 		return inputPane;
 	}
