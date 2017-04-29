@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -40,14 +41,18 @@ public class TrackFlexibility {
 		rnEnh.setEnabled(false);
 		dInputs.add(rnEnh);
 		
+		JButton perHighlight = new JButton();
+		perHighlight.setText("Reset To Census");
+		perHighlight.setHorizontalAlignment(SwingConstants.CENTER);
+		perHighlight.setFont(new Font(perHighlight.getFont().getName(),Font.BOLD,12));
+		
 		JToggleButton perBlock = new JToggleButton();
 		perBlock.setText("Interact with Tracks");
 		perBlock.setHorizontalAlignment(SwingConstants.CENTER);
 		perBlock.setFont(new Font(perBlock.getFont().getName(),Font.BOLD,12));
 		dInputs.add(perBlock);
-		//perBlock.addActionListener(new TrackOn(map));
-		
-		dInputs.add(Box.createVerticalGlue());
+		dInputs.add(perHighlight);
+		perBlock.addActionListener(new TrackOn(map));
 		
 		return dInputs;
 	}

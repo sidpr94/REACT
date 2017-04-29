@@ -1,6 +1,8 @@
 package content;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -51,6 +54,18 @@ public class GuiPane {
 		URL url = this.getClass().getClassLoader().getResource("Files/Logos/Buzz.png");
 		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(100, 100, Image.SCALE_FAST)));
+		
+		JPanel warning = new JPanel();
+		warning.setOpaque(false);
+		//warning.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+		warning.setBackground(Color.WHITE);
+		
+		JTextArea text = new JTextArea();
+		text.setText("Preliminary results, do not cite or quote.");
+		text.setForeground(Color.RED);
+		text.setFont(new Font(text.getFont().getName(),Font.BOLD,18));
+		text.setBackground(Color.WHITE);
+		warning.add(text);
 
 		JPanel guiPane = new JPanel();
 		guiPane.setLayout(new GridBagLayout());
@@ -105,7 +120,7 @@ public class GuiPane {
 		n.weightx = 1;
 		n.weighty = 1;
 		n.insets = new Insets(0, 0, 10, 10);
-		guiPane.add(picLabel, n);
+		guiPane.add(warning, n);
 
 		GridBagConstraints de = new GridBagConstraints();
 		de.fill = GridBagConstraints.BOTH;

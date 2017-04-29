@@ -73,7 +73,7 @@ public class ResultsTable {
 		g_name.add(cm.getColumn(1));
 		g_name.add(cm.getColumn(2));
 		g_name.add(cm.getColumn(3));
-		ColumnGroup g_lang = new ColumnGroup("Contour Area");
+		ColumnGroup g_lang = new ColumnGroup("Contour Area (nmi\u00b2)");
 		g_lang.add(cm.getColumn(4));
 		g_lang.add(cm.getColumn(5));
 		g_lang.add(cm.getColumn(6));

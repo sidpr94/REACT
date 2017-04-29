@@ -207,7 +207,7 @@ public class DashBoard {
 		o.weighty = 1;
 		o.gridx = 0;
 		o.gridy = 7;
-		o.insets = new Insets(10, 0, 0, 0);
+		o.insets = new Insets(5, 0, 0, 0);
 		inputPane.add(calculate, o);
 		
 		GridBagConstraints oo = new GridBagConstraints();

@@ -34,6 +34,17 @@ public class EditLayerName implements LayerInitializeCompleteListener {
 				if(layer.getName() == jMap.getLayers().get(0).getName()){
 					layer.setName("Population Beyond");
 				}else if(layer.getName() == jMap.getLayers().get(2).getName()){
+					LinkedHashMap<String, String> displayFields = new LinkedHashMap<String, String>();
+					displayFields.put("Operation","Operation Type: ");
+					displayFields.put("TrackName", "Track Name: ");
+					displayFields.put("Runway", "Runway: ");
+					MapTip maptip = new MapTip(displayFields);
+					maptip.setBackground(Color.WHITE);
+					maptip.setForeground(Color.BLACK);
+					maptip.setFont(new Font("Dialog",Font.BOLD,14));
+					maptip.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+					((GraphicsLayer) layer).setMapTip(maptip);
 					layer.setName("Flight Tracks");	
 				}else if(layer.getName() == jMap.getLayers().get(3).getName()){
 					layer.setName("Noise Contour");

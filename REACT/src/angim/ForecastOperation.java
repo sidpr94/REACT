@@ -17,6 +17,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
 import scenarioDev.fleet.InsertFleetTechnology;
+import scenarioDev.track.InfoOverlayTrack;
 
 public class ForecastOperation {
 	JComboBox<String> op;
@@ -39,9 +40,9 @@ public class ForecastOperation {
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
 			csvBody.get(1)[1] = "KMCI_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2020L_REACT";
+			csvBody.get(1)[1] = "KMCI_2030L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Above Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2020H_REACT";
+			csvBody.get(1)[1] = "KMCI_2030H_REACT";
 		}
 		reader.close();
 		CSVWriter writer = new CSVWriter(new FileWriter(inputFile), ',',CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,System.getProperty("line.separator"));
@@ -60,6 +61,7 @@ public class ForecastOperation {
 		}else if(op.getModel().getSelectedItem() == "2020 Above Nominal TAF"){
 			a = "KMCI_2020H_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
+			System.out.println("DID YOU UPDATE OPERATIONS?");
 			a = "KMCI_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
 			a = "KMCI_2020L_REACT";
@@ -79,6 +81,7 @@ public class ForecastOperation {
 			ac.put(tokens[0], tokens[1]);
 		}
 		rdr.close();
+		HashMap<String,String> ch = InfoOverlayTrack.changed;
 		if(!fleetToChange.isEmpty()){
 			for(Map.Entry<String,Number> entry : fleetToChange.entrySet()){
 				String key = entry.getKey();
@@ -90,6 +93,18 @@ public class ForecastOperation {
 						csvBody.get(j)[3] = String.valueOf((Double.parseDouble(csvBody.get(j)[3])*(1-percent/100)));
 						csvBody.get(j)[4] = String.valueOf((Double.parseDouble(csvBody.get(j)[4])*(1-percent/100)));
 						csvBody.get(j)[5] = String.valueOf((Double.parseDouble(csvBody.get(j)[5])*(1-percent/100)));
+					}
+				}
+			}
+		}
+		if(!ch.isEmpty()){
+			System.out.println("Made it");
+			for(Map.Entry<String,String> entry : ch.entrySet()){
+				String key = entry.getKey();
+				String value = entry.getValue();
+				for(int j = 1; j < csvBody.size()-1;j++){
+					if(csvBody.get(j)[0].contains(key)){
+						csvBody.get(j)[0].replace(key, value);
 					}
 				}
 			}

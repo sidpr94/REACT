@@ -34,7 +34,7 @@ public class ResultLayerList {
 		final JPanel controlPanel = new JPanel();
 		BoxLayout boxLayout1 = new BoxLayout(controlPanel, BoxLayout.Y_AXIS);
 		controlPanel.setLayout(boxLayout1);
-		controlPanel.setPreferredSize(new Dimension(265,210));
+		controlPanel.setPreferredSize(new Dimension(265,230));
 		controlPanel.setOpaque(false);
 		controlPanel.setBorder(new LineBorder(Color.BLACK,5));
 		controlPanel.add(txtTitle);
