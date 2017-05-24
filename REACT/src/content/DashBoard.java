@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package content;
 
 import java.awt.Color;
@@ -10,7 +13,6 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -38,18 +40,50 @@ import scenarioDev.fleet.FleetTechnology;
 import scenarioDev.runway.RunwayEnhancement;
 import scenarioDev.track.TrackFlexibility;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DashBoard.
+ */
 public class DashBoard {
+	
+	/** The map. */
 	JMap map;
+	
+	/** The compare. */
 	JMap compare;
+	
+	/** The layer list. */
 	JLayerList layerList;
+	
+	/** The table. */
 	JTable table;
+	
+	/**
+	 * Instantiates a new dash board.
+	 */
 	public DashBoard(){}
+	
+	/**
+	 * Instantiates a new dash board.
+	 *
+	 * @param jMap the j map
+	 * @param list the list
+	 * @param compare the compare
+	 * @param table the table
+	 */
 	public DashBoard(JMap jMap,JLayerList list,JMap compare,JTable table){
 		this.map = jMap;
 		this.layerList = list;
 		this.compare = compare;
 		this.table = table;
 	}
+	
+	/**
+	 * Gets the dashboard.
+	 *
+	 * @return the dashboard
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public JPanel getDashboard() throws IOException{
 		JPanel inputPane = new JPanel();
 		inputPane.setLayout(new GridBagLayout());
@@ -94,10 +128,10 @@ public class DashBoard {
 		JComboBox<String> opForecast = new JComboBox<>();
 		opForecast.setPreferredSize(new Dimension(300,40));
 		opForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2015 Operations","2020 Below Nominal TAF","2020 Nominal TAF","2020 Above Nominal TAF","2030 Below Nominal TAF","2030 Nominal TAF","2030 Above Nominal TAF"}));
-		((JLabel)opForecast.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+		((JLabel)opForecast.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		JComboBox<String> popForecast = new JComboBox<>();
 		popForecast.setPreferredSize(new Dimension(300,40));
-		((JLabel)popForecast.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+		((JLabel)popForecast.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		popForecast.setModel(new DefaultComboBoxModel<>(new String[]{"2010 Year", "2020 Year","2030 Year"}));
 
 		JTextField WhatifTitle = new JTextField();
@@ -134,8 +168,7 @@ public class DashBoard {
 		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
 		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map,compare,table,reset,resetTech));
 
-		URL url = this.getClass().getClassLoader().getResource("Files/Logos/ASDLlogo.png");
-		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
+		BufferedImage myPicture = ImageIO.read(new File("Files/Logos/ASDLlogo.png"));
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(300, 50, Image.SCALE_FAST)));
 
 		GridBagConstraints c = new GridBagConstraints();

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package GUI;
 
 import java.awt.event.*;
@@ -6,44 +9,71 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.text.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AutoCompletion.
+ */
 /* This work is hereby released into the Public Domain.
  * To view a copy of the public domain dedication, visit
  * http://creativecommons.org/licenses/publicdomain/
  */
 public class AutoCompletion extends PlainDocument {
-    /**
-	 * 
-	 */
+    
+    /** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The combo box. */
 	JComboBox<?> comboBox;
+    
+    /** The model. */
     ComboBoxModel<?> model;
+    
+    /** The editor. */
     JTextComponent editor;
     // flag to indicate if setSelectedItem has been called
+    /** The selecting. */
     // subsequent calls to remove/insertString should be ignored
     boolean selecting=false;
+    
+    /** The hide popup on focus loss. */
     boolean hidePopupOnFocusLoss;
+    
+    /** The hit backspace. */
     boolean hitBackspace=false;
+    
+    /** The hit backspace on selection. */
     boolean hitBackspaceOnSelection;
     
+    /** The editor key listener. */
     KeyListener editorKeyListener;
+    
+    /** The editor focus listener. */
     FocusListener editorFocusListener;
     
+    /**
+     * Instantiates a new auto completion.
+     *
+     * @param comboBox the combo box
+     */
     public AutoCompletion(final JComboBox<?> comboBox) {
         this.comboBox = comboBox;
         model = comboBox.getModel();
         comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            @Override
+			public void actionPerformed(ActionEvent e) {
                 if (!selecting) highlightCompletedText(0);
             }
         });
         comboBox.addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
+            @Override
+			public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("editor")) configureEditor((ComboBoxEditor) e.getNewValue());
                 if (e.getPropertyName().equals("model")) model = (ComboBoxModel<?>) e.getNewValue();
             }
         });
         editorKeyListener = new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
+            @Override
+			public void keyPressed(KeyEvent e) {
                 if (comboBox.isDisplayable()) comboBox.setPopupVisible(true);
                 hitBackspace=false;
                 switch (e.getKeyCode()) {
@@ -62,10 +92,12 @@ public class AutoCompletion extends PlainDocument {
         hidePopupOnFocusLoss=System.getProperty("java.version").startsWith("1.5");
         // Highlight whole text when gaining focus
         editorFocusListener = new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
+            @Override
+			public void focusGained(FocusEvent e) {
                 highlightCompletedText(0);
             }
-            public void focusLost(FocusEvent e) {
+            @Override
+			public void focusLost(FocusEvent e) {
                 // Workaround for Bug 5100422 - Hide Popup on focus loss
                 if (hidePopupOnFocusLoss) comboBox.setPopupVisible(false);
             }
@@ -77,6 +109,11 @@ public class AutoCompletion extends PlainDocument {
         highlightCompletedText(0);
     }
     
+    /**
+     * Enable.
+     *
+     * @param comboBox the combo box
+     */
     public static void enable(JComboBox<?> comboBox) {
         // has to be editable
         comboBox.setEditable(true);
@@ -84,6 +121,11 @@ public class AutoCompletion extends PlainDocument {
         new AutoCompletion(comboBox);
     }
     
+    /**
+     * Configure editor.
+     *
+     * @param newEditor the new editor
+     */
     void configureEditor(ComboBoxEditor newEditor) {
         if (editor != null) {
             editor.removeKeyListener(editorKeyListener);
@@ -98,7 +140,11 @@ public class AutoCompletion extends PlainDocument {
         }
     }
     
-    public void remove(int offs, int len) throws BadLocationException {
+    /* (non-Javadoc)
+     * @see javax.swing.text.AbstractDocument#remove(int, int)
+     */
+    @Override
+	public void remove(int offs, int len) throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
         if (hitBackspace) {
@@ -116,7 +162,11 @@ public class AutoCompletion extends PlainDocument {
         }
     }
     
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+    /* (non-Javadoc)
+     * @see javax.swing.text.PlainDocument#insertString(int, java.lang.String, javax.swing.text.AttributeSet)
+     */
+    @Override
+	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         // return immediately when selecting an item
         if (selecting) return;
         // insert the string into the document
@@ -138,6 +188,11 @@ public class AutoCompletion extends PlainDocument {
         highlightCompletedText(offs+str.length());
     }
     
+    /**
+     * Sets the text.
+     *
+     * @param text the new text
+     */
     private void setText(String text) {
         try {
             // remove all text and insert the completed string
@@ -148,17 +203,33 @@ public class AutoCompletion extends PlainDocument {
         }
     }
     
+    /**
+     * Highlight completed text.
+     *
+     * @param start the start
+     */
     private void highlightCompletedText(int start) {
         editor.setCaretPosition(getLength());
         editor.moveCaretPosition(start);
     }
     
+    /**
+     * Sets the selected item.
+     *
+     * @param item the new selected item
+     */
     private void setSelectedItem(Object item) {
         selecting = true;
         model.setSelectedItem(item);
         selecting = false;
     }
     
+    /**
+     * Lookup item.
+     *
+     * @param pattern the pattern
+     * @return the object
+     */
     private Object lookupItem(String pattern) {
         Object selectedItem = model.getSelectedItem();
         // only search for a different item if the currently selected does not match
@@ -178,6 +249,13 @@ public class AutoCompletion extends PlainDocument {
         return null;
     }
     
+    /**
+     * Starts with ignore case.
+     *
+     * @param str1 the str 1
+     * @param str2 the str 2
+     * @return true, if successful
+     */
     // checks if str1 starts with str2 - ignores case
     private boolean startsWithIgnoreCase(String str1, String str2) {
         return str1.toUpperCase().startsWith(str2.toUpperCase());

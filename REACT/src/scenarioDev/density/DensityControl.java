@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.density;
 
 import java.awt.Color;
@@ -14,11 +17,29 @@ import javax.swing.SwingConstants;
 
 import com.esri.map.JMap;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DensityControl.
+ */
 public class DensityControl {
+	
+	/** The map. */
 	JMap map;
+	
+	/**
+	 * Instantiates a new density control.
+	 *
+	 * @param jMap the j map
+	 */
 	public DensityControl(JMap jMap){
 		map = jMap;
 	}
+	
+	/**
+	 * Gets the density.
+	 *
+	 * @return the density
+	 */
 	public JPanel getDensity(){
 		JPanel dInputs = new JPanel();
 		GridLayout gLayout = new GridLayout(3,1);

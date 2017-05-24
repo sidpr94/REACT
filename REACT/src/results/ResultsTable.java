@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package results;
 
 import java.awt.Color;
@@ -13,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -20,11 +24,24 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsTable.
+ */
 public class ResultsTable {
 
+	/**
+	 * Instantiates a new results table.
+	 */
 	public ResultsTable(){
 	}
 
+	/**
+	 * Gets the fine pane.
+	 *
+	 * @param table the table
+	 * @return the fine pane
+	 */
 	public JPanel getfinePane(JTable table){
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(1200,1000));
@@ -50,6 +67,11 @@ public class ResultsTable {
 		return panel;
 	}
 	
+	/**
+	 * Gets the table.
+	 *
+	 * @return the table
+	 */
 	public JTable getTable(){
 		DefaultTableModel dm = new DefaultTableModel();
 		dm.setDataVector(new Object[][]{
@@ -62,6 +84,7 @@ public class ResultsTable {
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			protected JTableHeader createDefaultTableHeader() {
 				return new GroupableTableHeader(columnModel);
 			}
@@ -98,6 +121,13 @@ public class ResultsTable {
 		table.setFillsViewportHeight(true);
 		return table;
 	}
+	
+	/**
+	 * Gets the pane.
+	 *
+	 * @param table the table
+	 * @return the pane
+	 */
 	public JScrollPane getPane(JTable table){
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setViewportView(table);
@@ -105,6 +135,11 @@ public class ResultsTable {
 		return scroll;
 	}
 
+	/**
+	 * Gets the panel.
+	 *
+	 * @return the panel
+	 */
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -138,6 +173,18 @@ public class ResultsTable {
 
 		return panel;
 	}	
+	
+	/**
+	 * Gets the scenario summary.
+	 *
+	 * @return the scenario summary
+	 */
+	public JScrollPane getScenarioSummary(){
+		JScrollPane summaryCont = new JScrollPane();
+		JTextPane summary = new JTextPane();
+		summaryCont.add(summary);
+		return summaryCont;
+	}
 
 
 }

@@ -1,23 +1,37 @@
+/*
+ * 
+ */
 package database;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReadFleetData.
+ */
 public class ReadFleetData {
+	
+	/**
+	 * Instantiates a new read fleet data.
+	 */
 	public ReadFleetData(){}
 
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
 	public Object[][] getData(){
 		BufferedReader br = null;
 		String line = "";
 		ArrayList<String[]> data = new ArrayList<String[]>();
-		URL url = this.getClass().getClassLoader().getResource("Files/FleetData.csv");
 		try {
-			br = new BufferedReader(new FileReader(url.getPath()));
+			br = new BufferedReader(new FileReader("Files/FleetData.csv"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

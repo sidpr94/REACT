@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.fleet;
 
 import java.awt.event.ActionEvent;
@@ -16,25 +19,61 @@ import javax.swing.JTextField;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
-import angim.ForecastOperation;
+import angim.ForecastScenarios;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InsertFleetTechnology.
+ */
 public class InsertFleetTechnology implements ActionListener{
+	
+	/** The fleet. */
 	JComboBox<String> fleet;
+	
+	/** The op. */
 	JComboBox<String> op;
+	
+	/** The text. */
 	JTextField text;
+	
+	/** The start. */
 	JButton start;
+	
+	/** The stop. */
 	JButton stop;
+	
+	/** The fleet changed. */
 	public static HashMap<String,Number> fleetChanged = new HashMap<String,Number>();
+	
+	/**
+	 * Instantiates a new insert fleet technology.
+	 *
+	 * @param start the start
+	 * @param stop the stop
+	 * @param fleet the fleet
+	 * @param text the text
+	 */
 	public InsertFleetTechnology(JButton start,JButton stop,JComboBox<String> fleet,JTextField text){
 		this.fleet = fleet;
 		this.text = text;
 		this.start = start;
 		this.stop = stop;
 	}
+	
+	/**
+	 * Instantiates a new insert fleet technology.
+	 *
+	 * @param resetTech the reset tech
+	 * @param op the op
+	 */
 	public InsertFleetTechnology(JButton resetTech, JComboBox<String> op){
 		this.stop = resetTech;
 		this.op = op;
 	};
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -78,9 +117,15 @@ public class InsertFleetTechnology implements ActionListener{
 			fleet.setSelectedIndex(selected);
 		}
 	}
+	
+	/**
+	 * Empty fleet.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void emptyFleet() throws IOException{
 		stop.doClick();
-		List<String[]> data = ForecastOperation.origData;
+		List<String[]> data = ForecastScenarios.origData;
 		String a = "";
 		if(op.getModel().getSelectedItem() == "2015 Operations"){
 			a = "KMCI_2015_REACT";

@@ -1,7 +1,11 @@
+/*
+ * 
+ */
 package basemap;
 
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,8 +18,23 @@ import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Tracks creates the tracks based on csv files containing points that make up the polyline.
+ */
 public class Tracks {
+	
+	/**
+	 * Instantiates a new tracks.
+	 */
 	public Tracks(){};
+	
+	/**
+	 * Creates the tracks.
+	 *
+	 * @return the tracks graphics layer
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public GraphicsLayer createTracks() throws IOException{
 		GraphicsLayer trackLayer = new GraphicsLayer();
 		SimpleLineSymbol symbol = null;
@@ -51,24 +70,41 @@ public class Tracks {
 		return trackLayer;
 	}
 
+	/**
+	 * Gets the file path names.
+	 *
+	 * @return the file path strings for each track
+	 */
 	private String[] getFile(){
 		String[] urls = new String[36];
 		for(int i = 0; i < 17; i++){
-			urls[i] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/J"+(i+1)+"/J"+(i+1)+".csv").getPath();
+			File newFile = new File("Files/Tracks/J"+(i+1)+"/J"+(i+1)+".csv");
+			urls[i] = newFile.getAbsolutePath();
 		}
-		urls[17] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/J4A/J4A.csv").getPath();
+		File newFile = new File("Files/Tracks/J4A/J4A.csv");
+		urls[17] = newFile.getAbsolutePath();
 		for(int j = 18; j < 24; j++){
-			urls[j] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/Arrivals/A"+(j+1-18)+".csv").getPath();
+			newFile = new File("Files/Tracks/Arrivals/A"+(j+1-18)+".csv");
+			urls[j] = newFile.getAbsolutePath();
 		}
 		for(int k = 24; k < 30; k++){
-			urls[k] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/Arrivals/A"+(k+1-24)+"A.csv").getPath();
+			newFile = new File("Files/Tracks/Arrivals/A"+(k+1-24)+"A.csv");
+			urls[k] = newFile.getAbsolutePath();
 		}
 		for(int k = 30; k < 36; k++){
-			urls[k] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/Arrivals/A"+(k+1-30)+"B.csv").getPath();
+			newFile = new File("Files/Tracks/Arrivals/A"+(k+1-30)+"B.csv");
+			urls[k] = newFile.getAbsolutePath();
 		}
 		return urls;
 	}
 
+	/**
+	 * Creates the polyline for the track based on coordinate points.
+	 *
+	 * @param x the longitudinal coordinate
+	 * @param y the latitude coordinate
+	 * @return the track line
+	 */
 	private Polyline createLine(List<Double> x, List<Double> y){
 		Polyline line = new Polyline();
 		line.startPath(x.get(0), y.get(0));
@@ -78,6 +114,11 @@ public class Tracks {
 		return line;
 	}
 
+	/**
+	 * Gets the track names for each track to be added as an attribute for hte graphic.
+	 *
+	 * @return the track names
+	 */
 	public String[] getTrackNames(){
 		String[] names = new String[36];
 		for(int i = 0; i < 17; i++){
@@ -96,6 +137,11 @@ public class Tracks {
 		return names;
 	}
 
+	/**
+	 * Gets the runway names for each track.
+	 *
+	 * @return the runway names for each track to be added as an attribute
+	 */
 	private String[] getRunway(){
 		String[] tracks = getTrackNames();
 		String[] names = new String[36];

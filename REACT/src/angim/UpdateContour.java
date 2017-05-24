@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package angim;
 
 import java.awt.Color;
@@ -12,34 +15,80 @@ import java.util.Map;
 
 import javax.swing.JComboBox;
 
-import com.esri.core.geometry.Polyline;
+import com.esri.core.geometry.Polygon;
 import com.esri.core.map.Graphic;
+import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 import com.esri.map.JMap;
 
-import basemap.NoiseContour;
-
+// TODO: Auto-generated Javadoc
+/**
+ * Updates or resets the contour in accordance to ANGIM output
+ * @author Sidharth Prem
+ * @see content.RunANGIM
+ */
 public class UpdateContour {
+	
+	/** The main map containing airport information. */
 	JMap map;
+	
+	/** The ComboBox that contains operation forecasting information. */
 	JComboBox<String> op;
+	
+	/** The state that describes whether contour is being reset or updated. */
 	String state;
+	
+	/** The longitudinal reference of runway 01L. */
 	static double long_ref = -1.653338445;
+	
+	/** The latitude reference of runway 01L. */
 	static double lat_ref = 0.685798105;
+	
+	/** The radius of earth in nmi. */
 	static double R_earth = 3440.069517;
+	
+	/** The rotational degree of 01L. */
 	static double rot_deg = 1.346084905;
+	
+	/** The dnl55 color value for tte contour. */
 	Color DNL55 = new Color(56,168,0);
+	
+	/** The dnl60 color value for tte contour. */
 	Color DNL60 = new Color(0,92,230);
+	
+	/** The dnl65 color value for tte contour. */
 	Color DNL65 = new Color(255,0,0);
+	
+	/**
+	 * Instantiates a new update contour.
+	 *
+	 * @param map the map
+	 * @param op the op
+	 * @param s the s
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public UpdateContour(JMap map, JComboBox<String> op, String s) throws IOException{
 		this.map = map;
 		this.op = op;
 		this.state = s;
 		
 	}
+	
+	/**
+	 * Instantiates a new update contour.
+	 *
+	 * @param map the main map
+	 */
 	public UpdateContour(JMap map){
 		this.map = map;
 	}
+	
+	/**
+	 * Update contour graphic to the resulting ANGIM outputs.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void updateContourGraphic() throws IOException{
 		GraphicsLayer noise = (GraphicsLayer) map.getLayers().get(3);	
 		BufferedReader[] readers = new BufferedReader[3];
@@ -68,21 +117,26 @@ public class UpdateContour {
 			}
 			Map<String,Object> att = new HashMap<String,Object>();
 			att.put("Contour", DNL);
-			SimpleLineSymbol symbol;
+			SimpleFillSymbol symbol;
 			if(DNL == 55){
-				symbol = new SimpleLineSymbol(DNL55,5);
+				symbol = new SimpleFillSymbol(DNL55,new SimpleLineSymbol(DNL55,5), SimpleFillSymbol.Style.NULL);
 			}else if (DNL == 60){
-				symbol = new SimpleLineSymbol(DNL60,5);
+				symbol = new SimpleFillSymbol(DNL55,new SimpleLineSymbol(DNL60,5), SimpleFillSymbol.Style.NULL);
 			}else {
-				symbol = new SimpleLineSymbol(DNL65,5);
+				symbol = new SimpleFillSymbol(DNL65,new SimpleLineSymbol(DNL65,5), SimpleFillSymbol.Style.NULL);
 			}
-			Graphic g = new Graphic(createLine(lon,lat),symbol,att);
+			Graphic g = new Graphic(createPoly(lon,lat),symbol,att);
 			
 			noise.updateGraphic(id[i], g);
 		}
 		
 	}
 	
+	/**
+	 * Adds the scenario graphic to the compare map for the Results Pane.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void addScenarioGraphic() throws IOException{
 		GraphicsLayer noise = (GraphicsLayer) map.getLayers().get(3);	
 		BufferedReader[] readers = new BufferedReader[3];
@@ -111,21 +165,26 @@ public class UpdateContour {
 			}
 			Map<String,Object> att = new HashMap<String,Object>();
 			att.put("Contour", DNL);
-			SimpleLineSymbol symbol;
+			SimpleFillSymbol symbol;
 			if(DNL == 55){
-				symbol = new SimpleLineSymbol(DNL55,5,SimpleLineSymbol.Style.DASH);
+				symbol = new SimpleFillSymbol(DNL55,new SimpleLineSymbol(DNL55,5,SimpleLineSymbol.Style.DASH), SimpleFillSymbol.Style.NULL);
 			}else if (DNL == 60){
-				symbol = new SimpleLineSymbol(DNL60,5,SimpleLineSymbol.Style.DASH);
+				symbol = new SimpleFillSymbol(DNL60,new SimpleLineSymbol(DNL60,5,SimpleLineSymbol.Style.DASH), SimpleFillSymbol.Style.NULL);
 			}else {
-				symbol = new SimpleLineSymbol(DNL65,5,SimpleLineSymbol.Style.DASH);
+				symbol = new SimpleFillSymbol(DNL65,new SimpleLineSymbol(DNL65,5,SimpleLineSymbol.Style.DASH), SimpleFillSymbol.Style.NULL);
 			}
-			Graphic g = new Graphic(createLine(lon,lat),symbol,att);
+			Graphic g = new Graphic(createPoly(lon,lat),symbol,att);
 			
 			noise.updateGraphic(id[i], g);
 		}
 		
 	}
 	
+	/**
+	 * Gets the file path that contains the noise contour information.
+	 *
+	 * @return the strings of path names for each Contour level
+	 */
 	private String[] getFile(){
 		String[] urls = new String[3];
 		String a = "";
@@ -153,13 +212,23 @@ public class UpdateContour {
 			File file3 = new File("OUT/Contours/Contours_"+a+"_MCI_65.csv");
 			urls[2]= file3.getAbsolutePath();
 		} else if (state == "reset"){
-			urls[0] = NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_55.csv").getPath();
-			urls[1] = NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_60.csv").getPath();
-			urls[2]= NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_65.csv").getPath();
+			File file1 = new File("Files/Contours_KMCI_2015_REACT_MCI_55.csv");
+			urls[0] = file1.getAbsolutePath();
+			File file2 = new File("Files/Contours_KMCI_2015_REACT_MCI_60.csv");
+			urls[1] = file2.getAbsolutePath();
+			File file3 = new File("Files/Contours_KMCI_2015_REACT_MCI_65.csv");
+			urls[2]= file3.getAbsolutePath();
 		}
 		return urls;
 	}
 
+	/**
+	 * Change coord system from nmi to degrees.
+	 *
+	 * @param xnmi the ANGIM x coordinate in nmi
+	 * @param ynmi the ANGIM y coordinate in nmi
+	 * @return the double[] containing the longitude and latitude information 
+	 */
 	private double[] changeCoordSystem(double xnmi, double ynmi){
 		double xnmirot = xnmi*Math.cos(rot_deg)-ynmi*Math.sin(rot_deg);
 		double ynmirot = ynmi*Math.cos(rot_deg)+xnmi*Math.sin(rot_deg);
@@ -181,12 +250,19 @@ public class UpdateContour {
 		return longlat;
 	}
 	
-	private Polyline createLine(List<Double> x, List<Double> y){
-		Polyline line = new Polyline();
-		line.startPath(x.get(0), y.get(0));
+	/**
+	 * Creates the polygon from a set of points.
+	 *
+	 * @param x the list of longitudinal points
+	 * @param y the list of latitude points
+	 * @return the polygon to be created
+	 */
+	private Polygon createPoly(List<Double> x, List<Double> y){
+		Polygon poly = new Polygon();
+		poly.startPath(x.get(0), y.get(0));
 		for(int i = 1; i < x.size(); i++){
-			line.lineTo(x.get(i), y.get(i));
+			poly.lineTo(x.get(i), y.get(i));
 		}
-		return line;
+		return poly;
 	}
 }

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package results;
 
 import java.awt.Color;
@@ -11,20 +14,29 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicTableHeaderUI;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GroupableTableHeaderUI.
+ */
 public class GroupableTableHeaderUI extends BasicTableHeaderUI {
 
+    /**
+     * Gets the header.
+     *
+     * @return the header
+     */
     protected GroupableTableHeader getHeader() {
         return (GroupableTableHeader) header;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTableHeaderUI#paint(java.awt.Graphics, javax.swing.JComponent)
+     */
     @Override
     public void paint(Graphics g, JComponent c) {
         Rectangle clipBounds = g.getClipBounds();
@@ -65,6 +77,13 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         }
     }
 
+    /**
+     * Paint cell.
+     *
+     * @param g the g
+     * @param cellRect the cell rect
+     * @param columnIndex the column index
+     */
     private void paintCell(Graphics g, Rectangle cellRect, int columnIndex) {
         TableColumn aColumn = header.getColumnModel().getColumn(columnIndex);
         TableCellRenderer renderer = aColumn.getHeaderRenderer();
@@ -83,6 +102,13 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         rendererPane.paintComponent(g, c, header, cellRect.x, cellRect.y, cellRect.width, cellRect.height, true);
     }
 
+    /**
+     * Paint cell.
+     *
+     * @param g the g
+     * @param cellRect the cell rect
+     * @param cGroup the c group
+     */
     private void paintCell(Graphics g, Rectangle cellRect, ColumnGroup cGroup) {
         TableCellRenderer renderer = cGroup.getHeaderRenderer();
         if (renderer == null) {
@@ -95,6 +121,11 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
                 .paintComponent(g, component, header, cellRect.x, cellRect.y, cellRect.width, cellRect.height, true);
     }
 
+    /**
+     * Gets the header height.
+     *
+     * @return the header height
+     */
     private int getHeaderHeight() {
         int headerHeight = 0;
         TableColumnModel columnModel = header.getColumnModel();
@@ -117,6 +148,9 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         return headerHeight;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTableHeaderUI#getPreferredSize(javax.swing.JComponent)
+     */
     @Override
     public Dimension getPreferredSize(JComponent c) {
         int width = 0;
@@ -127,6 +161,12 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI {
         return createHeaderSize(width);
     }
 
+    /**
+     * Creates the header size.
+     *
+     * @param width the width
+     * @return the dimension
+     */
     private Dimension createHeaderSize(int width) {
         TableColumnModel columnModel = header.getColumnModel();
         width += columnModel.getColumnMargin() * columnModel.getColumnCount();

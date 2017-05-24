@@ -1,7 +1,11 @@
+/*
+ * 
+ */
 package basemap;
 //This class creates the NoiseContour map from the shapefile within Files
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,22 +13,55 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.esri.core.geometry.Polyline;
+import com.esri.core.geometry.Polygon;
 import com.esri.core.map.Graphic;
+import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Creates a GraphicsLayer composed of 3 graphics: Noise Contours at 55,60,65 DNL.
+ * The graphic is created as polygons with no fill.
+ * Reference values are based on runway 01L as this is the reference for ANGIM coordinate system.
+ * Conversion between nmi to degrees is necessary as ANGIM coordinates are in nmi.
+ * @author Sidharth Prem
+ * @see basemap.createMainMap
+ */
 public class NoiseContour {
 
+	/** The longitudinal reference for runway 01L. */
 	static double long_ref = -1.653338445;
+	
+	/** The latitude reference for ruwnay 01L. */
 	static double lat_ref = 0.685798105;
+	
+	/** The radius of the earth. */
 	static double R_earth = 3440.069517;
+	
+	/** The rotational angle for runway 01L. */
 	static double rot_deg = 1.346084905;
+	
+	/** The dnl55 color value. */
 	Color DNL55 = new Color(56,168,0);
+	
+	/** The dnl60 color value. */
 	Color DNL60 = new Color(0,92,230);
+	
+	/** The dnl65 color value. */
 	Color DNL65 = new Color(255,0,0);
+	
+	/**
+	 * Instantiates a new noise contour.
+	 */
 	public NoiseContour(){};
 
+	/**
+	 * Creates the noise contour for each DNL level
+	 *
+	 * @return the noise contour graphics layer
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public GraphicsLayer createNoiseContour() throws IOException{
 		BufferedReader[] readers = new BufferedReader[3];
 		readers[0] = new BufferedReader(new FileReader(getFile()[0]));
@@ -50,28 +87,43 @@ public class NoiseContour {
 			}
 			Map<String,Object> att = new HashMap<String,Object>();
 			att.put("Contour", DNL);
-			SimpleLineSymbol symbol;
+			SimpleFillSymbol symbol;
 			if(DNL == 55){
-				symbol = new SimpleLineSymbol(DNL55,5);
+				symbol = new SimpleFillSymbol(DNL55,new SimpleLineSymbol(DNL55,5), SimpleFillSymbol.Style.NULL);
 			}else if (DNL == 60){
-				symbol = new SimpleLineSymbol(DNL60,5);
+				symbol = new SimpleFillSymbol(DNL60,new SimpleLineSymbol(DNL60,5), SimpleFillSymbol.Style.NULL);
 			}else {
-				symbol = new SimpleLineSymbol(DNL65,5);
+				symbol = new SimpleFillSymbol(DNL65,new SimpleLineSymbol(DNL65,5), SimpleFillSymbol.Style.NULL);
 			}
-			Graphic g = new Graphic(createLine(lon,lat),symbol,att);
+			Graphic g = new Graphic(createPoly(lon,lat),symbol,att);
 			noiseLayer.addGraphic(g);
 		}
 		return noiseLayer;
 	}
 
+	/**
+	 * Gets the files that contain the point values for the noise contours
+	 *
+	 * @return the file path names
+	 */
 	private String[] getFile(){
 		String[] urls = new String[3];
-		urls[0] = NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_55.csv").getPath();
-		urls[1] = NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_60.csv").getPath();
-		urls[2]= NoiseContour.class.getClassLoader().getResource("Files/Contours_KMCI_2015_REACT_MCI_65.csv").getPath();
+		File file1 = new File("Files/Contours_KMCI_2015_REACT_MCI_55.csv");
+		urls[0] = file1.getAbsolutePath();
+		File file2 = new File("Files/Contours_KMCI_2015_REACT_MCI_60.csv");
+		urls[1] = file2.getAbsolutePath();
+		File file3 = new File("Files/Contours_KMCI_2015_REACT_MCI_65.csv");
+		urls[2]= file3.getAbsolutePath();
 		return urls;
 	}
 
+	/**
+	 * Change coord system from xnmi ANGIM coordinates to longtiude and latitude WSG84
+	 *
+	 * @param xnmi the x ANGIM coordinate in nmi
+	 * @param ynmi the y ANGIM coordinate in nmi
+	 * @return the double[] containing longitude and latitude point
+	 */
 	private double[] changeCoordSystem(double xnmi, double ynmi){
 		double xnmirot = xnmi*Math.cos(rot_deg)-ynmi*Math.sin(rot_deg);
 		double ynmirot = ynmi*Math.cos(rot_deg)+xnmi*Math.sin(rot_deg);
@@ -93,13 +145,20 @@ public class NoiseContour {
 		return longlat;
 	}
 	
-	private Polyline createLine(List<Double> x, List<Double> y){
-		Polyline line = new Polyline();
-		line.startPath(x.get(0), y.get(0));
+	/**
+	 * Creates the polygon.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return the polygon
+	 */
+	private Polygon createPoly(List<Double> x, List<Double> y){
+		Polygon poly = new Polygon();
+		poly.startPath(x.get(0), y.get(0));
 		for(int i = 1; i < x.size(); i++){
-			line.lineTo(x.get(i), y.get(i));
+			poly.lineTo(x.get(i), y.get(i));
 		}
-		return line;
+		return poly;
 	}
 
 }

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.fleet;
 
 import java.awt.Color;
@@ -17,12 +20,29 @@ import javax.swing.SwingConstants;
 import GUI.AutoCompletion;
 import database.ReadFleetData;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FleetTechnology.
+ */
 public class FleetTechnology {
+	
+	/** The reset. */
 	JButton reset;
+	
+	/**
+	 * Instantiates a new fleet technology.
+	 *
+	 * @param reset the reset
+	 */
 	public FleetTechnology(JButton reset){
 		this.reset = reset;
 	}
 
+	/**
+	 * Gets the fleet.
+	 *
+	 * @return the fleet
+	 */
 	public JPanel getFleet(){
 		ReadFleetData rd = new ReadFleetData();
 		Object[][] data = rd.getData();

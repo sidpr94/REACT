@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package results;
 
 import java.awt.Color;
@@ -13,10 +16,23 @@ import javax.swing.border.LineBorder;
 
 import com.esri.toolkit.JLayerList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultLayerList.
+ */
 public class ResultLayerList {
 	
+	/**
+	 * Instantiates a new result layer list.
+	 */
 	public ResultLayerList(){}
 	
+	/**
+	 * Gets the map layer.
+	 *
+	 * @param jLayerlist the j layerlist
+	 * @return the map layer
+	 */
 	public JPanel getMapLayer(JLayerList jLayerlist){
 		//Creates a text field for the title of the control panel
 		JTextField txtTitle = new JTextField();

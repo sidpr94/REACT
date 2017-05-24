@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.runway;
 
 import java.awt.Color;
@@ -12,10 +15,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RunwayEnhancement.
+ */
 public class RunwayEnhancement {
 
+	/**
+	 * Instantiates a new runway enhancement.
+	 */
 	public RunwayEnhancement(){}
 
+	/**
+	 * Gets the run.
+	 *
+	 * @return the run
+	 */
 	public JPanel getRun(){
 		JPanel runInputs = new JPanel();
 		runInputs.setBackground(new Color(51,81,112));

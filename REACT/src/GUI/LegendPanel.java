@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package GUI;
 //creates the JPanel containing the legend for the layers on the map
 import java.awt.Color;
@@ -12,18 +15,51 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LegendPanel.
+ */
 public class LegendPanel {
+	
+	/** The bg. */
 	Color bg;
+	
+	/** The text. */
 	String text;
+	
+	/** The width. */
 	int width;
+	
+	/** The height. */
 	int height;
-	Dimension d = new Dimension((int)width/8,(int)height/32);
-	Dimension e = new Dimension((int)width/16,(int)height/32);
+	
+	/** The d. */
+	Dimension d = new Dimension(width/8,height/32);
+	
+	/** The e. */
+	Dimension e = new Dimension(width/16,height/32);
+	
+	/**
+	 * Instantiates a new legend panel.
+	 */
 	public LegendPanel(){}
+	
+	/**
+	 * Instantiates a new legend panel.
+	 *
+	 * @param w the w
+	 * @param h the h
+	 */
 	public LegendPanel(int w, int h){
 		this.width = w;
 		this.height = h;
 	};
+	
+	/**
+	 * Gets the legend.
+	 *
+	 * @return the legend
+	 */
 	//creates the final legend calling the get methods
 	public JPanel getLegend(){
 		final JPanel legendPanel = new JPanel(new GridLayout(17,1){
@@ -32,9 +68,10 @@ public class LegendPanel {
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public Dimension preferredLayoutSize(Container target){
 				Dimension sd = super.preferredLayoutSize(target);
-				sd.width = (int)width/8;
+				sd.width = width/8;
 				return sd;
 			}
 		});

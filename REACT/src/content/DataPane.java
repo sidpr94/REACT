@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package content;
 
 import java.awt.Color;
@@ -27,7 +30,13 @@ import javax.swing.table.TableRowSorter;
 import database.ReadFleetData;
 import database.TableModel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DataPane.
+ */
 public class DataPane {
+	
+	/** The col names. */
 	String[] colNames = {"Aircraft",
 			"Track Name",
 			"Runway",
@@ -36,18 +45,34 @@ public class DataPane {
 			"Daily Night-Time Operations",
 			"Daily Total Operations"};
 
+	/** The text. */
 	String[] text = {"Aircraft",
-			"Track ID",
+			"Track Name",
 			"Runway",
 			"Operation"};
 
+	/** The table. */
 	JTable table;
+	
+	/** The search. */
 	JTextField search = new JTextField();
+	
+	/** The filters. */
 	JComboBox<String> filters = new JComboBox<>();
+	
+	/** The sorter. */
 	TableRowSorter<TableModel> sorter;
 
+	/**
+	 * Instantiates a new data pane.
+	 */
 	public DataPane(){}
 
+	/**
+	 * Gets the fine pane.
+	 *
+	 * @return the fine pane
+	 */
 	public JPanel getfinePane(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -71,6 +96,12 @@ public class DataPane {
 
 		return panel;
 	}
+	
+	/**
+	 * Gets the pane.
+	 *
+	 * @return the pane
+	 */
 	public JScrollPane getPane(){
 		ReadFleetData rdData = new ReadFleetData();
 		Object[][] data = rdData.getData();
@@ -139,6 +170,11 @@ public class DataPane {
 		return scroll;
 	}
 
+	/**
+	 * Gets the panel.
+	 *
+	 * @return the panel
+	 */
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());

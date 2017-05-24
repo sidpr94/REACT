@@ -1,7 +1,11 @@
+/*
+ * 
+ */
 package scenarioDev.track;
 
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,20 +23,47 @@ import com.esri.toolkit.overlays.HitTestEvent;
 import com.esri.toolkit.overlays.HitTestListener;
 import com.esri.toolkit.overlays.HitTestOverlay;
 
-import basemap.NoiseContour;
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InfoOverlayTrack.
+ */
 public class InfoOverlayTrack implements HitTestListener{
+	
+	/** The overlay. */
 	HitTestOverlay overlay;
+	
+	/** The layer. */
 	GraphicsLayer layer;
+	
+	/** The j map. */
 	JMap jMap;
+	
+	/** The name. */
 	public static String name = null;
+	
+	/** The vars. */
 	public static List<Graphic> vars = new ArrayList<Graphic>();
+	
+	/** The vars ID. */
 	public static List<Integer> varsID = new ArrayList<Integer>();
+	
+	/** The changed. */
 	public static HashMap<String,String> changed = new HashMap<String,String>();
+	
+	/**
+	 * Instantiates a new info overlay track.
+	 *
+	 * @param featureLayer the feature layer
+	 * @param map the map
+	 */
 	public InfoOverlayTrack(GraphicsLayer featureLayer, JMap map) {
 		this.layer = featureLayer;	
 		this.jMap = map;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.esri.toolkit.overlays.HitTestListener#featureHit(com.esri.toolkit.overlays.HitTestEvent)
+	 */
 	@Override
 	public void featureHit(HitTestEvent event) {
 		HitTestOverlay overlay = event.getOverlay();
@@ -122,6 +153,13 @@ public class InfoOverlayTrack implements HitTestListener{
 			}
 		}*/
 	}	
+	
+	/**
+	 * Creates the variant.
+	 *
+	 * @param hit the hit
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void createVariant(Graphic hit) throws IOException{
 		BufferedReader reader = null;
 		SimpleLineSymbol symbol = new SimpleLineSymbol(Color.RED,4);
@@ -147,6 +185,13 @@ public class InfoOverlayTrack implements HitTestListener{
 			varsID.add(layer.addGraphic(g));
 		}
 	}
+	
+	/**
+	 * Gets the file.
+	 *
+	 * @param hit the hit
+	 * @return the file
+	 */
 	private String[] getFile(Graphic hit){
 		String name = hit.getAttributeValue("TrackName").toString();
 		String[] urls = null;
@@ -158,11 +203,19 @@ public class InfoOverlayTrack implements HitTestListener{
 			urls = new String[5];
 		}
 		for(int i = 0; i < urls.length; i++){
-			urls[i] = NoiseContour.class.getClassLoader().getResource("Files/Tracks/"+name+"/"+name+"_v"+(i+1)+".csv").getPath();
+			File newFile = new File("Files/Tracks/"+name+"/"+name+"_v"+(i+1)+".csv");
+			urls[i] = newFile.getAbsolutePath();
 		}
 		return urls;
 	}
 
+	/**
+	 * Creates the line.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 * @return the polyline
+	 */
 	private Polyline createLine(List<Double> x, List<Double> y){
 		Polyline line = new Polyline();
 		line.startPath(x.get(0), y.get(0));

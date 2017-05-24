@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package basemap;
 
 import java.awt.Color;
@@ -9,8 +12,22 @@ import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Runway creates the runways for Kansas City International Airport: 01L-19R, 01R-19L, 09-27.
+ */
 public class Runway{
+	
+	/**
+	 * Instantiates a new runway.
+	 */
 	public Runway(){};
+	
+	/**
+	 * Creates the runways based on coordinates of the runway ends.
+	 *
+	 * @return the runway graphics layer 
+	 */
 	public GraphicsLayer createRunway(){
 
 		Polyline O1L19R = new Polyline();

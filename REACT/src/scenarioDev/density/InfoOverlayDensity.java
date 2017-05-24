@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.density;
 
 import java.awt.Color;
@@ -31,25 +34,65 @@ import com.esri.toolkit.overlays.HitTestEvent;
 import com.esri.toolkit.overlays.HitTestListener;
 import com.esri.toolkit.overlays.HitTestOverlay;
 
+import basemap.PopMap;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InfoOverlayDensity.
+ */
 public class InfoOverlayDensity implements HitTestListener{
+	
+	/** The overlay. */
 	HitTestOverlay overlay;
+	
+	/** The layer. */
 	GraphicsLayer layer;
+	
+	/** The flayer. */
 	FeatureLayer flayer;
+	
+	/** The button. */
 	JButton button;
+	
+	/** The list. */
 	private static Map<Integer,Graphic> list = new HashMap<Integer,Graphic>();
+	
+	/** The j map. */
 	JMap jMap;
+	
+	/** The x. */
 	int x = 0;
+	
+	/** The y. */
 	int y = 0;
+	
+	/**
+	 * Instantiates a new info overlay density.
+	 *
+	 * @param featureLayer the feature layer
+	 * @param map the map
+	 * @param btn the btn
+	 */
 	public InfoOverlayDensity(GraphicsLayer featureLayer, JMap map, JButton btn) {
 		this.layer = featureLayer;	
 		this.jMap = map;
 		this.button = btn;
 	}
 
+	/**
+	 * Instantiates a new info overlay density.
+	 *
+	 * @param featureLayer the feature layer
+	 * @param map the map
+	 */
 	public InfoOverlayDensity(FeatureLayer featureLayer, JMap map) {
 		this.flayer = featureLayer;	
 		this.jMap = map;
 	}	
+	
+	/* (non-Javadoc)
+	 * @see com.esri.toolkit.overlays.HitTestListener#featureHit(com.esri.toolkit.overlays.HitTestEvent)
+	 */
 	@Override
 	public void featureHit(HitTestEvent event) {
 		// TODO Auto-generated method stub
@@ -144,6 +187,7 @@ public class InfoOverlayDensity implements HitTestListener{
 						Map<String,Object> att = new HashMap<String,Object>();
 						att.put("POP10", spinner.getValue());
 						list.put(hitGraphic.getUid(), hitGraphic);
+						PopMap.graphics.replace(hitGraphic.getUid(), hitGraphic);
 						Graphic replace = new Graphic(hitGraphic.getGeometry(),null,att);
 						layer.updateGraphic(hitGraphic.getUid(), replace);
 						popup.close();
@@ -161,7 +205,7 @@ public class InfoOverlayDensity implements HitTestListener{
 								Graphic g = entry.getValue();
 								Graphic reset = new Graphic(g.getGeometry(),null,g.getAttributes());
 								layer.updateGraphic(entry.getKey(), reset);
-
+								PopMap.graphics.replace(entry.getKey(), reset);
 							}
 							list.clear();
 						}

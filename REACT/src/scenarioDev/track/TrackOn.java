@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.track;
 
 import java.awt.Color;
@@ -12,17 +15,39 @@ import com.esri.map.JMap;
 import com.esri.toolkit.overlays.HitTestOverlay;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TrackOn.
+ */
 public class TrackOn implements ActionListener {
+	
+	/** The map. */
 	JMap map;
+	
+	/** The track. */
 	GraphicsLayer track;
+	
+	/** The hit test overlay. */
 	HitTestOverlay hitTestOverlay;
+	
+	/** The info. */
 	InfoOverlayTrack info;
+	
+	/**
+	 * Instantiates a new track on.
+	 *
+	 * @param jMap the j map
+	 */
 	public TrackOn(JMap jMap){
 		this.map = jMap;
 		this.track = (GraphicsLayer) jMap.getLayers().get(2);
 		this.hitTestOverlay = new HitTestOverlay(track);
 		this.info = new InfoOverlayTrack(track,map);
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

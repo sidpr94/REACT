@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package content;
 
 import java.awt.Color;
@@ -5,18 +8,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -28,18 +23,45 @@ import GUI.MapLayer;
 import GUI.MapLayerButton;
 import GUI.mapCoordPanel;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GuiPane.
+ */
 public class GuiPane {
+	
+	/** The j layer list. */
 	JLayerList jLayerList;
+	
+	/** The coord txt. */
 	JTextArea coordTxt;
+	
+	/** The d. */
 	Dimension d;
+	
+	/**
+	 * Instantiates a new gui pane.
+	 */
 	public GuiPane(){}
 
+	/**
+	 * Instantiates a new gui pane.
+	 *
+	 * @param list the list
+	 * @param txt the txt
+	 * @param screen the screen
+	 */
 	public GuiPane(JLayerList list, JTextArea txt, Dimension screen){
 		this.jLayerList = list;
 		this.coordTxt = txt;
 		this.d = screen;
 	}
 
+	/**
+	 * Gets the GU ipane.
+	 *
+	 * @return the GU ipane
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public JPanel getGUIpane() throws IOException{
 		LegendPanel lPanel = new LegendPanel(d.width,d.height);
 		JPanel legendPanel = lPanel.getLegend();
@@ -50,10 +72,6 @@ public class GuiPane {
 		MapLayer lyrPanel = new MapLayer(d.width,d.height);
 		JPanel layerPanel = lyrPanel.getMapLayer(jLayerList); 
 		MapLayerButton mbtn = new MapLayerButton(layerPanel,d.width,d.height);
-
-		URL url = this.getClass().getClassLoader().getResource("Files/Logos/Buzz.png");
-		BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(100, 100, Image.SCALE_FAST)));
 		
 		JPanel warning = new JPanel();
 		warning.setOpaque(false);

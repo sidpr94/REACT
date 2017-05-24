@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package scenarioDev.density;
 
 import java.awt.Color;
@@ -15,14 +18,39 @@ import com.esri.map.GraphicsLayer;
 import com.esri.map.JMap;
 import com.esri.toolkit.overlays.HitTestOverlay;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DensityOn.
+ */
 public class DensityOn implements ActionListener {
+	
+	/** The map. */
 	JMap map;
+	
+	/** The pop. */
 	GraphicsLayer pop;
+	
+	/** The popnoedit. */
 	FeatureLayer popnoedit;
+	
+	/** The hit test overlay. */
 	HitTestOverlay hitTestOverlay;
+	
+	/** The info. */
 	InfoOverlayDensity info;
+	
+	/** The info 1. */
 	InfoOverlayDensity info1;
+	
+	/** The hit test overlay 1. */
 	HitTestOverlay hitTestOverlay1;
+	
+	/**
+	 * Instantiates a new density on.
+	 *
+	 * @param jMap the j map
+	 * @param btn the btn
+	 */
 	public DensityOn(JMap jMap,JButton btn){
 		this.map = jMap;
 		this.pop = (GraphicsLayer) jMap.getLayers().get(1);
@@ -32,6 +60,10 @@ public class DensityOn implements ActionListener {
 		this.info = new InfoOverlayDensity(pop,map,btn);
 		this.info1 = new InfoOverlayDensity(popnoedit,map);
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

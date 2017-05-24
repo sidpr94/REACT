@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package results;
 
 import java.awt.Color;
@@ -12,16 +15,40 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ResultsLegend.
+ */
 public class ResultsLegend {
+	
+	/** The width. */
 	int width;
+	
+	/** The height. */
 	int height;
+	
+	/** The bg. */
 	Color bg;
+	
+	/** The text. */
 	String text;
+	
+	/**
+	 * Instantiates a new results legend.
+	 *
+	 * @param w the w
+	 * @param h the h
+	 */
 	public ResultsLegend(int w, int h){
 		this.width = w;
 		this.height = h;
 	}
 	
+	/**
+	 * Creates the legend.
+	 *
+	 * @return the j panel
+	 */
 	public JPanel createLegend(){
 		final JPanel legendPanel = new JPanel(new GridLayout(9,1){
 			/**
@@ -29,9 +56,10 @@ public class ResultsLegend {
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public Dimension preferredLayoutSize(Container target){
 				Dimension sd = super.preferredLayoutSize(target);
-				sd.width = (int)width/8;
+				sd.width = width/8;
 				return sd;
 			}
 		});

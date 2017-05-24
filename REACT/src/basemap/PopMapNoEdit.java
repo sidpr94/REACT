@@ -1,8 +1,11 @@
+/*
+ * 
+ */
 package basemap;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 
 import com.esri.core.geodatabase.ShapefileFeatureTable;
 import com.esri.core.renderer.ClassBreaksRenderer;
@@ -10,12 +13,27 @@ import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.FeatureLayer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The population blocks outside of the airport proximity that is not editable for land zoning.
+ * This was done to conserve computer memory.
+ */
 public class PopMapNoEdit {
+	
+	/**
+	 * Instantiates a new pop map no edit.
+	 */
 	public PopMapNoEdit(){}
 
+	/**
+	 * Creates the population blocks as a shape file.
+	 *
+	 * @return the shapefile feature layer for noneditable population block.
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public FeatureLayer createPop() throws FileNotFoundException{
-		URL url = this.getClass().getClassLoader().getResource("Files/Shapefiles/PopMapNoEdit.shp");
-		ShapefileFeatureTable pop = new ShapefileFeatureTable(url.getPath().replace("/", "\\").substring(1));
+		File file = new File("Files/Shapefiles/PopMapNoEdit.shp");
+		ShapefileFeatureTable pop = new ShapefileFeatureTable(file.getAbsolutePath());
 		FeatureLayer layer = new FeatureLayer(pop);
 		ClassBreaksRenderer cbrenderer = new ClassBreaksRenderer(new SimpleFillSymbol(Color.WHITE,new SimpleLineSymbol(Color.BLACK,1)),"POP10");
 		cbrenderer.addBreak(0,14,new SimpleFillSymbol(Color.getHSBColor(0, 0, 1),new SimpleLineSymbol(Color.getHSBColor(0,0,0.43f),0.3f)));

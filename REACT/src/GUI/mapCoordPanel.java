@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package GUI;
 
 import java.awt.Color;
@@ -12,15 +15,40 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class mapCoordPanel.
+ */
 public class mapCoordPanel {
+	
+	/** The width. */
 	int width;
+	
+	/** The height. */
 	int height;
+	
+	/**
+	 * Instantiates a new map coord panel.
+	 */
 	public mapCoordPanel(){}
+	
+	/**
+	 * Instantiates a new map coord panel.
+	 *
+	 * @param w the w
+	 * @param h the h
+	 */
 	public mapCoordPanel(int w, int h){
 		this.width = w;
 		this.height = h;
 	}
 
+	/**
+	 * Gets the coord panel.
+	 *
+	 * @param coordTxt the coord txt
+	 * @return the coord panel
+	 */
 	public JPanel getCoordPanel(JTextArea coordTxt){
 		JTextField coordTitle = new JTextField();
 		coordTitle.setText("Map Coordinates");
@@ -46,6 +74,11 @@ public class mapCoordPanel {
 		return coordPanel;
 	}
 
+	/**
+	 * Gets the coord txt.
+	 *
+	 * @return the coord txt
+	 */
 	public JTextArea getCoordTxt(){
 		JTextArea coordTxt = new JTextArea(1,1);
 		coordTxt.setLineWrap(true);

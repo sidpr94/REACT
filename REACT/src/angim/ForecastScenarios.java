@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package angim;
 
 import java.io.BufferedReader;
@@ -19,12 +22,35 @@ import com.opencsv.CSVWriter;
 import scenarioDev.fleet.InsertFleetTechnology;
 import scenarioDev.track.InfoOverlayTrack;
 
-public class ForecastOperation {
+// TODO: Auto-generated Javadoc
+/**
+ * Edits all excel files for ANGIM and sets up the calculations for ANGIM to run.
+ * Files edited: CONFIG/CaseList.csv, IN/FlightSchedules/...csv
+ * @author Sidharth Prem
+ * @see angim.CalculateNoise
+ */
+public class ForecastScenarios {
+	
+	/** The ComboBox containing Operation Forecasting Information. */
 	JComboBox<String> op;
+	
+	/** The Original Data before fleet technology is inserted. */
 	public static List<String[]> origData = new ArrayList<String[]>();
-	public ForecastOperation(JComboBox<String> op){
+	
+	/**
+	 * Instantiates a new forecast operation.
+	 *
+	 * @param op the op
+	 */
+	public ForecastScenarios(JComboBox<String> op){
 		this.op = op;
 	}
+	
+	/**
+	 * Ensures ANGIM uses the correct forecast year flight schedule by editing CaseList file
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void updateOperations() throws IOException{
 		File inputFile = new File("CONFIG/CaseList.csv");
 		CSVReader reader = new CSVReader(new FileReader(inputFile),',');
@@ -50,6 +76,14 @@ public class ForecastOperation {
 		writer.flush();
 		writer.close();
 	}
+	
+	/**
+	 * Insert fleet technology.
+	 * Edit flight schedules for the appropriate Track variant inserted
+	 * ACKey contains the official aircraft title versus ANGIM recognized aircraft titles (i.e. Boeing 737 - B737).
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public void insertFleetTechnology() throws IOException{
 		String a = "";
 		if(op.getModel().getSelectedItem() == "2015 Operations"){
@@ -72,8 +106,9 @@ public class ForecastOperation {
 		CSVReader reader = new CSVReader(new FileReader(inputFile),',');
 		List<String[]> csvBody = reader.readAll();
 		origData = csvBody;
+		//fleetChanged contains the aircraft that are currently edited
 		HashMap<String,Number> fleetToChange = InsertFleetTechnology.fleetChanged;
-		File ackey = new File(this.getClass().getClassLoader().getResource("Files/ACKey.csv").getPath());
+		File ackey = new File("Files/ACKey.csv");
 		BufferedReader rdr = new BufferedReader(new FileReader(ackey));
 		HashMap<String,String> ac = new HashMap<String,String>();
 		for(String line = rdr.readLine();line != null; line = rdr.readLine()){
@@ -88,6 +123,7 @@ public class ForecastOperation {
 				double percent = (double) entry.getValue();
 				String code = ac.get(key);
 				for(int j = 1; j < csvBody.size()-1;j++){
+					//Technology is inserted as a percent change to operations
 					if(csvBody.get(j)[0].substring(0,code.length()).equals(code)){
 						csvBody.get(j)[2] = String.valueOf((Double.parseDouble(csvBody.get(j)[2])*(1-percent/100)));
 						csvBody.get(j)[3] = String.valueOf((Double.parseDouble(csvBody.get(j)[3])*(1-percent/100)));
@@ -97,8 +133,8 @@ public class ForecastOperation {
 				}
 			}
 		}
+		//HERE IS WHERE TRACK CHANGES ARE INSERTED
 		if(!ch.isEmpty()){
-			System.out.println("Made it");
 			for(Map.Entry<String,String> entry : ch.entrySet()){
 				String key = entry.getKey();
 				String value = entry.getValue();
@@ -110,6 +146,7 @@ public class ForecastOperation {
 			}
 		}
 		reader.close();
+		//This is to make sure the strings aren't in quotes, which ANGIM can't recognize
 		CSVWriter writer = new CSVWriter(new FileWriter(inputFile), ',',CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,System.getProperty("line.separator"));
 		writer.writeAll(csvBody);
 		writer.flush();

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package GUI;
 
 import java.awt.Color;
@@ -13,14 +16,35 @@ import javax.swing.border.LineBorder;
 
 import com.esri.toolkit.JLayerList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MapLayer.
+ */
 public class MapLayer {
+	
+	/** The width. */
 	int width;
+	
+	/** The height. */
 	int height;
+	
+	/**
+	 * Instantiates a new map layer.
+	 *
+	 * @param w the w
+	 * @param h the h
+	 */
 	public MapLayer(int w, int h){
 		this.width = w;
 		this.height = h;
 	}
 
+	/**
+	 * Gets the map layer.
+	 *
+	 * @param jLayerlist the j layerlist
+	 * @return the map layer
+	 */
 	public JPanel getMapLayer(JLayerList jLayerlist){
 		//Creates a text field for the title of the control panel
 		JTextField txtTitle = new JTextField();

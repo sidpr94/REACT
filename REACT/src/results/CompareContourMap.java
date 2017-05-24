@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package results;
 
 import java.awt.Dimension;
@@ -13,13 +16,35 @@ import javax.swing.OverlayLayout;
 import com.esri.map.JMap;
 import com.esri.toolkit.JLayerList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CompareContourMap.
+ */
 public class CompareContourMap {
+	
+	/** The map. */
 	JMap map;
+	
+	/** The d. */
 	Dimension d;
+	
+	/**
+	 * Instantiates a new compare contour map.
+	 *
+	 * @param map the map
+	 * @param d the d
+	 */
 	public CompareContourMap(JMap map,Dimension d){
 		this.map = map;
 		this.d = d;
 	}
+	
+	/**
+	 * Creates the map pane.
+	 *
+	 * @return the j panel
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public JPanel createMapPane() throws IOException{
 		JPanel mapPane = new JPanel();
 		JLayerList list = new JLayerList(map);
