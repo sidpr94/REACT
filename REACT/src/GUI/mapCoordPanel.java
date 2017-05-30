@@ -17,34 +17,18 @@ import javax.swing.border.LineBorder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class mapCoordPanel.
+ * The Class mapCoordPanel creates the coordinate panel that contains information about the location of the mnouse
+ * as a coordinate location.
+ * @author Sidharth Prem
+ * @see content.GuiPane
  */
 public class mapCoordPanel {
-	
-	/** The width. */
-	int width;
-	
-	/** The height. */
-	int height;
-	
 	/**
 	 * Instantiates a new map coord panel.
 	 */
 	public mapCoordPanel(){}
-	
 	/**
-	 * Instantiates a new map coord panel.
-	 *
-	 * @param w the w
-	 * @param h the h
-	 */
-	public mapCoordPanel(int w, int h){
-		this.width = w;
-		this.height = h;
-	}
-
-	/**
-	 * Gets the coord panel.
+	 * Gets the coord panel containing text about the location on the map as the mouse moves.
 	 *
 	 * @param coordTxt the coord txt
 	 * @return the coord panel
@@ -56,7 +40,6 @@ public class mapCoordPanel {
 		coordTitle.setEnabled(false);
 		coordTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		coordTitle.setFont(new Font(coordTitle.getFont().getName(),Font.BOLD,16));
-		//coordTitle.setPreferredSize(new Dimension(170,30));
 		coordTitle.setBackground(new Color(38,38,38));
 		coordTitle.setDisabledTextColor((Color.WHITE));
 		coordTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
@@ -65,7 +48,6 @@ public class mapCoordPanel {
 		BoxLayout boxLayout2 = new BoxLayout(coordPanel, BoxLayout.Y_AXIS);
 		coordPanel.setLayout(boxLayout2);
 		coordPanel.setPreferredSize(new Dimension(260,70));
-		//coordPanel.setLocation(240,height-coordPanel.getHeight()-60);
 		coordPanel.setOpaque(false);
 		coordPanel.setBorder(new LineBorder(Color.BLACK,5));
 		coordPanel.add(coordTitle);
@@ -75,7 +57,7 @@ public class mapCoordPanel {
 	}
 
 	/**
-	 * Gets the coord txt.
+	 * Initializes the coord txt.
 	 *
 	 * @return the coord txt
 	 */
@@ -86,7 +68,6 @@ public class mapCoordPanel {
 		coordTxt.setAlignmentX(SwingConstants.CENTER);
 		coordTxt.setAlignmentY(SwingConstants.CENTER);
 		coordTxt.setFont(new Font(coordTxt.getFont().getName(), coordTxt.getFont().getStyle(), 14));
-		//coordTxt.setPreferredSize(new Dimension(170,30));
 		coordTxt.setBackground(new Color(0,0,0,255));
 		coordTxt.setForeground(Color.WHITE);
 		coordTxt.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));

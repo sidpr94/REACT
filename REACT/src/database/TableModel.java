@@ -7,17 +7,19 @@ import javax.swing.table.AbstractTableModel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class TableModel.
+ * The Class TableModel used for the database table.
+ * @author Sidharth Prem
+ * @see database.DataPane
  */
 public class TableModel extends AbstractTableModel {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** The col name. */
+	/** The column name. */
 	String[] colName;
 	
-	/** The data. */
+	/** The data in the table. */
 	Object[][] data;
 	
 	/** The debug. */

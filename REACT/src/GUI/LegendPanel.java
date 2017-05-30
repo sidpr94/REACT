@@ -2,7 +2,7 @@
  * 
  */
 package GUI;
-//creates the JPanel containing the legend for the layers on the map
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -17,26 +17,29 @@ import javax.swing.border.LineBorder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class LegendPanel.
+ * The Class LegendPanel creates the legend for the main map pane.
+ * The legend contains information about the airport boundary, noise DNL values, tracks, and population count.
+ * @author Sidharth Prem
+ * @see content.GuiPane
  */
 public class LegendPanel {
 	
-	/** The bg. */
+	/** The background color for DNL/population values. */
 	Color bg;
 	
-	/** The text. */
+	/** The text for each legend component. */
 	String text;
 	
-	/** The width. */
+	/** The width of the screen. */
 	int width;
 	
-	/** The height. */
+	/** The height of the screen. */
 	int height;
 	
-	/** The d. */
+	/** The legend panel width. */
 	Dimension d = new Dimension(width/8,height/32);
 	
-	/** The e. */
+	/** The legend element dimensions. */
 	Dimension e = new Dimension(width/16,height/32);
 	
 	/**
@@ -56,15 +59,17 @@ public class LegendPanel {
 	};
 	
 	/**
-	 * Gets the legend.
+	 * Gets the legend panel. The elements are stacked as a for each section.
+	 * 
+	 * The grids are laid out as a 1x16 within a 1x2 for each line.
 	 *
-	 * @return the legend
+	 * @return the legend panel
 	 */
-	//creates the final legend calling the get methods
+
 	public JPanel getLegend(){
 		final JPanel legendPanel = new JPanel(new GridLayout(17,1){
 			/**
-			 * 
+			 * This method allows the legend panel to have a static width and variable height
 			 */
 			private static final long serialVersionUID = 1L;
 

@@ -12,17 +12,19 @@ import javax.swing.JPanel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class LegendButton.
+ * The Class LegendButton creates a button that toggles the legend's visibility in the main map pane.
+ * @author Sidharth Prem
+ * @see GUI.LegendPanel
  */
 public class LegendButton {
 	
 	/** The legend panel. */
 	JPanel legendPanel;
 	
-	/** The width. */
+	/** The width of the screen. */
 	int width;
 	
-	/** The height. */
+	/** The height of the screen. */
 	int height;
 	
 	/**

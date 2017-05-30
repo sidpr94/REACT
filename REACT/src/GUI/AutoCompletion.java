@@ -11,7 +11,8 @@ import javax.swing.text.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AutoCompletion.
+ * The Class AutoCompletion allows the ComboBox within fleet technology panel to be editable and filterable.
+ * @see scenarioDev.fleet.FleetTechnology
  */
 /* This work is hereby released into the Public Domain.
  * To view a copy of the public domain dedication, visit

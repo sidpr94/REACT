@@ -29,11 +29,15 @@ import javax.swing.table.TableRowSorter;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class DataPane.
+ * The Class DataPane contains the table with the flight schedule information.
+ * The table information is obtained from a CSV file and populated at once.
+ * The data pane is a combination of the title block, filter text, and the table itself.
+ * @author Sidharth Prem
+ * @see basemap.REACT
  */
 public class DataPane {
 	
-	/** The col names. */
+	/** The table column names. */
 	String[] colNames = {"Aircraft",
 			"Track Name",
 			"Runway",
@@ -42,22 +46,22 @@ public class DataPane {
 			"Daily Night-Time Operations",
 			"Daily Total Operations"};
 
-	/** The text. */
+	/** The column headers that can be used to filter the table. */
 	String[] text = {"Aircraft",
 			"Track Name",
 			"Runway",
 			"Operation"};
 
-	/** The table. */
-	JTable table;
+	/** The database table. */
+	JTable Table;
 	
-	/** The search. */
+	/** The search textfield that filters the table. */
 	JTextField search = new JTextField();
 	
-	/** The filters. */
+	/** The filter used on the table. */
 	JComboBox<String> filters = new JComboBox<>();
 	
-	/** The sorter. */
+	/** The sorter that alphabetically/numerically sorts the table. */
 	TableRowSorter<TableModel> sorter;
 
 	/**
@@ -66,9 +70,9 @@ public class DataPane {
 	public DataPane(){}
 
 	/**
-	 * Gets the fine pane.
+	 * Gets the final pane containing title block and table.
 	 *
-	 * @return the fine pane
+	 * @return the final pane
 	 */
 	public JPanel getfinePane(){
 		JPanel panel = new JPanel();
@@ -95,9 +99,9 @@ public class DataPane {
 	}
 	
 	/**
-	 * Gets the pane.
+	 * Gets the table contained in a scroll pane.
 	 *
-	 * @return the pane
+	 * @return the scroll pane
 	 */
 	public JScrollPane getPane(){
 		ReadFleetData rdData = new ReadFleetData();
@@ -168,9 +172,9 @@ public class DataPane {
 	}
 
 	/**
-	 * Gets the panel.
+	 * Gets the title block containing title, filter textbox and filter combobox.
 	 *
-	 * @return the panel
+	 * @return the title block
 	 */
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();

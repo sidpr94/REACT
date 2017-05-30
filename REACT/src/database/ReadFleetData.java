@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ReadFleetData.
+ * The Class ReadFleetData compiles all flight schedule information for the baseline case and populates into the datapane.
+ * @author Sidharth Prem
+ * @see database.DataPane
  */
 public class ReadFleetData {
 	
@@ -22,9 +24,9 @@ public class ReadFleetData {
 	public ReadFleetData(){}
 
 	/**
-	 * Gets the data.
+	 * Gets the data from the CSV file called FleetData.csv.
 	 *
-	 * @return the data
+	 * @return the data as an object matrix
 	 */
 	public Object[][] getData(){
 		BufferedReader br = null;

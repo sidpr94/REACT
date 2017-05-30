@@ -35,6 +35,7 @@ import com.esri.toolkit.JLayerList;
 
 import angim.CalculateNoise;
 import angim.ResetToBaseline;
+import scenarioDev.ScenarioPane;
 import scenarioDev.density.DensityControl;
 import scenarioDev.fleet.FleetTechnology;
 import scenarioDev.runway.RunwayEnhancement;
@@ -42,21 +43,29 @@ import scenarioDev.track.TrackFlexibility;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class DashBoard.
+ * The Class DashBoard creates the dashboard found at the west side of the Main Map Pane.
+ * The dashboard is the center of the functionality for REACT.
+ * It contains the operations and population forecast sceanrios.
+ * It contains the scenario development and mitigation strategies.
+ * It also houses the calculate noise and reset features.
+ * @author Sidharth Prem
+ * @see content.ContentPane
+ * @see angim.CaclulateNoise
+ * @see scenarioDev
  */
 public class DashBoard {
 	
-	/** The map. */
-	JMap map;
+	/** The main map. */
+	JMap mainMap;
 	
-	/** The compare. */
+	/** The Noise contour comparison map. */
 	JMap compare;
 	
-	/** The layer list. */
-	JLayerList layerList;
+	/** The main layer list. */
+	JLayerList mainLayerList;
 	
-	/** The table. */
-	JTable table;
+	/** The table containing results from ANGIM. */
+	JTable resultsTable;
 	
 	/**
 	 * Instantiates a new dash board.
@@ -72,16 +81,17 @@ public class DashBoard {
 	 * @param table the table
 	 */
 	public DashBoard(JMap jMap,JLayerList list,JMap compare,JTable table){
-		this.map = jMap;
-		this.layerList = list;
+		this.mainMap = jMap;
+		this.mainLayerList = list;
 		this.compare = compare;
-		this.table = table;
+		this.resultsTable = table;
 	}
 	
 	/**
-	 * Gets the dashboard.
+	 * Gets the dashboard panel containing ComboBoxes for Operation and Population Forecast.
+	 * Inserts the scenario development pane as well as the calculate noise and reset to baseline buttons
 	 *
-	 * @return the dashboard
+	 * @return the dashboard panel
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public JPanel getDashboard() throws IOException{
@@ -145,11 +155,12 @@ public class DashBoard {
 		WhatifTitle.setDisabledTextColor(new Color(238,178,17));
 		WhatifTitle.setBorder(BorderFactory.createMatteBorder(3, 0, 3, 0, Color.BLACK));	
 		
+		//button that resets technology insertion factors
 		JButton resetTech = new JButton();
 
 		RunwayEnhancement run = new RunwayEnhancement();
-		DensityControl land = new DensityControl(map);
-		TrackFlexibility track = new TrackFlexibility(map);
+		DensityControl land = new DensityControl(mainMap);
+		TrackFlexibility track = new TrackFlexibility(mainMap);
 		FleetTechnology fleet = new FleetTechnology(resetTech);
 
 		ScenarioPane sPane = new ScenarioPane(run.getRun(),land.getDensity(),track.getTrack(),fleet.getFleet());
@@ -159,14 +170,14 @@ public class DashBoard {
 		reset.setPreferredSize(new Dimension(300,50));
 		reset.setHorizontalAlignment(SwingConstants.CENTER);
 		reset.setFont(new Font(reset.getFont().getName(),Font.BOLD,14));
-		reset.addActionListener(new ResetToBaseline(opForecast,map));
+		reset.addActionListener(new ResetToBaseline(opForecast,mainMap));
 		
 		JButton calculate = new JButton();
 		calculate.setText("Calculate Noise");
 		calculate.setPreferredSize(new Dimension(300,50));
 		calculate.setHorizontalAlignment(SwingConstants.CENTER);
 		calculate.setFont(new Font(calculate.getFont().getFontName(),Font.BOLD,14));
-		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,map,compare,table,reset,resetTech));
+		calculate.addActionListener(new CalculateNoise(calculate,opForecast,popForecast,sP,mainMap,compare,resultsTable,reset,resetTech));
 
 		BufferedImage myPicture = ImageIO.read(new File("Files/Logos/ASDLlogo.png"));
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(300, 50, Image.SCALE_FAST)));

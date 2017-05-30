@@ -25,18 +25,21 @@ import GUI.mapCoordPanel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class GuiPane.
+ * The Class GuiPane creates the GUI elements overlayed on top of the main map pane.
+ * The GUI elements are: the map coordinate information, the layer list, the legend, and the warning notification
+ * @author Sidharth Prem
+ * @see content.MapPane
  */
 public class GuiPane {
 	
-	/** The j layer list. */
-	JLayerList jLayerList;
+	/** The main layer list. */
+	JLayerList mainLayerList;
 	
-	/** The coord txt. */
+	/** The map coordinate information text. */
 	JTextArea coordTxt;
 	
-	/** The d. */
-	Dimension d;
+	/** The screen size. */
+	Dimension screenSize;
 	
 	/**
 	 * Instantiates a new gui pane.
@@ -46,36 +49,36 @@ public class GuiPane {
 	/**
 	 * Instantiates a new gui pane.
 	 *
-	 * @param list the list
-	 * @param txt the txt
-	 * @param screen the screen
+	 * @param list the layer list
+	 * @param txt the coordinate text
+	 * @param screen the screen size
 	 */
 	public GuiPane(JLayerList list, JTextArea txt, Dimension screen){
-		this.jLayerList = list;
+		this.mainLayerList = list;
 		this.coordTxt = txt;
-		this.d = screen;
+		this.screenSize = screen;
 	}
 
 	/**
-	 * Gets the GU ipane.
+	 * Gets the GUI pane. It uses a transparent pane containing elements at each corner
+	 * @see GUI
 	 *
-	 * @return the GU ipane
+	 * @return the GUI pane
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public JPanel getGUIpane() throws IOException{
-		LegendPanel lPanel = new LegendPanel(d.width,d.height);
+		LegendPanel lPanel = new LegendPanel(screenSize.width,screenSize.height);
 		JPanel legendPanel = lPanel.getLegend();
-		LegendButton lgndbtn = new LegendButton(legendPanel,d.width,d.height);	
+		LegendButton lgndbtn = new LegendButton(legendPanel,screenSize.width,screenSize.height);	
 
-		mapCoordPanel mPanel = new mapCoordPanel(d.width,d.height);
+		mapCoordPanel mPanel = new mapCoordPanel();
 
-		MapLayer lyrPanel = new MapLayer(d.width,d.height);
-		JPanel layerPanel = lyrPanel.getMapLayer(jLayerList); 
-		MapLayerButton mbtn = new MapLayerButton(layerPanel,d.width,d.height);
+		MapLayer lyrPanel = new MapLayer(screenSize.width,screenSize.height);
+		JPanel layerPanel = lyrPanel.getMapLayer(mainLayerList); 
+		MapLayerButton mbtn = new MapLayerButton(layerPanel,screenSize.width,screenSize.height);
 		
 		JPanel warning = new JPanel();
 		warning.setOpaque(false);
-		//warning.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
 		warning.setBackground(Color.WHITE);
 		
 		JTextArea text = new JTextArea();

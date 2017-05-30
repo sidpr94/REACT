@@ -18,18 +18,20 @@ import basemap.CreateMainMap;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MapPane.
+ * The Class MapPane adds the main map and the GUI elements into this panel. The Map pane is underneath the transparent GUI pane.
+ * @author Sidharth Prem
+ * @see content.ContentPane
  */
 public class MapPane {
 	
-	/** The j map. */
-	JMap jMap;
+	/** The main map. */
+	JMap mainMap;
 	
-	/** The j layer list. */
-	JLayerList jLayerList;
+	/** The main layer list. */
+	JLayerList mainLayerList;
 	
-	/** The d. */
-	Dimension d;
+	/** The screen size. */
+	Dimension screenSize;
 	
 	/**
 	 * Instantiates a new map pane.
@@ -44,24 +46,24 @@ public class MapPane {
 	 * @param screen the screen
 	 */
 	public MapPane(JMap map, JLayerList list, Dimension screen){
-		this.jMap = map;
-		this.jLayerList = list;
-		this.d = screen;
+		this.mainMap = map;
+		this.mainLayerList = list;
+		this.screenSize = screen;
 	}
 	
 	/**
 	 * Gets the map pane.
-	 *
+	 * @see GUI
 	 * @return the map pane
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public JPanel getmapPane() throws IOException{
 		JPanel mapPane = new JPanel();
 		mapPane.setLayout(new OverlayLayout(mapPane));
-		mapCoordPanel mPanel = new mapCoordPanel(d.width,d.height);
+		mapCoordPanel mPanel = new mapCoordPanel();
 		JTextArea coordTxt = mPanel.getCoordTxt();
-		GuiPane gui = new GuiPane(jLayerList,coordTxt,d);
-		CreateMainMap mapCreator = new CreateMainMap(jMap,jLayerList,coordTxt);
+		GuiPane gui = new GuiPane(mainLayerList,coordTxt,screenSize);
+		CreateMainMap mapCreator = new CreateMainMap(mainMap,mainLayerList,coordTxt);
 		mapPane.add(gui.getGUIpane());
 		mapPane.add(mapCreator.getMap());
 		return mapPane;
