@@ -12,17 +12,19 @@ import javax.swing.JPanel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MapLayerButton.
+ * The Class MapLayerButton allows the user to toggle the visibility of the map layer panel.
+ * @author Sidharth Prem
+ * @see GUI.MapLayer
  */
 public class MapLayerButton {
 	
-	/** The map panel. */
+	/** The map layer panel. */
 	JPanel mapPanel;
 	
-	/** The width. */
+	/** The width of the screen. */
 	int width;
 	
-	/** The height. */
+	/** The height of the screen. */
 	int height;
 	
 	/**
@@ -39,7 +41,7 @@ public class MapLayerButton {
 	}
 	
 	/**
-	 * Gets the map button.
+	 * Gets the map button and adds an actionlistener that changes the visibility of the panel.
 	 *
 	 * @return the map button
 	 */

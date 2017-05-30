@@ -22,20 +22,24 @@ import basemap.PopMapNoEdit;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ContourMap.
+ * The Class ContourMap creates the contour comparison map found in the results pane.
+ * The ContourMap contains population counts, noise contour for hte baseline.
+ * The scenario contour is generated once noise is calculated.
+ * @author Sidharth Prem
+ * @see results.CompareContourMap
  */
 public class ContourMap {
 	
-	/** The map. */
-	JMap map;
+	/** The contour comparison map. */
+	JMap comparison;
 	
-	/** The list. */
-	JLayerList list;
+	/** The comparsion layer list. */
+	JLayerList compLayerList;
 	
-	/** The op. */
+	/** The operational forecasting scenario information. */
 	JComboBox<String> op;
 	
-	/** The s. */
+	/** The state of the contour used in UpdateContour class. */
 	String s;
 	
 	/**
@@ -45,8 +49,8 @@ public class ContourMap {
 	 * @param list the list
 	 */
 	public ContourMap(JMap map,JLayerList list){
-		this.map = map;
-		this.list = list;
+		this.comparison = map;
+		this.compLayerList = list;
 	}
 	
 	/**
@@ -57,54 +61,55 @@ public class ContourMap {
 	 * @param s the s
 	 */
 	public ContourMap(JMap map,JComboBox<String> op, String s){
-		this.map = map;
+		this.comparison = map;
 		this.op = op;
 		this.s = s;
 	}
 	
 	/**
-	 * Creates the map.
+	 * Creates the comparison map.
 	 *
-	 * @return the j map
+	 * @return the comparison map
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public JMap createMap() throws IOException{
 		PopMap pmap = new PopMap();
-		map.setBackground(new Color(214, 217, 223));
+		comparison.setBackground(new Color(214, 217, 223));
 		NoiseContour nmap = new NoiseContour();
 		PopMapNoEdit popm = new PopMapNoEdit();
 		GraphicsLayer pop = new GraphicsLayer();
 		Layer popnoedit = popm.createPop();
 		Layer noise = nmap.createNoiseContour();
 		noise.setName("Baseline Noise Contour");
-		map.getLayers().add(0,popnoedit);
-		map.getLayers().add(1,pop);
-		map.getLayers().add(2,noise);
-		map.getLayers().get(0).setVisible(false);
-		map.getLayers().get(1).setVisible(false);
-		map.addMapEventListener(new MapEventListenerAdapter(){
+		comparison.getLayers().add(0,popnoedit);
+		comparison.getLayers().add(1,pop);
+		comparison.getLayers().add(2,noise);
+		comparison.getLayers().get(0).setVisible(false);
+		comparison.getLayers().get(1).setVisible(false);
+		comparison.addMapEventListener(new MapEventListenerAdapter(){
 			@Override
 			public void mapReady(final MapEvent arg0) {
 				pmap.createPopMap(pop);
 			}
 		});
 		
-		return map;
+		return comparison;
 	}
 	
 	/**
-	 * Adds the comparison.
+	 * Adds the scenario noise contour once noise calculations are complete.
+	 * Size denotes whether or not there is a scenario contained in the map
 	 *
-	 * @param size the size
+	 * @param size the number of layers in the comparison map
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void addComparison(int size) throws IOException{
-		UpdateContour c = new UpdateContour(map,op,s);
+		UpdateContour c = new UpdateContour(comparison,op,s);
 		NoiseContour nmap = new NoiseContour();
-		if(size == 3){
+		if(size == 3){// no scenario noise contour
 			Layer noise = nmap.createNoiseContour();
-			map.getLayers().add(noise);
-			map.getLayers().get(3).setName("Scenario Noise Contour");
+			comparison.getLayers().add(noise);
+			comparison.getLayers().get(3).setName("Scenario Noise Contour");
 			c.addScenarioGraphic();
 		}else if (size == 4){
 			c.addScenarioGraphic();

@@ -18,7 +18,9 @@ import com.esri.toolkit.JLayerList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ResultLayerList.
+ * The Class ResultLayerList creates the layer list panel for the contour comparison map in the results.
+ * @author Sidharth Prem
+ * @see results.CompareContourMap
  */
 public class ResultLayerList {
 	
@@ -30,8 +32,8 @@ public class ResultLayerList {
 	/**
 	 * Gets the map layer.
 	 *
-	 * @param jLayerlist the j layerlist
-	 * @return the map layer
+	 * @param jLayerlist the comparsion layerlist
+	 * @return the map layer panel
 	 */
 	public JPanel getMapLayer(JLayerList jLayerlist){
 		//Creates a text field for the title of the control panel

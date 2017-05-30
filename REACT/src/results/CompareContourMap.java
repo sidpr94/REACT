@@ -18,15 +18,18 @@ import com.esri.toolkit.JLayerList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CompareContourMap.
+ * The Class CompareContourMap adds the comparison map, legend, and layer list in the Results Pane.
+ * This is done by using an invisible panel for the GUI components over the map (similar to main map).
+ * @author Sidharth Prem
+ * @see results.ResultPane
  */
 public class CompareContourMap {
 	
-	/** The map. */
-	JMap map;
+	/** The contour comparison map. */
+	JMap comparison;
 	
-	/** The d. */
-	Dimension d;
+	/** The screebn size. */
+	Dimension screnSize;
 	
 	/**
 	 * Instantiates a new compare contour map.
@@ -35,19 +38,19 @@ public class CompareContourMap {
 	 * @param d the d
 	 */
 	public CompareContourMap(JMap map,Dimension d){
-		this.map = map;
-		this.d = d;
+		this.comparison = map;
+		this.screnSize = d;
 	}
 	
 	/**
-	 * Creates the map pane.
+	 * Creates the map panel containing the legend, layer list, and comparison map.
 	 *
-	 * @return the j panel
+	 * @return the map panel
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public JPanel createMapPane() throws IOException{
 		JPanel mapPane = new JPanel();
-		JLayerList list = new JLayerList(map);
+		JLayerList list = new JLayerList(comparison);
 		mapPane.setLayout(new OverlayLayout(mapPane));
 		
 		JPanel guiPane = new JPanel();
@@ -65,7 +68,7 @@ public class CompareContourMap {
 		c.insets = new Insets(10, 10, 0, 0);
 		guiPane.add(layerPane.getMapLayer(list), c);
 		
-		ResultsLegend legend = new ResultsLegend(d.width, d.height);
+		ResultsLegend legend = new ResultsLegend(screnSize.width, screnSize.height);
 		GridBagConstraints d = new GridBagConstraints();
 		d.gridx = 1;
 		d.gridy = 0;
@@ -78,7 +81,7 @@ public class CompareContourMap {
 		guiPane.add(Box.createGlue());
 		
 		mapPane.add(guiPane);
-		ContourMap maps = new ContourMap(map,list);
+		ContourMap maps = new ContourMap(comparison,list);
 		mapPane.add(maps.createMap());
 		
 		return mapPane;

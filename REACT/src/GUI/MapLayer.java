@@ -18,32 +18,23 @@ import com.esri.toolkit.JLayerList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MapLayer.
+ * The Class MapLayer creates the Layer List in the Map Pane.
+ * The layer list allows the user to control visibility of each layer.
+ * @author Sidharth Prem
+ * @see content.GuiPane
  */
 public class MapLayer {
-	
-	/** The width. */
-	int width;
-	
-	/** The height. */
-	int height;
-	
 	/**
 	 * Instantiates a new map layer.
-	 *
-	 * @param w the w
-	 * @param h the h
 	 */
-	public MapLayer(int w, int h){
-		this.width = w;
-		this.height = h;
+	public MapLayer(){
 	}
 
 	/**
-	 * Gets the map layer.
+	 * Gets the map layer using the JLayerList class.
 	 *
-	 * @param jLayerlist the j layerlist
-	 * @return the map layer
+	 * @param jLayerlist the main layer list
+	 * @return the map layer panel
 	 */
 	public JPanel getMapLayer(JLayerList jLayerlist){
 		//Creates a text field for the title of the control panel
@@ -53,7 +44,6 @@ public class MapLayer {
 		txtTitle.setEditable(false);
 		txtTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTitle.setFont(new Font(txtTitle.getFont().getName(),Font.BOLD,16));
-		//txtTitle.setPreferredSize(new Dimension(260,30));
 		txtTitle.setBackground(new Color(38,38,38));
 		txtTitle.setDisabledTextColor(Color.WHITE);
 		txtTitle.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));

@@ -13,7 +13,7 @@ import javax.swing.table.TableColumnModel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class GroupableTableHeader.
+ * The Class GroupableTableHeader creates the proper headers for grouped columns.
  */
 @SuppressWarnings("serial")
 public class GroupableTableHeader extends JTableHeader {

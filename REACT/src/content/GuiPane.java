@@ -73,7 +73,7 @@ public class GuiPane {
 
 		mapCoordPanel mPanel = new mapCoordPanel();
 
-		MapLayer lyrPanel = new MapLayer(screenSize.width,screenSize.height);
+		MapLayer lyrPanel = new MapLayer();
 		JPanel layerPanel = lyrPanel.getMapLayer(mainLayerList); 
 		MapLayerButton mbtn = new MapLayerButton(layerPanel,screenSize.width,screenSize.height);
 		

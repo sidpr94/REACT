@@ -17,20 +17,22 @@ import javax.swing.border.LineBorder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ResultsLegend.
+ * The Class ResultsLegend creates the legend for the results pane using a similar technique to the main map.
+ * @author Sidharth Prem
+ * @see results.CompareContourMap
  */
 public class ResultsLegend {
 	
-	/** The width. */
+	/** The width of the screen. */
 	int width;
 	
-	/** The height. */
+	/** The height of the screen. */
 	int height;
 	
-	/** The bg. */
+	/** The color of each legend entry. */
 	Color bg;
 	
-	/** The text. */
+	/** The text information for each legend entry. */
 	String text;
 	
 	/**
@@ -45,7 +47,7 @@ public class ResultsLegend {
 	}
 	
 	/**
-	 * Creates the legend.
+	 * Creates the legend for the results tab.
 	 *
 	 * @return the j panel
 	 */

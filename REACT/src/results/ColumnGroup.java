@@ -15,7 +15,7 @@ import javax.swing.table.TableColumn;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ColumnGroup.
+ * The Class ColumnGroup allows multiple columns to be grouped together.
  */
 public class ColumnGroup {
 

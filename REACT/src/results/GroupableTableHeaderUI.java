@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class GroupableTableHeaderUI.
+ * The Class GroupableTableHeaderUI sets the UI for the table header found in results table.
  */
 public class GroupableTableHeaderUI extends BasicTableHeaderUI {
 
