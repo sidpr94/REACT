@@ -28,14 +28,15 @@ import com.esri.runtime.ArcGISRuntime;
 import com.esri.toolkit.JLayerList;
 
 import content.ContentPane;
-import content.DataPane;
+import database.DataPane;
 import results.ResultPane;
 import results.ResultsTable;
 
 // TODO: Auto-generated Javadoc
 /**
  *  REACT is the main thread run, and is the beginning of the REACT software.
- *  It initializes the main maps, tables, and layerlists. 
+ *  It initializes the main maps, tables, and layerlists.
+ *  @author Sidharth Prem 
  */
 public class REACT {
 	

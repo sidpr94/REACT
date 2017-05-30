@@ -21,6 +21,8 @@ import com.esri.map.GraphicsLayer;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Tracks creates the tracks based on csv files containing points that make up the polyline.
+ * @author Sidharth Prem
+ * @see basemap.CreateMainMap
  */
 public class Tracks {
 	

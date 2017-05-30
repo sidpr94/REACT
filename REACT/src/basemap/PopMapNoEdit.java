@@ -17,6 +17,8 @@ import com.esri.map.FeatureLayer;
 /**
  * The population blocks outside of the airport proximity that is not editable for land zoning.
  * This was done to conserve computer memory.
+ * @author Sidharth Prem
+ * @see basemap.CreateMainMap
  */
 public class PopMapNoEdit {
 	

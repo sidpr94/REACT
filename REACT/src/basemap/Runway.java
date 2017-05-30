@@ -15,6 +15,8 @@ import com.esri.map.GraphicsLayer;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Runway creates the runways for Kansas City International Airport: 01L-19R, 01R-19L, 09-27.
+ * @author Sidharth Prem
+ * @see basemap.CreateMainMap
  */
 public class Runway{
 	

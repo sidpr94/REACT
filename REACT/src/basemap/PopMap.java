@@ -21,7 +21,9 @@ import com.esri.map.GraphicsLayer;
  * Creates the editable area for population map based on 2010 Census Population Data.
  * Currently there are too many blocks to allow for every block to be editable.
  * It might be solvable by breaking up the population map into a set of smaller population maps
- * A computer memory issue. 
+ * A computer memory issue.
+ * @author Sidharth Prem 
+ * @see basemap.CreateMainMap
  */
 public class PopMap {
 	
