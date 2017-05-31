@@ -38,56 +38,59 @@ import basemap.PopMap;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class InfoOverlayDensity.
+ * The Class InfoOverlayDensity is the control center for how users interact with population blocks.
+ * It first checks to see if the user is clicking on an editable or non-editable population block.
+ * If the population block is non-editable then the information displayed will show only Population Count.
+ * If the population block is editable then the information displayed will show Current Population Count, Original Count,
+ * and a text field to change the population count. The user can accept the change for the population block and visually see the change.
+ * 
+ * Information is statically stored in a list to ensure the program knows which graphics were edited, and then those are reset to baseline scenarios.
+ * 
+ * @author Sidharth Prem
+ * @see scenarioDev.density.DensityOn
  */
 public class InfoOverlayDensity implements HitTestListener{
 	
-	/** The overlay. */
+	/** The overlay that allows the user to interact with population block. */
 	HitTestOverlay overlay;
 	
 	/** The layer. */
-	GraphicsLayer layer;
+	GraphicsLayer editLayer;
 	
 	/** The flayer. */
-	FeatureLayer flayer;
+	FeatureLayer noEditLayer;
 	
-	/** The button. */
-	JButton button;
+	/** The button that allows the user to reset the graphics to original attribute values. */
+	JButton resetToCensus;
 	
 	/** The list. */
-	private static Map<Integer,Graphic> list = new HashMap<Integer,Graphic>();
+	private static Map<Integer,Graphic> changedBlocks = new HashMap<Integer,Graphic>();
 	
-	/** The j map. */
-	JMap jMap;
-	
-	/** The x. */
-	int x = 0;
-	
-	/** The y. */
-	int y = 0;
+	/** The main map. */
+	JMap mainMap;
 	
 	/**
-	 * Instantiates a new info overlay density.
+	 * Instantiates a new info overlay density if the block clicked is editable.
 	 *
 	 * @param featureLayer the feature layer
 	 * @param map the map
 	 * @param btn the btn
 	 */
 	public InfoOverlayDensity(GraphicsLayer featureLayer, JMap map, JButton btn) {
-		this.layer = featureLayer;	
-		this.jMap = map;
-		this.button = btn;
+		this.editLayer = featureLayer;	
+		this.mainMap = map;
+		this.resetToCensus = btn;
 	}
 
 	/**
-	 * Instantiates a new info overlay density.
+	 * Instantiates a new info overlay density if the block clicked is not editable.
 	 *
 	 * @param featureLayer the feature layer
 	 * @param map the map
 	 */
 	public InfoOverlayDensity(FeatureLayer featureLayer, JMap map) {
-		this.flayer = featureLayer;	
-		this.jMap = map;
+		this.noEditLayer = featureLayer;	
+		this.mainMap = map;
 	}	
 	
 	/* (non-Javadoc)
@@ -96,18 +99,18 @@ public class InfoOverlayDensity implements HitTestListener{
 	@Override
 	public void featureHit(HitTestEvent event) {
 		// TODO Auto-generated method stub
-		if(flayer != null){
+		if(noEditLayer != null){
 			HitTestOverlay overlay = event.getOverlay();
 			// get first (top-most) graphic hit by the mouse
 			Feature hitGraphic = overlay.getHitFeatures().get(0);
 			// create a popup in edit view
 			PopupView contentPanel = PopupView.createAttributesView("", hitGraphic);
-			contentPanel.setFeature(jMap, hitGraphic);
-			final PopupDialog popup = jMap.createPopup(new JComponent[]{contentPanel}, hitGraphic);
+			contentPanel.setFeature(mainMap, hitGraphic);
+			final PopupDialog popup = mainMap.createPopup(new JComponent[]{contentPanel}, hitGraphic);
 			popup.setTitle("Population Information");
 			popup.setVisible(true);
 		}
-		else if(layer != null){
+		else if(editLayer != null){
 			HitTestOverlay overlay = event.getOverlay();
 			// get first (top-most) graphic hit by the mouse
 			Graphic hitGraphic = (Graphic)overlay.getHitFeatures().get(0);
@@ -175,7 +178,7 @@ public class InfoOverlayDensity implements HitTestListener{
 				f.weighty = 1;
 				panel.add(btn,f);
 
-				final PopupDialog popup = jMap.createPopup(new JComponent[]{panel}, hitGraphic);
+				final PopupDialog popup = mainMap.createPopup(new JComponent[]{panel}, hitGraphic);
 				popup.setTitle("Land Planning Simulation");
 				popup.setVisible(true);
 
@@ -186,28 +189,28 @@ public class InfoOverlayDensity implements HitTestListener{
 						// TODO Auto-generated method stub
 						Map<String,Object> att = new HashMap<String,Object>();
 						att.put("POP10", spinner.getValue());
-						list.put(hitGraphic.getUid(), hitGraphic);
+						changedBlocks.put(hitGraphic.getUid(), hitGraphic);
 						PopMap.graphics.replace(hitGraphic.getUid(), hitGraphic);
 						Graphic replace = new Graphic(hitGraphic.getGeometry(),null,att);
-						layer.updateGraphic(hitGraphic.getUid(), replace);
+						editLayer.updateGraphic(hitGraphic.getUid(), replace);
 						popup.close();
 					}
 
 				});
 
-				button.addActionListener(new ActionListener(){
+				resetToCensus.addActionListener(new ActionListener(){
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						if(list.size()!= 0){
-							for(Map.Entry<Integer, Graphic> entry:list.entrySet()){
+						if(changedBlocks.size()!= 0){
+							for(Map.Entry<Integer, Graphic> entry:changedBlocks.entrySet()){
 								Graphic g = entry.getValue();
 								Graphic reset = new Graphic(g.getGeometry(),null,g.getAttributes());
-								layer.updateGraphic(entry.getKey(), reset);
+								editLayer.updateGraphic(entry.getKey(), reset);
 								PopMap.graphics.replace(entry.getKey(), reset);
 							}
-							list.clear();
+							changedBlocks.clear();
 						}
 					}
 

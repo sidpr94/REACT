@@ -26,7 +26,11 @@ import javax.swing.table.TableColumnModel;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ResultsTable.
+ * The Class ResultsTable creates the table containing the results from ANGIM including:
+ * population exposed, contour area, fuel and emissions information.
+ * The table is created similar to the database table, it contains a title block and the table itself.
+ * @author Sidharth Prem
+ * @see results.ResultPane
  */
 public class ResultsTable {
 
@@ -37,10 +41,10 @@ public class ResultsTable {
 	}
 
 	/**
-	 * Gets the fine pane.
+	 * Gets the final pane containing both the table and the title block.
 	 *
-	 * @param table the table
-	 * @return the fine pane
+	 * @param table the results table
+	 * @return the final pane
 	 */
 	public JPanel getfinePane(JTable table){
 		JPanel panel = new JPanel();
@@ -80,7 +84,7 @@ public class ResultsTable {
 				new Object[]{"Scenario","55db DNL","60db DNL","65db DNL","55db DNL","60db DNL","65db DNL","Fuel Burn (lb)","CO2 (lb)","NOx (lb)"});
 		JTable table = new JTable( dm ) {
 			/**
-			 * 
+			 * Allows the table to have groupable columns
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -123,10 +127,10 @@ public class ResultsTable {
 	}
 	
 	/**
-	 * Gets the pane.
+	 * Gets the scroll pane containing the table
 	 *
-	 * @param table the table
-	 * @return the pane
+	 * @param table the results table
+	 * @return the scroll pane
 	 */
 	public JScrollPane getPane(JTable table){
 		JScrollPane scroll = new JScrollPane(table);
@@ -136,9 +140,9 @@ public class ResultsTable {
 	}
 
 	/**
-	 * Gets the panel.
+	 * Gets the title block.
 	 *
-	 * @return the panel
+	 * @return the title block
 	 */
 	public JPanel getPanel(){
 		JPanel panel = new JPanel();

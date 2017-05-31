@@ -19,12 +19,15 @@ import com.esri.map.JMap;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class DensityControl.
+ * The Class DensityControl creates the GUI panel for the density control mitigation strategy.
+ * The panel contains two buttons that allow for control and resetting of the control.
+ * @author Sidharth Prem
+ * @see scenarioDev.ScenarioPane
  */
 public class DensityControl {
 	
-	/** The map. */
-	JMap map;
+	/** The main map. */
+	JMap mainMap;
 	
 	/**
 	 * Instantiates a new density control.
@@ -32,13 +35,13 @@ public class DensityControl {
 	 * @param jMap the j map
 	 */
 	public DensityControl(JMap jMap){
-		map = jMap;
+		mainMap = jMap;
 	}
 	
 	/**
-	 * Gets the density.
+	 * Gets the density control buttons and adds action listeners to them.
 	 *
-	 * @return the density
+	 * @return the density control panel
 	 */
 	public JPanel getDensity(){
 		JPanel dInputs = new JPanel();
@@ -69,7 +72,7 @@ public class DensityControl {
 		perBlock.setText("Control Density per Block");
 		perBlock.setHorizontalAlignment(SwingConstants.CENTER);
 		perBlock.setFont(new Font(perBlock.getFont().getName(),Font.BOLD,12));
-		perBlock.addActionListener(new DensityOn(map,perHighlight));
+		perBlock.addActionListener(new DensityOn(mainMap,perHighlight));
 
 		dInputs.add(perBlock);
 		dInputs.add(perHighlight);
