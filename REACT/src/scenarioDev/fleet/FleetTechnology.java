@@ -22,11 +22,15 @@ import database.ReadFleetData;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class FleetTechnology.
+ * The Class FleetTechnology creates the GUI containing the auto completion combobox for all unique aircraft at MCI,
+ * the text box to input percent noise reduction, and reset technology buttons.
+ * @author Sidharth Prem
+ * @see GUI.AutoCompletion
+ * @see scenarioDev.ScenarioPane
  */
 public class FleetTechnology {
 	
-	/** The reset. */
+	/** The reset button that allows users to reset all technology insertions. */
 	JButton reset;
 	
 	/**
@@ -39,9 +43,9 @@ public class FleetTechnology {
 	}
 
 	/**
-	 * Gets the fleet.
+	 * Gets the fleet technology panel containing all GUI elements.
 	 *
-	 * @return the fleet
+	 * @return the fleet panel
 	 */
 	public JPanel getFleet(){
 		ReadFleetData rd = new ReadFleetData();
@@ -52,28 +56,29 @@ public class FleetTechnology {
 		}
 		String[] unAC = Arrays.stream(aircraft).toArray(String[]::new);
 
-		JPanel dInputs = new JPanel();
+		JPanel fInputs = new JPanel();
 		GridLayout gLayout = new GridLayout(7,1);
 		gLayout.setVgap(3);
-		dInputs.setLayout(gLayout);
-		dInputs.setBackground(new Color(51,81,112));
-		dInputs.setBorder(BorderFactory.createEmptyBorder());
-
+		fInputs.setLayout(gLayout);
+		fInputs.setBackground(new Color(51,81,112));
+		fInputs.setBorder(BorderFactory.createEmptyBorder());
+		
+		//Ensures that all aircraft are unique
 		String[] un = new String[22];
 		for(int i = 0; i<22;i++){
 			un[i] = unAC[i];
 		}
-		JTextField rnEnh = new JTextField();
-		rnEnh.setOpaque(false);
-		rnEnh.setDisabledTextColor(Color.WHITE);
-		rnEnh.setPreferredSize(new Dimension(250,30));
-		rnEnh.setFont(new Font(rnEnh.getFont().getName(),Font.BOLD,14));
-		rnEnh.setText("Fleet Technology Insertion");
-		rnEnh.setHorizontalAlignment(SwingConstants.CENTER);
-		rnEnh.setBorder(BorderFactory.createMatteBorder(0, 0,1,0,Color.WHITE));
-		rnEnh.setEditable(false);
-		rnEnh.setEnabled(false);
-		dInputs.add(rnEnh);
+		JTextField fleetTitle = new JTextField();
+		fleetTitle.setOpaque(false);
+		fleetTitle.setDisabledTextColor(Color.WHITE);
+		fleetTitle.setPreferredSize(new Dimension(250,30));
+		fleetTitle.setFont(new Font(fleetTitle.getFont().getName(),Font.BOLD,14));
+		fleetTitle.setText("Fleet Technology Insertion");
+		fleetTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		fleetTitle.setBorder(BorderFactory.createMatteBorder(0, 0,1,0,Color.WHITE));
+		fleetTitle.setEditable(false);
+		fleetTitle.setEnabled(false);
+		fInputs.add(fleetTitle);
 
 		JTextField fleet = new JTextField();
 		fleet.setOpaque(false);
@@ -85,12 +90,12 @@ public class FleetTechnology {
 		fleet.setBorder(BorderFactory.createMatteBorder(0, 0,0,0,Color.BLACK));
 		fleet.setEditable(false);
 		fleet.setEnabled(false);
-		dInputs.add(fleet);
+		fInputs.add(fleet);
 
 		JComboBox<String> fleetData = new JComboBox<>();
 		fleetData.setModel(new DefaultComboBoxModel<>(un));
 		AutoCompletion.enable(fleetData);
-		dInputs.add(fleetData);
+		fInputs.add(fleetData);
 
 		JTextField perRed = new JTextField();
 		perRed.setOpaque(false);
@@ -102,25 +107,25 @@ public class FleetTechnology {
 		perRed.setBorder(BorderFactory.createMatteBorder(0, 0,0,0,Color.BLACK));
 		perRed.setEditable(false);
 		perRed.setEnabled(false);
-		dInputs.add(perRed);
+		fInputs.add(perRed);
 
 		JTextField percent = new JTextField();
 		percent.setFont(new Font(percent.getFont().getName(),Font.PLAIN,12));
-		dInputs.add(percent);
+		fInputs.add(percent);
 		
-		JButton perHighlight = new JButton();
-		perHighlight.setText("Add Noise Reduction");
-		perHighlight.setHorizontalAlignment(SwingConstants.CENTER);
-		perHighlight.setFont(new Font(perHighlight.getFont().getName(),Font.BOLD,12));
-		perHighlight.addActionListener(new InsertFleetTechnology(perHighlight,reset,fleetData,percent));
-		dInputs.add(perHighlight);
+		JButton noiseReduce = new JButton();
+		noiseReduce.setText("Add Noise Reduction");
+		noiseReduce.setHorizontalAlignment(SwingConstants.CENTER);
+		noiseReduce.setFont(new Font(noiseReduce.getFont().getName(),Font.BOLD,12));
+		noiseReduce.addActionListener(new InsertFleetTechnology(noiseReduce,reset,fleetData,percent));
+		fInputs.add(noiseReduce);
 		
 		reset.setText("Reset Fleet Insertion");
 		reset.setHorizontalAlignment(SwingConstants.CENTER);
 		reset.setFont(new Font(reset.getFont().getName(),Font.BOLD,12));
-		reset.addActionListener(new InsertFleetTechnology(perHighlight,reset,fleetData,percent));
-		dInputs.add(reset);
+		reset.addActionListener(new InsertFleetTechnology(noiseReduce,reset,fleetData,percent));
+		fInputs.add(reset);
 
-		return dInputs;
+		return fInputs;
 	}
 }

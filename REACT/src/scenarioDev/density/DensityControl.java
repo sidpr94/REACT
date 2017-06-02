@@ -51,31 +51,31 @@ public class DensityControl {
 		dInputs.setLayout(gLayout);
 		dInputs.setBorder(BorderFactory.createEmptyBorder());
 
-		JTextField rnEnh = new JTextField();
-		rnEnh.setOpaque(false);
-		rnEnh.setDisabledTextColor(Color.WHITE);
-		rnEnh.setPreferredSize(new Dimension(250,30));
-		rnEnh.setFont(new Font(rnEnh.getFont().getName(),Font.BOLD,14));
-		rnEnh.setText("Density Control");
-		rnEnh.setHorizontalAlignment(SwingConstants.CENTER);
-		rnEnh.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.BLACK));
-		rnEnh.setEditable(false);
-		rnEnh.setEnabled(false);
-		dInputs.add(rnEnh);
+		JTextField dTitle = new JTextField();
+		dTitle.setOpaque(false);
+		dTitle.setDisabledTextColor(Color.WHITE);
+		dTitle.setPreferredSize(new Dimension(250,30));
+		dTitle.setFont(new Font(dTitle.getFont().getName(),Font.BOLD,14));
+		dTitle.setText("Density Control");
+		dTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		dTitle.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.BLACK));
+		dTitle.setEditable(false);
+		dTitle.setEnabled(false);
+		dInputs.add(dTitle);
 
-		JButton perHighlight = new JButton();
-		perHighlight.setText("Reset To Census");
-		perHighlight.setHorizontalAlignment(SwingConstants.CENTER);
-		perHighlight.setFont(new Font(perHighlight.getFont().getName(),Font.BOLD,12));
+		JButton resetToCensus = new JButton();
+		resetToCensus.setText("Reset To Census");
+		resetToCensus.setHorizontalAlignment(SwingConstants.CENTER);
+		resetToCensus.setFont(new Font(resetToCensus.getFont().getName(),Font.BOLD,12));
 
 		JToggleButton perBlock = new JToggleButton();
 		perBlock.setText("Control Density per Block");
 		perBlock.setHorizontalAlignment(SwingConstants.CENTER);
 		perBlock.setFont(new Font(perBlock.getFont().getName(),Font.BOLD,12));
-		perBlock.addActionListener(new DensityOn(mainMap,perHighlight));
+		perBlock.addActionListener(new DensityOn(mainMap,resetToCensus));
 
 		dInputs.add(perBlock);
-		dInputs.add(perHighlight);
+		dInputs.add(resetToCensus);
 
 		return dInputs;
 	}

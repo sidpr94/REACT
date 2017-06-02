@@ -197,7 +197,6 @@ public class UpdateContour {
 		}else if(op.getModel().getSelectedItem() == "2020 Above Nominal TAF"){
 			a = "KMCI_2020H_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
-			System.out.println("DID YOU UPDATE CONTOUR?");
 			a = "KMCI_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
 			a = "KMCI_2030L_REACT";

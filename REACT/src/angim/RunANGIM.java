@@ -4,6 +4,9 @@
 package angim;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,7 +21,9 @@ import javax.swing.table.DefaultTableModel;
 import com.esri.map.JMap;
 
 import results.ContourMap;
+import scenarioDev.density.InfoOverlayDensity;
 import scenarioDev.fleet.InsertFleetTechnology;
+import scenarioDev.track.InfoOverlayTrack;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -77,6 +82,8 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 	/** Initialize the processbuilder. */
 	ProcessBuilder pb = new ProcessBuilder("RANGG_V10.exe");
 	
+	public static List<String[]> summaryInfo = new ArrayList<String[]>();
+	
 	/**
 	 * Instantiates a new run ANGIM.
 	 *
@@ -112,6 +119,10 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		statusLabel.setText("Calculating Noise...");
 	}
 	
+	public RunANGIM() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/* (non-Javadoc)
 	 * @see javax.swing.SwingWorker#doInBackground()
 	 */
@@ -160,14 +171,15 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		//checks to see if ANGIM is successful before populating outputs
 		if(status == 0){
 			try {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				AngimOut Data = new AngimOut(model.getRowCount(),map);
-				model.addRow(Data.getAngimInfo());
+				addSummary();
 				UpdateContour contour = new UpdateContour(map,op,"update");
 				ContourMap c = new ContourMap(compare,op,"update");
 				contour.updateContourGraphic();
 				InsertFleetTechnology tech = new InsertFleetTechnology(resetTech,op);
 				tech.emptyFleet();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				AngimOut Data = new AngimOut(model.getRowCount(),map);
+				model.addRow(Data.getAngimInfo());
 				if(compare.getLayers().size() == 3){
 					c.addComparison(3);
 				}else if (compare.getLayers().size() == 4){
@@ -189,6 +201,63 @@ public class RunANGIM extends SwingWorker<Integer,String>{
 		frame.dispose();
 	}
 	
+	private void addSummary() {
+		String opInfo = (String) op.getSelectedItem();
+		String popInfo = (String) pop.getSelectedItem();
+		String popChanged = "";
+		if(InfoOverlayDensity.changedBlocks.size() != 0){
+			popChanged = "True";
+		}else{
+			popChanged = "False";
+		}
+		String aircraftChanged = "";
+		if(InsertFleetTechnology.fleetChanged.size() != 0){
+			for(Map.Entry<String,Number> entry: InsertFleetTechnology.fleetChanged.entrySet()){
+				if(!aircraftChanged.equals("")){
+					aircraftChanged = aircraftChanged+", "+entry.getKey();
+				}else{
+					aircraftChanged = entry.getKey();
+				}
+			}
+		}else{
+			aircraftChanged = "N/A";
+		}
+		String trackChanged = "";
+		if(InfoOverlayTrack.changed.size() != 0){
+			for(Map.Entry<String,String> entry: InfoOverlayTrack.changed.entrySet()){
+				if(!trackChanged.equals("")){
+					trackChanged = trackChanged+", "+entry.getKey();
+				}
+				else{
+					trackChanged = entry.getKey();
+				}
+			}
+		}else{
+			trackChanged = "N/A";
+		}
+		// TODO Auto-generated method stub
+		String[] info = new String[5];
+		info[0] = opInfo;
+		info[1] = popInfo;
+		info[2] = popChanged;
+		info[3] = aircraftChanged;
+		info[4] = trackChanged;	
+		
+		summaryInfo.add(info);
+	}
+	
+	public void addBaseline(){
+		if(summaryInfo.size() == 0){
+			String[] info = new String[5];
+			info[0] = "2015 Operations";
+			info[1] = "2010 Year";
+			info[2] = "False";
+			info[3] = "N/A";
+			info[4] = "N/A";
+			summaryInfo.add(info);
+		}
+	}
+
 	/**
 	 * Stop process for ANGIM, causes status to != 0.
 	 */

@@ -107,7 +107,7 @@ public class DataPane {
 		ReadFleetData rdData = new ReadFleetData();
 		Object[][] data = rdData.getData();
 		JTable table = new JTable();
-		TableModel model = new TableModel(colNames,data);
+		TableModel model = new TableModel(data,colNames);
 		table.setModel(model);
 		sorter = new TableRowSorter<TableModel>(model);
 		table.setRowSorter(sorter);

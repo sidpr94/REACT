@@ -106,52 +106,6 @@ public class InfoOverlayTrack implements HitTestListener{
 				}
 			}
 		}
-		/*if(origG != null){
-			hitName = origG.getAttributeValue("TrackName").toString();
-		}
-		if(vars.isEmpty()){
-			try {
-				createVariant(hitGraphic);
-				origG = hitGraphic;
-				System.out.println(origG.getAttributeValue("TrackName").toString());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-		}else{
-			if(hitGraphic.getAttributeValue("TrackName").toString().subSequence(0, hitName.length()).equals(hitName)){
-				if(hitGraphic.getAttributeValue("TrackName").toString().equals(hitName)){
-					for(int j = 0; j < vars.size(); j++){
-						layer.removeGraphic(varsID.get(j));
-					}
-				}else{
-					int keep = hitGraphic.getUid();
-					layer.updateGraphic(keep, new SimpleLineSymbol(Color.ORANGE,2));
-					for(int j = 0; j < vars.size(); j++){
-						if(varsID.get(j) != keep){
-							layer.removeGraphic(varsID.get(j));	
-						}
-					}
-					layer.removeGraphic(origG.getUid());
-				}
-				vars.clear();
-				varsID.clear();
-				origG = null;
-			}else{
-				vars.clear();
-				for(int i = 0; i < varsID.size(); i++){
-					layer.removeGraphic(varsID.get(i));
-				}
-				try {
-					createVariant(hitGraphic);
-					origG = hitGraphic;
-					System.out.println(origG.getAttributeValue("TrackName").toString());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}*/
 	}	
 	
 	/**

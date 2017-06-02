@@ -16,13 +16,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.BadLocationException;
+
+import angim.RunANGIM;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,7 +37,8 @@ import javax.swing.table.TableColumnModel;
  * @see results.ResultPane
  */
 public class ResultsTable {
-
+	
+	ScenarioSummary summary = new ScenarioSummary();
 	/**
 	 * Instantiates a new results table.
 	 */
@@ -45,8 +50,9 @@ public class ResultsTable {
 	 *
 	 * @param table the results table
 	 * @return the final pane
+	 * @throws BadLocationException 
 	 */
-	public JPanel getfinePane(JTable table){
+	public JPanel getfinePane(JTable table) throws BadLocationException{
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(1200,1000));
 		panel.setLayout(new GridBagLayout());
@@ -58,15 +64,47 @@ public class ResultsTable {
 		a.anchor = GridBagConstraints.FIRST_LINE_START;
 		a.weightx = 5;
 		a.weighty = 0;
-		panel.add(getPanel(),a);
+		panel.add(getPanel("RESULTS"),a);
 
 		GridBagConstraints b = new GridBagConstraints();
 		b.gridx = 0;
 		b.gridy = 1;
-		b.fill = GridBagConstraints.BOTH;
+		b.fill = GridBagConstraints.HORIZONTAL;
 		b.anchor = GridBagConstraints.FIRST_LINE_END;
-		b.weighty = 500;
+		b.weighty = 100;
 		panel.add(getPane(table),b);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.weightx = 5;
+		c.weighty = 50000;
+		panel.add(getPanel("SCENARIO SUMMARY"),c);
+		
+		ScenarioSummary sum = new ScenarioSummary();
+		
+		GridBagConstraints d = new GridBagConstraints();
+		d.gridx = 0;
+		d.gridy = 3;
+		d.fill = GridBagConstraints.BOTH;
+		d.anchor = GridBagConstraints.FIRST_LINE_START;
+		d.weightx = 5;
+		d.weighty = 10000000;
+		panel.add(sum.getScenarioSummary(),d);
+		
+		/*
+		GridBagConstraints e = new GridBagConstraints();
+		e.gridx = 0;
+		e.gridy = 4;
+		e.fill = GridBagConstraints.HORIZONTAL;
+		e.anchor = GridBagConstraints.FIRST_LINE_START;
+		e.weightx = 0;
+		e.weighty = 100;
+		panel.add(Box.createVerticalGlue(),d);
+		*/
+
 
 		return panel;
 	}
@@ -77,7 +115,19 @@ public class ResultsTable {
 	 * @return the table
 	 */
 	public JTable getTable(){
-		DefaultTableModel dm = new DefaultTableModel();
+		DefaultTableModel dm = new DefaultTableModel(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public boolean isCellEditable(int row, int column){
+				return false;
+			}
+			
+		};
 		dm.setDataVector(new Object[][]{
 			{"Baseline","1029","10","1","16.243","5.146","1.967","-","-",'-'}
 		},
@@ -123,6 +173,26 @@ public class ResultsTable {
 			table.getColumnModel().getColumn(column).setCellRenderer(centerRenderer);
 		}
 		table.setFillsViewportHeight(true);
+		RunANGIM addBase = new RunANGIM();
+		addBase.addBaseline();
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!arg0.getValueIsAdjusting()){
+					try {
+						summary.showSummary(table.getValueAt(table.getSelectedRow(), 0).toString(),table.getSelectedRow());
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
 		return table;
 	}
 	
@@ -144,13 +214,13 @@ public class ResultsTable {
 	 *
 	 * @return the title block
 	 */
-	public JPanel getPanel(){
+	public JPanel getPanel(String text){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(new Color(0,37,76));
 
 		JTextField inputTitle = new JTextField();
-		inputTitle.setText("RESULTS");
+		inputTitle.setText(text);
 		inputTitle.setFont(new Font(inputTitle.getFont().getName(),Font.BOLD,38));
 		inputTitle.setOpaque(false);
 		inputTitle.setDisabledTextColor(new Color(238,178,17));
@@ -177,18 +247,4 @@ public class ResultsTable {
 
 		return panel;
 	}	
-	
-	/**
-	 * Gets the scenario summary.
-	 *
-	 * @return the scenario summary
-	 */
-	public JScrollPane getScenarioSummary(){
-		JScrollPane summaryCont = new JScrollPane();
-		JTextPane summary = new JTextPane();
-		summaryCont.add(summary);
-		return summaryCont;
-	}
-
-
 }

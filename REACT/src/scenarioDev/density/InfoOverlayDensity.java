@@ -64,7 +64,7 @@ public class InfoOverlayDensity implements HitTestListener{
 	JButton resetToCensus;
 	
 	/** The list. */
-	private static Map<Integer,Graphic> changedBlocks = new HashMap<Integer,Graphic>();
+	public static Map<Integer,Graphic> changedBlocks = new HashMap<Integer,Graphic>();
 	
 	/** The main map. */
 	JMap mainMap;

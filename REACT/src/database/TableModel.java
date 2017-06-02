@@ -31,7 +31,7 @@ public class TableModel extends AbstractTableModel {
 	 * @param c the c
 	 * @param data the data
 	 */
-	public TableModel(String[] c, Object[][] data){
+	public TableModel(Object[][] data, String[] c){
 		this.colName = c;
 		this.data = data;
 	}
@@ -84,7 +84,7 @@ public class TableModel extends AbstractTableModel {
 	 *
 	 * @return true, if is cell editable
 	 */
-	public boolean isCellEditable(){
+	public boolean isCellEditable(int row, int column){
 		return false;
 	}
 

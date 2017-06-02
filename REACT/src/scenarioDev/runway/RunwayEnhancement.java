@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class RunwayEnhancement.
+ * The Class RunwayEnhancement is currently in works, to be updated!
  */
 public class RunwayEnhancement {
 

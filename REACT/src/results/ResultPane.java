@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.text.BadLocationException;
 
 import com.esri.map.JMap;
 
@@ -48,8 +49,9 @@ public class ResultPane {
 	 *
 	 * @return the result panel
 	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws BadLocationException 
 	 */
-	public JPanel createPane() throws IOException{
+	public JPanel createPane() throws IOException, BadLocationException{
 		JPanel resultsPane = new JPanel();
 		CompareContourMap con = new CompareContourMap(compare,screenSize);
 		resultsPane.setLayout(new BorderLayout(0,0));
