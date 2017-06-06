@@ -74,6 +74,7 @@ public class InfoOverlayTrack implements HitTestListener{
 				createVariant(hitGraphic);
 				name = hitGraphic.getAttributeValue("TrackName").toString();
 				vars.add(hitGraphic);
+				System.out.println(hitGraphic.getAttributeValue("TrackName"));
 				varsID.add(hitGraphic.getUid());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -82,6 +83,7 @@ public class InfoOverlayTrack implements HitTestListener{
 		}else{
 			if(hitGraphic.getAttributeValue("TrackName").toString().contains(name)){
 				changed.put(name, hitGraphic.getAttributeValue("TrackName").toString());
+				System.out.println(hitGraphic.getAttributeValue("TrackName").toString());
 				int keep = hitGraphic.getUid();
 				layer.updateGraphic(keep, new SimpleLineSymbol(Color.ORANGE,2));
 				for(int i = 0; i < vars.size(); i++){
@@ -136,6 +138,7 @@ public class InfoOverlayTrack implements HitTestListener{
 			att.put("Operation",hit.getAttributeValue("Operation").toString());
 			Graphic g = new Graphic(createLine(lon,lat),symbol,att);
 			vars.add(g);
+			System.out.println(g.getAttributeValue("TrackName"));
 			varsID.add(layer.addGraphic(g));
 		}
 	}
@@ -178,5 +181,6 @@ public class InfoOverlayTrack implements HitTestListener{
 		}
 		return line;
 	}
+	
 
 }

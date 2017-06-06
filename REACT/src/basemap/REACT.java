@@ -136,7 +136,7 @@ public class REACT {
 		mainMap = new JMap();
 		mapCompare = new JMap();
 		mainLayerList = new JLayerList(mainMap);
-		ResultsTable t = new ResultsTable();
+		ResultsTable t = new ResultsTable(mapCompare);
 		table = t.getTable();
 		JTabbedPane tabContent = new JTabbedPane();
 		tabContent.setBorder(BorderFactory.createEmptyBorder());

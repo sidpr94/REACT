@@ -26,7 +26,11 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.BadLocationException;
 
+import com.esri.map.GraphicsLayer;
+import com.esri.map.JMap;
+
 import angim.RunANGIM;
+import angim.UpdateContour;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,11 +42,14 @@ import angim.RunANGIM;
  */
 public class ResultsTable {
 	
+	JMap compare;
+	
 	ScenarioSummary summary = new ScenarioSummary();
 	/**
 	 * Instantiates a new results table.
 	 */
-	public ResultsTable(){
+	public ResultsTable(JMap map){
+		this.compare = map;
 	}
 
 	/**
@@ -183,6 +190,16 @@ public class ResultsTable {
 				// TODO Auto-generated method stub
 				if(!arg0.getValueIsAdjusting()){
 					try {
+						if(compare.getLayers().size() == 4){
+							GraphicsLayer noise = (GraphicsLayer) compare.getLayers().get(3);
+							int[] ids = noise.getGraphicIDs();
+							for(int i = 0; i < ids.length; i++){
+								if(table.getSelectedRow() != 0){
+									noise.updateGraphic(ids[i], UpdateContour.scenarioGraphics.get(table.getSelectedRow()-1).get(i));
+							
+								}
+							}
+						}
 						summary.showSummary(table.getValueAt(table.getSelectedRow(), 0).toString(),table.getSelectedRow());
 					} catch (BadLocationException e) {
 						// TODO Auto-generated catch block

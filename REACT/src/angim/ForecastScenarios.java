@@ -138,8 +138,9 @@ public class ForecastScenarios {
 				String key = entry.getKey();
 				String value = entry.getValue();
 				for(int j = 1; j < csvBody.size()-1;j++){
-					if(csvBody.get(j)[0].contains(key)){
-						csvBody.get(j)[0].replace(key, value);
+					if(csvBody.get(j)[0].contains("_"+key+"_")){
+						csvBody.get(j)[0] = csvBody.get(j)[0].replace("_"+key+"_", "_"+value+"_");
+						System.out.println(csvBody.get(j)[0]);
 					}
 				}
 			}

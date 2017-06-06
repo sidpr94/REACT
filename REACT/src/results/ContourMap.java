@@ -5,7 +5,6 @@ package results;
 
 import java.awt.Color;
 import java.io.IOException;
-
 import javax.swing.JComboBox;
 
 import com.esri.map.GraphicsLayer;

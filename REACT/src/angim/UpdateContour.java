@@ -60,6 +60,9 @@ public class UpdateContour {
 	/** The dnl65 color value for tte contour. */
 	Color DNL65 = new Color(255,0,0);
 	
+	/** List of scenario noise contours to be associated with the scenario summary. */
+	public static List<List<Graphic>> scenarioGraphics = new ArrayList<List<Graphic>>();
+	
 	/**
 	 * Instantiates a new update contour.
 	 *
@@ -126,10 +129,8 @@ public class UpdateContour {
 				symbol = new SimpleFillSymbol(DNL65,new SimpleLineSymbol(DNL65,5), SimpleFillSymbol.Style.NULL);
 			}
 			Graphic g = new Graphic(createPoly(lon,lat),symbol,att);
-			
 			noise.updateGraphic(id[i], g);
 		}
-		
 	}
 	
 	/**
@@ -144,6 +145,7 @@ public class UpdateContour {
 		readers[1] = new BufferedReader(new FileReader(getFile()[1]));
 		readers[2] = new BufferedReader(new FileReader(getFile()[2]));
 		int[] id = noise.getGraphicIDs();
+		List<Graphic> listOfGraphics = new ArrayList<Graphic>();
 		for(int i = 0; i < getFile().length; i++){
 			String line = readers[i].readLine();
 			List<Double> lon = new ArrayList<>();
@@ -174,10 +176,10 @@ public class UpdateContour {
 				symbol = new SimpleFillSymbol(DNL65,new SimpleLineSymbol(DNL65,5,SimpleLineSymbol.Style.DASH), SimpleFillSymbol.Style.NULL);
 			}
 			Graphic g = new Graphic(createPoly(lon,lat),symbol,att);
-			
+			listOfGraphics.add(g);
 			noise.updateGraphic(id[i], g);
 		}
-		
+		scenarioGraphics.add(listOfGraphics);
 	}
 	
 	/**

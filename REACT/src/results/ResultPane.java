@@ -56,7 +56,7 @@ public class ResultPane {
 		CompareContourMap con = new CompareContourMap(compare,screenSize);
 		resultsPane.setLayout(new BorderLayout(0,0));
 		resultsPane.add(con.createMapPane(), BorderLayout.CENTER);
-		ResultsTable crash = new ResultsTable();
+		ResultsTable crash = new ResultsTable(compare);
 		resultsPane.add(crash.getfinePane(resultsTable), BorderLayout.WEST);
 		return resultsPane;
 	}
