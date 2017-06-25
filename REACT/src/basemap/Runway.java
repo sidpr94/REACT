@@ -4,13 +4,20 @@
 package basemap;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
+import com.opencsv.CSVReader;
+
+import angim.ForecastScenarios;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,43 +34,59 @@ public class Runway{
 	
 	/**
 	 * Creates the runways based on coordinates of the runway ends.
-	 *
+	 * MCI Specific need to fix
 	 * @return the runway graphics layer 
+	 * @throws IOException 
 	 */
-	public GraphicsLayer createRunway(){
-
-		Polyline O1L19R = new Polyline();
-		O1L19R.startPath(-94.7293, 39.29334);
-		O1L19R.lineTo(-94.7208, 39.32224);
-		Map<String,Object> O1L19Rattr = new HashMap<String, Object>();
-		O1L19Rattr.put("Start", "39.32224 N, 94.7208 W");
-		O1L19Rattr.put("End", "39.29334 N, 94.7293 W");
-		O1L19Rattr.put("Runway Name", "01L-19R");
-		Graphic O1L19Rrunway = new Graphic(O1L19R,new SimpleLineSymbol(Color.BLACK,5),O1L19Rattr);
-
-		Polyline O1R19L = new Polyline();
-		O1R19L.startPath(-94.709,39.28146);
-		O1R19L.lineTo(-94.7015, 39.30687);
-		Map<String,Object> O1R19Lattr = new HashMap<String, Object>();
-		O1R19Lattr.put("Start", "39.30687 N, 94.7015 W");
-		O1R19Lattr.put("End", "39.28146 N, 94.709 W");
-		O1R19Lattr.put("Runway Name", "01R-19L");
-		Graphic O1R19Lrunway = new Graphic(O1R19L,new SimpleLineSymbol(Color.BLACK,5),O1R19Lattr);
-
-		Polyline O927 = new Polyline();
-		O927.startPath(-94.7266, 39.29086);
-		O927.lineTo(-94.6932, 39.28808);
-		Map<String,Object> O927attr = new HashMap<String, Object>();
-		O927attr.put("Start", "39.28808 N, 94.6932 W");
-		O927attr.put("End", "39.29086 N, 94.7266 W");
-		O927attr.put("Runway Name", "09-27");
-		Graphic O927runway = new Graphic(O927,new SimpleLineSymbol(Color.BLACK,5),O927attr);
-
-		GraphicsLayer runway = new GraphicsLayer();
-		runway.addGraphic(O1L19Rrunway);
-		runway.addGraphic(O1R19Lrunway);
-		runway.addGraphic(O927runway);
-
-		return runway;
+	public GraphicsLayer createRunway() throws IOException{
+		File file = new File("Files/RunwayInformation.csv");
+		CSVReader reader = new CSVReader(new FileReader(file), ',');
+		GraphicsLayer runways = new GraphicsLayer();
+		List<String[]> csvBody = reader.readAll();
+		reader.close();
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		for(int j = 0; j < csvBody.size(); j++){
+			if(csvBody.get(j)[0].equals(airportName)){
+				for(int i = 4; i < 19; i=i+2){
+					if(!csvBody.get(j)[i].equals("")){
+						Polyline runway = new Polyline();
+						runway.startPath(Double.parseDouble(csvBody.get(j)[i+32]),Double.parseDouble(csvBody.get(j)[i+16]));
+						runway.lineTo(Double.parseDouble(csvBody.get(j)[i+33]),Double.parseDouble(csvBody.get(j)[i+17]));
+						Map<String,Object> attr = new HashMap<String, Object>();
+						if(Double.parseDouble(csvBody.get(j)[i+32]) < 0){
+							if(Double.parseDouble(csvBody.get(j)[i+16]) < 0){
+								attr.put("Start", csvBody.get(j)[i+32]+" S, "+csvBody.get(j)[i+16]+" W");
+							}else{
+								attr.put("Start", csvBody.get(j)[i+32]+" S, "+csvBody.get(j)[i+16]+" E");
+							}
+						}else{
+							if(Double.parseDouble(csvBody.get(j)[i+16]) < 0){
+								attr.put("Start", csvBody.get(j)[i+32]+" N, "+csvBody.get(j)[i+16]+" W");
+							}else{
+								attr.put("Start", csvBody.get(j)[i+32]+" N, "+csvBody.get(j)[i+16]+" E");
+							}
+						}
+						if(Double.parseDouble(csvBody.get(j)[i+33]) < 0){
+							if(Double.parseDouble(csvBody.get(j)[i+17]) < 0){
+								attr.put("End", csvBody.get(j)[i+33]+" S, "+csvBody.get(j)[i+17]+" W");
+							}else{
+								attr.put("End", csvBody.get(j)[i+33]+" S, "+csvBody.get(j)[i+17]+" E");
+							}
+						}else{
+							if(Double.parseDouble(csvBody.get(j)[i+17]) < 0){
+								attr.put("End", csvBody.get(j)[i+33]+" N, "+csvBody.get(j)[i+17]+" W");
+							}else{
+								attr.put("End", csvBody.get(j)[i+33]+" N, "+csvBody.get(j)[i+17]+" E");
+							}
+						}
+						attr.put("Runway Name", csvBody.get(j)[i]+"-"+csvBody.get(j)[i+1]);
+						Graphic runwayGraphic = new Graphic(runway,new SimpleLineSymbol(Color.BLACK,5),attr);
+						runways.addGraphic(runwayGraphic);
+					}
+				}
+			}
+		}
+		return runways;
 	}
 }

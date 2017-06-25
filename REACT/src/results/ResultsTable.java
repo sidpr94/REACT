@@ -118,7 +118,7 @@ public class ResultsTable {
 	
 	/**
 	 * Gets the table.
-	 *
+	 * MCI specific need to fix
 	 * @return the table
 	 */
 	public JTable getTable(){
@@ -136,7 +136,7 @@ public class ResultsTable {
 			
 		};
 		dm.setDataVector(new Object[][]{
-			{"Baseline","1029","10","1","16.243","5.146","1.967","-","-",'-'}
+			{"Baseline","1966","27","4","16.620","5.261","1.996","-","-",'-'}
 		},
 				new Object[]{"Scenario","55db DNL","60db DNL","65db DNL","55db DNL","60db DNL","65db DNL","Fuel Burn (lb)","CO2 (lb)","NOx (lb)"});
 		JTable table = new JTable( dm ) {

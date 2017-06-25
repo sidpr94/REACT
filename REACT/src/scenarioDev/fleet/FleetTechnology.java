@@ -44,7 +44,7 @@ public class FleetTechnology {
 
 	/**
 	 * Gets the fleet technology panel containing all GUI elements.
-	 *
+	 * MCI specific need to fix
 	 * @return the fleet panel
 	 */
 	public JPanel getFleet(){

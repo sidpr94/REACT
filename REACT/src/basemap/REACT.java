@@ -127,7 +127,7 @@ public class REACT {
 
 	/**
 	 * Creates the various JPanels to be inserted into the main window including: Map Tab, Database Tab, and Results Tab.
-	 *
+	 * MCI Specific Need to Fix
 	 * @param d the dimension of the screen size
 	 * @return the contents for the window
 	 * @throws Exception the exception

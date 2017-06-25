@@ -21,11 +21,13 @@ import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 import com.esri.map.JMap;
+import com.opencsv.CSVReader;
 
 // TODO: Auto-generated Javadoc
 /**
  * Updates or resets the contour in accordance to ANGIM output
  * @author Sidharth Prem
+ * 
  * @see content.RunANGIM
  */
 public class UpdateContour {
@@ -40,16 +42,16 @@ public class UpdateContour {
 	String state;
 	
 	/** The longitudinal reference of runway 01L. */
-	static double long_ref = -1.653338445;
+	static double long_ref = 0;
 	
 	/** The latitude reference of runway 01L. */
-	static double lat_ref = 0.685798105;
+	static double lat_ref = 0;
 	
 	/** The radius of earth in nmi. */
 	static double R_earth = 3440.069517;
 	
 	/** The rotational degree of 01L. */
-	static double rot_deg = 1.346084905;
+	static double rot_deg = 0;
 	
 	/** The dnl55 color value for tte contour. */
 	Color DNL55 = new Color(56,168,0);
@@ -75,7 +77,19 @@ public class UpdateContour {
 		this.map = map;
 		this.op = op;
 		this.state = s;
-		
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		File file = new File("Files/RunwayInformation.csv");
+		CSVReader reader = new CSVReader(new FileReader(file),',');
+		List<String[]> csvBody = reader.readAll();
+		for(int i = 0; i < csvBody.size(); i++){
+			if(csvBody.get(i)[0].equals(airportName)){
+				rot_deg = Double.parseDouble(csvBody.get(i)[1]);
+				lat_ref = Double.parseDouble(csvBody.get(i)[2]);
+				long_ref = Double.parseDouble(csvBody.get(i)[3]);
+			}
+		}
+		reader.close();
 	}
 	
 	/**
@@ -184,40 +198,43 @@ public class UpdateContour {
 	
 	/**
 	 * Gets the file path that contains the noise contour information.
-	 *
+	 * MCI Specific need to fix
 	 * @return the strings of path names for each Contour level
+	 * @throws IOException 
 	 */
-	private String[] getFile(){
+	private String[] getFile() throws IOException{
 		String[] urls = new String[3];
 		String a = "";
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
 		if(op.getModel().getSelectedItem() == "2015 Operations"){
-			a = "KMCI_2015_REACT";
+			a = airportName+"_2015_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Nominal TAF"){
-			a = "KMCI_2020_REACT";
+			a = airportName+"_2020_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Below Nominal TAF"){
-			a = "KMCI_2020L_REACT";
+			a = airportName+"_2020L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Above Nominal TAF"){
-			a = "KMCI_2020H_REACT";
+			a = airportName+"_2020H_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
-			a = "KMCI_2030_REACT";
+			a = airportName+"_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
-			a = "KMCI_2030L_REACT";
+			a = airportName+"_2030L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Above Nominal TAF"){
-			a = "KMCI_2030H_REACT";
+			a = airportName+"_2030H_REACT";
 		}
 		if(state == "update"){
-			File file1 = new File("OUT/Contours/Contours_"+a+"_MCI_55.csv");
+			File file1 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_55.csv");
 			urls[0] = file1.getAbsolutePath();
-			File file2 = new File("OUT/Contours/Contours_"+a+"_MCI_60.csv");
+			File file2 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_60.csv");
 			urls[1] = file2.getAbsolutePath();
-			File file3 = new File("OUT/Contours/Contours_"+a+"_MCI_65.csv");
+			File file3 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_65.csv");
 			urls[2]= file3.getAbsolutePath();
 		} else if (state == "reset"){
-			File file1 = new File("Files/Contours_KMCI_2015_REACT_MCI_55.csv");
+			File file1 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_55.csv");
 			urls[0] = file1.getAbsolutePath();
-			File file2 = new File("Files/Contours_KMCI_2015_REACT_MCI_60.csv");
+			File file2 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_60.csv");
 			urls[1] = file2.getAbsolutePath();
-			File file3 = new File("Files/Contours_KMCI_2015_REACT_MCI_65.csv");
+			File file3 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_65.csv");
 			urls[2]= file3.getAbsolutePath();
 		}
 		return urls;

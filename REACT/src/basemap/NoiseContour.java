@@ -18,6 +18,9 @@ import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleFillSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
+import com.opencsv.CSVReader;
+
+import angim.ForecastScenarios;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,16 +34,16 @@ import com.esri.map.GraphicsLayer;
 public class NoiseContour {
 
 	/** The longitudinal reference for runway 01L. */
-	static double long_ref = -1.653338445;
+	static double long_ref = 0;
 	
 	/** The latitude reference for ruwnay 01L. */
-	static double lat_ref = 0.685798105;
+	static double lat_ref = 0;
 	
 	/** The radius of the earth. */
 	static double R_earth = 3440.069517;
 	
 	/** The rotational angle for runway 01L. */
-	static double rot_deg = 1.346084905;
+	static double rot_deg = 0;
 	
 	/** The dnl55 color value. */
 	Color DNL55 = new Color(56,168,0);
@@ -53,8 +56,23 @@ public class NoiseContour {
 	
 	/**
 	 * Instantiates a new noise contour.
+	 * @throws IOException 
 	 */
-	public NoiseContour(){};
+	public NoiseContour() throws IOException{
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		File file = new File("Files/RunwayInformation.csv");
+		CSVReader reader = new CSVReader(new FileReader(file),',');
+		List<String[]> csvBody = reader.readAll();
+		for(int i = 0; i < csvBody.size(); i++){
+			if(csvBody.get(i)[0].equals(airportName)){
+				rot_deg = Double.parseDouble(csvBody.get(i)[1]);
+				lat_ref = Double.parseDouble(csvBody.get(i)[2]);
+				long_ref = Double.parseDouble(csvBody.get(i)[3]);
+			}
+		}
+		reader.close();
+	};
 
 	/**
 	 * Creates the noise contour for each DNL level
@@ -103,16 +121,19 @@ public class NoiseContour {
 
 	/**
 	 * Gets the files that contain the point values for the noise contours
-	 *
+	 * MCI Specific Need to Fix
 	 * @return the file path names
+	 * @throws IOException 
 	 */
-	private String[] getFile(){
+	private String[] getFile() throws IOException{
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
 		String[] urls = new String[3];
-		File file1 = new File("Files/Contours_KMCI_2015_REACT_MCI_55.csv");
+		File file1 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_55.csv");
 		urls[0] = file1.getAbsolutePath();
-		File file2 = new File("Files/Contours_KMCI_2015_REACT_MCI_60.csv");
+		File file2 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_60.csv");
 		urls[1] = file2.getAbsolutePath();
-		File file3 = new File("Files/Contours_KMCI_2015_REACT_MCI_65.csv");
+		File file3 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_65.csv");
 		urls[2]= file3.getAbsolutePath();
 		return urls;
 	}

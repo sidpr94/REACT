@@ -46,29 +46,34 @@ public class ForecastScenarios {
 		this.op = op;
 	}
 	
+	public ForecastScenarios(){
+		
+	}
+	
 	/**
 	 * Ensures ANGIM uses the correct forecast year flight schedule by editing CaseList file
-	 *
+	 * 
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void updateOperations() throws IOException{
 		File inputFile = new File("CONFIG/CaseList.csv");
 		CSVReader reader = new CSVReader(new FileReader(inputFile),',');
 		List<String[]> csvBody = reader.readAll();
+		String airportName = getAirportName();
 		if(op.getModel().getSelectedItem() == "2015 Operations"){
-			csvBody.get(1)[1] = "KMCI_2015_REACT";
+			csvBody.get(1)[1] = airportName+"_2015_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2020_REACT";
+			csvBody.get(1)[1] = airportName+"_2020_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Below Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2020L_REACT";
+			csvBody.get(1)[1] = airportName+"_2020L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Above Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2020H_REACT";
+			csvBody.get(1)[1] = airportName+"_2020H_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2030_REACT";
+			csvBody.get(1)[1] = airportName+"_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2030L_REACT";
+			csvBody.get(1)[1] = airportName+"_2030L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Above Nominal TAF"){
-			csvBody.get(1)[1] = "KMCI_2030H_REACT";
+			csvBody.get(1)[1] = airportName+"_2030H_REACT";
 		}
 		reader.close();
 		CSVWriter writer = new CSVWriter(new FileWriter(inputFile), ',',CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,System.getProperty("line.separator"));
@@ -81,25 +86,26 @@ public class ForecastScenarios {
 	 * Insert fleet technology.
 	 * Edit flight schedules for the appropriate Track variant inserted
 	 * ACKey contains the official aircraft title versus ANGIM recognized aircraft titles (i.e. Boeing 737 - B737).
-	 *
+	 * 
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void insertFleetTechnology() throws IOException{
 		String a = "";
+		String airportName = getAirportName();
 		if(op.getModel().getSelectedItem() == "2015 Operations"){
-			a = "KMCI_2015_REACT";
+			a = airportName+"_2015_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Nominal TAF"){
-			a = "KMCI_2020_REACT";
+			a = airportName+"_2020_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Below Nominal TAF"){
-			a = "KMCI_2020L_REACT";
+			a = airportName+"_2020L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2020 Above Nominal TAF"){
-			a = "KMCI_2020H_REACT";
+			a = airportName+"_2020H_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Nominal TAF"){
-			a = "KMCI_2030_REACT";
+			a = airportName+"_2030_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Below Nominal TAF"){
-			a = "KMCI_2020L_REACT";
+			a = airportName+"_2020L_REACT";
 		}else if(op.getModel().getSelectedItem() == "2030 Above Nominal TAF"){
-			a = "KMCI_2020H_REACT";
+			a = airportName+"_2020H_REACT";
 		}
 		File inputFile = new File("IN/FlightSchedules/FlightSchedule_"+a+".csv");
 		CSVReader reader = new CSVReader(new FileReader(inputFile),',');
@@ -151,5 +157,17 @@ public class ForecastScenarios {
 		writer.writeAll(csvBody);
 		writer.flush();
 		writer.close();
+	}
+	
+	/** 
+	 * This method retrieves the airport name 
+	 * @throws IOException 
+	 */
+	public String getAirportName() throws IOException{
+		File inputFile = new File("CONFIG/CaseList.csv");
+		CSVReader reader = new CSVReader(new FileReader(inputFile),',');
+		List<String[]> csvBody = reader.readAll();
+		reader.close();
+		return csvBody.get(1)[2];
 	}
 }

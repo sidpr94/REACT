@@ -37,7 +37,7 @@ public class PopMap {
 	
 	/**
 	 * Creates the population by taking a GeoJSON file of the population census blocks and parsing through them conveting them into graphics.
-	 *
+	 * MCI Specific Need to Fix
 	 * @param layer the Editable Population near the airport GraphicLayer
 	 */
 	public void createPopMap(GraphicsLayer layer){
