@@ -31,6 +31,7 @@ import content.ContentPane;
 import database.DataPane;
 import results.ResultPane;
 import results.ResultsTable;
+import trackflex.TrackFlexPane;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -137,6 +138,7 @@ public class REACT {
 		mapCompare = new JMap();
 		mainLayerList = new JLayerList(mainMap);
 		ResultsTable t = new ResultsTable(mapCompare);
+		TrackFlexPane trackFlexPane = new TrackFlexPane(mapCompare,d);
 		table = t.getTable();
 		JTabbedPane tabContent = new JTabbedPane();
 		tabContent.setBorder(BorderFactory.createEmptyBorder());
@@ -148,7 +150,7 @@ public class REACT {
 		tabContent.addTab("Map", contentPane.getContentPane());
 		tabContent.addTab("Database", dataPane.getfinePane());
 		tabContent.addTab("Results", resultsPane.createPane());
-		
+		tabContent.addTab("Track Editor", trackFlexPane.createPane());
 		//Sets the initial zoom status of the map. Zooms into the runway
 		Envelope initialExtent = new Envelope(-94.920484888,39.062438997,-94.543736896,39.534769654);
 		mainMap.setFullExtent(initialExtent);
