@@ -46,7 +46,7 @@ public class Tracks {
 		List<String> opType = getOpType();
 		BufferedReader reader = null;
 		for(int i = 0; i < 36; i++){
-			reader = new BufferedReader(new FileReader(getFile()[i]));
+			reader = new BufferedReader(new FileReader(getFile().get(i)));
 			String line = reader.readLine();
 			List<Double> lon = new ArrayList<>();
 			List<Double> lat = new ArrayList<>();
@@ -75,35 +75,28 @@ public class Tracks {
 
 	/**
 	 * Gets the file path names.
-	 * MCI Specific need to fix
 	 * @return the file path strings for each track
+	 * @throws IOException 
 	 */
-	private String[] getFile(){
-		String[] urls = new String[36];
-		for(int i = 0; i < 17; i++){
-			File newFile = new File("Files/Tracks/J"+(i+1)+"/J"+(i+1)+".csv");
-			urls[i] = newFile.getAbsolutePath();
-		}
-		File newFile = new File("Files/Tracks/J4A/J4A.csv");
-		urls[17] = newFile.getAbsolutePath();
-		for(int j = 18; j < 24; j++){
-			newFile = new File("Files/Tracks/Arrivals/A"+(j+1-18)+".csv");
-			urls[j] = newFile.getAbsolutePath();
-		}
-		for(int k = 24; k < 30; k++){
-			newFile = new File("Files/Tracks/Arrivals/A"+(k+1-24)+"A.csv");
-			urls[k] = newFile.getAbsolutePath();
-		}
-		for(int k = 30; k < 36; k++){
-			newFile = new File("Files/Tracks/Arrivals/A"+(k+1-30)+"B.csv");
-			urls[k] = newFile.getAbsolutePath();
+	private List<String> getFile() throws IOException{
+		List<String> names = getTrackNames();
+		List<String> opType = getOpType();
+		List<String> urls = new ArrayList<String>();
+		for(int i = 0; i < names.size(); i++){
+			if(opType.get(i).equals("Approach")){
+				File file = new File("Files/Tracks/"+"/"+names.get(i)+".csv");
+				urls.add(file.getAbsolutePath());
+			}
+			else{
+				File file = new File("Files/Tracks/"+names.get(i)+"/"+names.get(i)+".csv");
+				urls.add(file.getAbsolutePath());	
+			}
 		}
 		return urls;
 	}
 
 	/**
 	 * Creates the polyline for the track based on coordinate points.
-	 * 
 	 * @param x the longitudinal coordinate
 	 * @param y the latitude coordinate
 	 * @return the track line
@@ -119,7 +112,6 @@ public class Tracks {
 
 	/**
 	 * Gets the track names for each track to be added as an attribute for hte graphic.
-	 * MCI Specific need to fix
 	 * @return the track names
 	 * @throws IOException 
 	 */
@@ -137,7 +129,6 @@ public class Tracks {
 
 	/**
 	 * Gets the runway names for each track.
-	 * MCI Specific need to fix
 	 * @return the runway names for each track to be added as an attribute
 	 * @throws IOException 
 	 */
@@ -153,6 +144,11 @@ public class Tracks {
 		return names;
 	}
 	
+	/**
+	 * Gets the operation type for each track
+	 * @return the list of operation types for each track
+	 * @throws IOException
+	 */
 	private List<String> getOpType() throws IOException{
 		File file = new File("Files/TrackInformation.csv");
 		List<String> names = new ArrayList<String>();
