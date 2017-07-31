@@ -129,11 +129,11 @@ public class NoiseContour {
 		ForecastScenarios scenario = new ForecastScenarios();
 		String airportName = scenario.getAirportName();
 		String[] urls = new String[3];
-		File file1 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_55.csv");
+		File file1 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName+"_55.csv");
 		urls[0] = file1.getAbsolutePath();
-		File file2 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_60.csv");
+		File file2 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName+"_60.csv");
 		urls[1] = file2.getAbsolutePath();
-		File file3 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName.substring(1,airportName.length())+"_65.csv");
+		File file3 = new File("Files/Contours_"+airportName+"_2015_REACT_"+airportName+"_65.csv");
 		urls[2]= file3.getAbsolutePath();
 		return urls;
 	}

@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 import java.util.regex.PatternSyntaxException;
 
 import javax.swing.BorderFactory;
@@ -73,8 +74,9 @@ public class DataPane {
 	 * Gets the final pane containing title block and table.
 	 *
 	 * @return the final pane
+	 * @throws IOException 
 	 */
-	public JPanel getfinePane(){
+	public JPanel getfinePane() throws IOException{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 
@@ -102,8 +104,9 @@ public class DataPane {
 	 * Gets the table contained in a scroll pane.
 	 *
 	 * @return the scroll pane
+	 * @throws IOException 
 	 */
-	public JScrollPane getPane(){
+	public JScrollPane getPane() throws IOException{
 		ReadFleetData rdData = new ReadFleetData();
 		Object[][] data = rdData.getData();
 		JTable table = new JTable();

@@ -83,7 +83,10 @@ public class GuiPane {
 		
 		JTextArea text = new JTextArea();
 		text.setText("Preliminary results, do not cite or quote.");
+		text.setEditable(false);
+		text.setEnabled(false);
 		text.setForeground(Color.RED);
+		text.setDisabledTextColor(Color.RED);
 		text.setFont(new Font(text.getFont().getName(),Font.BOLD,18));
 		text.setBackground(Color.WHITE);
 		warning.add(text);

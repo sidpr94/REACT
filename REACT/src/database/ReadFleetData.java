@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import angim.ForecastScenarios;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReadFleetData compiles all flight schedule information for the baseline case and populates into the datapane.
@@ -27,13 +29,16 @@ public class ReadFleetData {
 	 * Gets the data from the CSV file called FleetData.csv.
 	 *
 	 * @return the data as an object matrix
+	 * @throws IOException 
 	 */
-	public Object[][] getData(){
+	public Object[][] getData() throws IOException{
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
 		BufferedReader br = null;
 		String line = "";
 		ArrayList<String[]> data = new ArrayList<String[]>();
 		try {
-			br = new BufferedReader(new FileReader("Files/FleetData.csv"));
+			br = new BufferedReader(new FileReader("Files/FleetData_"+airportName+".csv"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

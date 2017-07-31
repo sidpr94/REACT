@@ -331,7 +331,7 @@ public final class GeoJsonParser {
 	 * @param node the node
 	 * @return the map
 	 */
-	private Map<String, Object> parseProperties(JsonNode node) {
+	Map<String, Object> parseProperties(JsonNode node) {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		Iterator<Map.Entry<String, JsonNode>> propertyInterator = node.getFields(); 
 		while (propertyInterator.hasNext()) {
@@ -354,7 +354,7 @@ public final class GeoJsonParser {
 	 * @param node the node
 	 * @return a geometry.
 	 */
-	private Geometry parseGeometry(JsonNode node) {
+	Geometry parseGeometry(JsonNode node) {
 		GeometryType type = GeometryType.fromString(node.path(FIELD_TYPE).getTextValue());
 		return parseCoordinates(type, node.path(FIELD_COORDINATES));
 	}

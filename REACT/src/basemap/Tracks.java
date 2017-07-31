@@ -19,6 +19,8 @@ import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.map.GraphicsLayer;
 import com.opencsv.CSVReader;
 
+import angim.ForecastScenarios;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Tracks creates the tracks based on csv files containing points that make up the polyline.
@@ -61,7 +63,7 @@ public class Tracks {
 			att.put("TrackName",names.get(i));
 			att.put("Runway",runway.get(i));
 			att.put("Operation", opType.get(i));
-			if(opType.get(i).equals("Approach")){
+			if(opType.get(i).equals("Departure")){
 				symbol = new SimpleLineSymbol(Color.ORANGE,2);
 			}else{
 				symbol = new SimpleLineSymbol(Color.BLUE,2);
@@ -82,13 +84,15 @@ public class Tracks {
 		List<String> names = getTrackNames();
 		List<String> opType = getOpType();
 		List<String> urls = new ArrayList<String>();
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
 		for(int i = 0; i < names.size(); i++){
 			if(opType.get(i).equals("Approach")){
-				File file = new File("Files/Tracks/"+"/"+names.get(i)+".csv");
+				File file = new File("Files/Tracks/"+airportName+"/"+names.get(i)+".csv");
 				urls.add(file.getAbsolutePath());
 			}
 			else{
-				File file = new File("Files/Tracks/"+names.get(i)+"/"+names.get(i)+".csv");
+				File file = new File("Files/Tracks/"+airportName+"/"+names.get(i)+"/"+names.get(i)+".csv");
 				urls.add(file.getAbsolutePath());	
 			}
 		}
@@ -116,7 +120,9 @@ public class Tracks {
 	 * @throws IOException 
 	 */
 	public List<String> getTrackNames() throws IOException{
-		File file = new File("Files/TrackInformation.csv");
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		File file = new File("Files/TrackInformation_"+airportName+".csv");
 		CSVReader reader = new CSVReader(new FileReader(file),',');
 		List<String[]> csvBody = reader.readAll();
 		reader.close();
@@ -133,7 +139,9 @@ public class Tracks {
 	 * @throws IOException 
 	 */
 	private List<String> getRunway() throws IOException{
-		File file = new File("Files/TrackInformation.csv");
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		File file = new File("Files/TrackInformation_"+airportName+".csv");
 		List<String> names = new ArrayList<String>();
 		CSVReader reader = new CSVReader(new FileReader(file),',');
 		List<String[]> csvBody = reader.readAll();
@@ -150,7 +158,9 @@ public class Tracks {
 	 * @throws IOException
 	 */
 	private List<String> getOpType() throws IOException{
-		File file = new File("Files/TrackInformation.csv");
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		File file = new File("Files/TrackInformation_"+airportName+".csv");
 		List<String> names = new ArrayList<String>();
 		CSVReader reader = new CSVReader(new FileReader(file),',');
 		List<String[]> csvBody = reader.readAll();

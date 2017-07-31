@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/httpclient.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/httpcore.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/httpmime.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jackson-core-lgpl.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jackson-core-lgpl.jar" sourcepath="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jackson-core-lgpl.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jackson-mapper-lgpl.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jcifs.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/ArcGIS SDKs/java10.2.4/sdk/jars/jcommon.jar"/>

@@ -13,6 +13,7 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 
@@ -27,6 +28,7 @@ import com.esri.map.JMap;
 import com.esri.runtime.ArcGISRuntime;
 import com.esri.toolkit.JLayerList;
 
+import angim.ForecastScenarios;
 import content.ContentPane;
 import database.DataPane;
 import results.ResultPane;
@@ -104,9 +106,12 @@ public class REACT {
 	 * Creates the main window.
 	 *
 	 * @return the main window to be displayed
+	 * @throws IOException 
 	 */
-	private JFrame createWindow() {
-		JFrame window = new JFrame("REACT - Rapid Environmental Impact on Airport Community Tradeoff Environment: Kansas City International Airport (MCI)");
+	private JFrame createWindow() throws IOException {
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
+		JFrame window = new JFrame("REACT - Rapid Environmental Impact on Airport Community Tradeoff Environment: "+airportName.substring(1,airportName.length()));
 		window.setBounds(0, 10, width,height-60);
 		window.setExtendedState	(Frame.MAXIMIZED_BOTH);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -23,6 +23,8 @@ import com.esri.toolkit.overlays.HitTestEvent;
 import com.esri.toolkit.overlays.HitTestListener;
 import com.esri.toolkit.overlays.HitTestOverlay;
 
+import angim.ForecastScenarios;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class InfoOverlayTrack.
@@ -145,8 +147,11 @@ public class InfoOverlayTrack implements HitTestListener{
 	 * MCI specific need to fix
 	 * @param hit the hit
 	 * @return the file
+	 * @throws IOException 
 	 */
-	private String[] getFile(Graphic hit){
+	private String[] getFile(Graphic hit) throws IOException{
+		ForecastScenarios scenario = new ForecastScenarios();
+		String airportName = scenario.getAirportName();
 		String name = hit.getAttributeValue("TrackName").toString();
 		String[] urls = null;
 		if(name.equals("J2") || name.equals("J5") || name.equals("J12")){
@@ -157,7 +162,7 @@ public class InfoOverlayTrack implements HitTestListener{
 			urls = new String[5];
 		}
 		for(int i = 0; i < urls.length; i++){
-			File newFile = new File("Files/Tracks/"+name+"/"+name+"_v"+(i+1)+".csv");
+			File newFile = new File("Files/Tracks/"+airportName+"/"+name+"/"+name+"_v"+(i+1)+".csv");
 			urls[i] = newFile.getAbsolutePath();
 		}
 		return urls;

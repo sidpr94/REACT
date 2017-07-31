@@ -209,25 +209,25 @@ public class LegendPanel {
 			colorBox.setBorder(new LineBorder(Color.WHITE,5,false));
 			colorBox.setPreferredSize(e);
 			switch(i){
-			case 1: text = "10-14";
+			case 1: text = "0-919";
 			bg = Color.getHSBColor(0,0,1);
 			break;
-			case 2: text = "15-47";
+			case 2: text = "920-1310";
 			bg = Color.getHSBColor(0,0,0.83f);
 			break;
-			case 3: text = "48-108";
+			case 3: text = "1311-1769";
 			bg = Color.getHSBColor(0,0,0.66f);
 			break;
-			case 4: text = "109-235";
+			case 4: text = "1770-2343";
 			bg = Color.getHSBColor(0,0,0.49f);
 			break;
-			case 5: text = "236-488";
+			case 5: text = "2344-3204";
 			bg = Color.getHSBColor(0,0,0.33f);
 			break;
-			case 6: text = "489-1130";
+			case 6: text = "3205-4838";
 			bg = Color.getHSBColor(0,0,0.16f);
 			break;
-			case 7: text = "1131-2362";
+			case 7: text = "4839-9658";
 			bg = Color.getHSBColor(0,0,0);
 			break;
 			}

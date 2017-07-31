@@ -95,7 +95,7 @@ public class InsertFleetTechnology implements ActionListener{
 				}else{
 					fleetChanged.put(fleet.getSelectedItem().toString().substring(0,fleet.getSelectedItem().toString().length()-1), Double.parseDouble(percent.getText()));
 				}
-				String[] un = new String[22];
+				String[] un = new String[fleet.getItemCount()];
 				int selected = fleet.getSelectedIndex();
 				for(int i = 0; i < fleet.getItemCount(); i++){
 					if(i != fleet.getSelectedIndex()){
@@ -114,7 +114,7 @@ public class InsertFleetTechnology implements ActionListener{
 		}
 		else if(source.equals(reset)){
 			fleetChanged.clear();
-			String[] un = new String[22];
+			String[] un = new String[fleet.getItemCount()];
 			int selected = fleet.getSelectedIndex();
 			for(int i = 0; i < fleet.getItemCount(); i++){
 				if(fleet.getItemAt(i).contains("*")){

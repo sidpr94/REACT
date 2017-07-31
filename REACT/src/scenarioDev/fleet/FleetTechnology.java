@@ -7,7 +7,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -17,8 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.opencsv.CSVReader;
+
 import GUI.AutoCompletion;
-import database.ReadFleetData;
+import angim.ForecastScenarios;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,27 +53,30 @@ public class FleetTechnology {
 	 * Gets the fleet technology panel containing all GUI elements.
 	 * MCI specific need to fix
 	 * @return the fleet panel
+	 * @throws IOException 
 	 */
-	public JPanel getFleet(){
-		ReadFleetData rd = new ReadFleetData();
-		Object[][] data = rd.getData();
-		String[] aircraft = new String[data.length];
-		for(int i = 0; i < data.length; i++){
-			aircraft[i] = (String) data[i][0];
+	public JPanel getFleet() throws IOException{
+		ForecastScenarios forecast = new ForecastScenarios();
+		String airportName = forecast.getAirportName();
+		CSVReader reader = new CSVReader(new FileReader(new File("Files/ACKey_"+airportName+".csv")),',');
+		List<String[]> data = reader.readAll();
+		reader.close();
+		Set<String> uniqueAC = new TreeSet<String>();
+		for(int i = 0; i < data.size(); i++){
+			uniqueAC.add((String) data.get(i)[0]);
 		}
-		String[] unAC = Arrays.stream(aircraft).toArray(String[]::new);
-
 		JPanel fInputs = new JPanel();
 		GridLayout gLayout = new GridLayout(7,1);
 		gLayout.setVgap(3);
 		fInputs.setLayout(gLayout);
 		fInputs.setBackground(new Color(51,81,112));
 		fInputs.setBorder(BorderFactory.createEmptyBorder());
-		
 		//Ensures that all aircraft are unique
-		String[] un = new String[22];
-		for(int i = 0; i<22;i++){
-			un[i] = unAC[i];
+		String[] un = new String[uniqueAC.size()];
+		int i = 0;
+		for(String s : uniqueAC){
+			un[i] = s;
+			i++;
 		}
 		JTextField fleetTitle = new JTextField();
 		fleetTitle.setOpaque(false);

@@ -150,7 +150,7 @@ public class InfoOverlayDensity implements HitTestListener{
 				des1.setBorder(BorderFactory.createEmptyBorder());
 
 				JSpinner spinner = new JSpinner();
-				SpinnerModel mdel = new SpinnerNumberModel((Number) hitGraphic.getAttributeValue("POP10"),0,3000,1);
+				SpinnerModel mdel = new SpinnerNumberModel((Number) hitGraphic.getAttributeValue("POP10"),0,10000,1);
 				spinner.setModel(mdel);
 
 				JButton btn = new JButton("Commit Change");

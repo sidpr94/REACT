@@ -223,18 +223,18 @@ public class UpdateContour {
 			a = airportName+"_2030H_REACT";
 		}
 		if(state == "update"){
-			File file1 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_55.csv");
+			File file1 = new File("OUT/Contours/Contours_"+a+"_"+airportName+"_55.csv");
 			urls[0] = file1.getAbsolutePath();
-			File file2 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_60.csv");
+			File file2 = new File("OUT/Contours/Contours_"+a+"_"+airportName+"_60.csv");
 			urls[1] = file2.getAbsolutePath();
-			File file3 = new File("OUT/Contours/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_65.csv");
+			File file3 = new File("OUT/Contours/Contours_"+a+"_"+airportName+"_65.csv");
 			urls[2]= file3.getAbsolutePath();
 		} else if (state == "reset"){
-			File file1 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_55.csv");
+			File file1 = new File("Files/Contours_"+a+"_"+airportName+"_55.csv");
 			urls[0] = file1.getAbsolutePath();
-			File file2 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_60.csv");
+			File file2 = new File("Files/Contours_"+a+"_"+airportName+"_60.csv");
 			urls[1] = file2.getAbsolutePath();
-			File file3 = new File("Files/Contours_"+a+"_"+airportName.substring(1,airportName.length())+"_65.csv");
+			File file3 = new File("Files/Contours_"+a+"_"+airportName+"_65.csv");
 			urls[2]= file3.getAbsolutePath();
 		}
 		return urls;

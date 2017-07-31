@@ -93,7 +93,12 @@ public class CreateMainMap {
 		mainMap.addMapEventListener(new MapEventListenerAdapter(){
 			@Override
 			public void mapReady(final MapEvent arg0) {
-				pmap.createPopMap(pop);
+				try {
+					pmap.createPopMap(pop);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		//Add all visual information and overlays
