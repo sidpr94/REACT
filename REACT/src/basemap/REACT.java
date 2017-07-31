@@ -157,12 +157,12 @@ public class REACT {
 		tabContent.addTab("Results", resultsPane.createPane());
 		tabContent.addTab("Track Editor", trackFlexPane.createPane());
 		//Sets the initial zoom status of the map. Zooms into the runway
-		Envelope initialExtent = new Envelope(-94.920484888,39.062438997,-94.543736896,39.534769654);
-		mainMap.setFullExtent(initialExtent);
-		Envelope initialExtent1 = new Envelope(-94.920484888,39.062438997,-94.493736896,39.604769654);
-		mapCompare.setFullExtent(initialExtent1);
-		mapCompare.setShowingEsriLogo(false);
-		mapCompare.setScale(100000);
+		//Envelope initialExtent = new Envelope(-94.920484888,39.062438997,-94.543736896,39.534769654);
+		//mainMap.setFullExtent(initialExtent);
+		//Envelope initialExtent1 = new Envelope(-94.920484888,39.062438997,-94.493736896,39.604769654);
+		//mapCompare.setFullExtent(initialExtent1);
+		//mapCompare.setShowingEsriLogo(false);
+		//mapCompare.setScale(100000);
 		mainMap.setShowingEsriLogo(false);
 		return tabContent;
 	}
